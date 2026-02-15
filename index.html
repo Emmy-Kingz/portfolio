@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emmanuel Amobi | Multimedia Lead & Engineer</title>
+    <meta name="description" content="Portfolio of Emmanuel Amobi - Digital Creator, Engineer, and Multimedia Lead bridging the gap between tech and creative storytelling.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Custom Config for Brand Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0056b3',    /* Professional Blue */
+                        secondary: '#004494',  /* Darker Blue for hover */
+                        accent: '#f4f4f4',     /* Light Gray */
+                        dark: '#0f172a',       /* Slate 900 */
+                        neutral: '#64748b',    /* Slate 500 */
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Utilities */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .hero-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 86, 179, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 68, 148, 0.1) 0px, transparent 50%);
+        }
+        
+        /* Accordion Styles */
+        .experience-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .experience-item.active .experience-content {
+            max-height: 500px; /* Arbitrary large height */
+            transition: max-height 0.5s ease-in;
+        }
+        .experience-item.active .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Slideshow Styles */
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: fadeEffect 1s;
+        }
+        .slide.active {
+            display: block;
+        }
+        @keyframes fadeEffect {
+            from {opacity: 0.4}
+            to {opacity: 1}
+        }
+        
+        /* Gallery Hover */
+        .gallery-item {
+            overflow: hidden;
+        }
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-white antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center gap-3 group">
+                        <!-- Logo Image with fallback text -->
+                        <img src="logo.png" alt="EA Logo" class="h-10 w-auto object-contain transition group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="text-2xl font-serif font-bold text-dark hidden">EA<span class="text-primary">.</span></span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="text-sm font-medium text-slate-600 hover:text-primary transition">About</a>
+                    <a href="#services" class="text-sm font-medium text-slate-600 hover:text-primary transition">Services</a>
+                    <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-primary transition">Experience</a>
+                    <a href="#projects" class="text-sm font-medium text-slate-600 hover:text-primary transition">Projects</a>
+                    <a href="#gallery" class="text-sm font-medium text-slate-600 hover:text-primary transition">Gallery</a>
+                    <a href="#contact" class="px-5 py-2.5 rounded-full bg-dark text-white hover:bg-primary transition shadow-lg text-sm font-medium">Let's Talk</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-primary focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl absolute w-full z-40">
+            <div class="px-6 pt-4 pb-8 space-y-2">
+                <a href="#about" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">About</a>
+                <a href="#services" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Services</a>
+                <a href="#experience" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Experience</a>
+                <a href="#projects" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Projects</a>
+                <a href="#gallery" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Gallery</a>
+                <a href="#contact" class="block mt-4 text-center py-3 rounded-lg text-base font-bold bg-primary text-white">Contact Me</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 mb-8 text-xs font-bold tracking-widest text-primary uppercase bg-blue-50 border border-blue-100 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    Open to Work
+                </div>
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-dark mb-6 leading-[1.1] tracking-tight font-serif">
+                    Bridging Engineering Precision with <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Creative Storytelling</span>
+                </h1>
+                <p class="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
+                    I am Emmanuel Amobi. Digital Creator, Engineer, and Multimedia Lead. I engineer visual narratives for C-suite audiences and optimize technical systems for growth.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#projects" class="px-8 py-4 rounded-full bg-primary text-white font-semibold hover:bg-secondary transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-center">
+                        View Selected Works
+                    </a>
+                    <a href="#experience" class="px-8 py-4 rounded-full bg-white text-slate-700 border border-slate-200 font-semibold hover:bg-slate-50 transition shadow-sm flex items-center justify-center gap-2">
+                        Review Experience
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Visual (5 cols) -->
+                <div class="lg:col-span-5 relative group">
+                    <div class="absolute inset-0 bg-primary/10 transform translate-x-4 translate-y-4 rounded-2xl transition duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/5]">
+                        <!-- Profile Image with fallback -->
+                        <img src="myphoto.png" alt="Emmanuel Amobi" class="w-full h-full object-cover hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/600x800/f1f5f9/94a3b8?text=Emmanuel+Amobi';">
+                    </div>
+                </div>
+                
+                <!-- Content (7 cols) -->
+                <div class="lg:col-span-7">
+                    <h2 class="text-3xl font-bold text-dark mb-6 font-serif">The Tech-Creative Hybrid</h2>
+                    <p class="text-slate-600 mb-4 leading-relaxed text-lg">
+                        I am a multidisciplinary professional who sits at the intersection of engineering precision and creative storytelling. With a Bachelor’s in Electrical and Electronics Engineering, I approach digital media not just as an art form, but as a system that requires strategy, analysis, and optimization.
+                    </p>
+                    <p class="text-slate-600 mb-8 leading-relaxed text-lg">
+                        My career is defined by adaptability and measurable impact. From achieving a 95% completion rate in field operations at Ikeja Electric to ensuring 100% data compliance as a WHO Cluster Supervisor, I bring a standard of excellence to every project.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
+                        <div>
+                            <h4 class="text-3xl font-bold text-primary">100%</h4>
+                            <p class="text-sm text-slate-500 font-medium mt-1">Data Compliance<br>(WHO Project)</p>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-bold text-primary">200+</h4>
+                            <p class="text-sm text-slate-500 font-medium mt-1">C-Suite Execs<br>Engaged (AFRES)</p>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-bold text-primary">95%</h4>
+                            <p class="text-sm text-slate-500 font-medium mt-1">Efficiency Rate<br>(Engineering)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-wider uppercase text-xs">Expertise</span>
+                <h2 class="text-3xl font-bold text-dark mt-2 font-serif">Services & Solutions</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Consultant -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300">
+                    <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 text-primary">
+                        <i class="fas fa-chess-knight text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Brand Strategy</h3>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Data-driven multimedia strategies for businesses needing content calendars, video production, or a complete digital overhaul.
+                    </p>
+                    <a href="mailto:emmanuel.amobi03@gmail.com" class="text-primary font-semibold text-sm hover:underline">Request Proposal &rarr;</a>
+                </div>
+
+                <!-- Engineer -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-primary relative transform md:-translate-y-2">
+                    <div class="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center mb-6 text-dark">
+                        <i class="fas fa-laptop-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">IT Consultancy</h3>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Technical solutions for complex problems. From data compliance and network troubleshooting to system optimization.
+                    </p>
+                    <a href="mailto:emmanuel.amobi03@gmail.com" class="text-dark font-semibold text-sm hover:underline">Discuss Project &rarr;</a>
+                </div>
+
+                <!-- Coach -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300">
+                    <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 text-green-600">
+                        <i class="fas fa-user-graduate text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Coaching</h3>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Personalized guidance for growth. Digital skills training, mathematics tutoring, and tech-creative career advice.
+                    </p>
+                    <a href="https://wa.me/2348075598791" target="_blank" class="text-green-600 font-semibold text-sm hover:underline">Book Session &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Experience Section (Accordion) -->
+    <section id="experience" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-wider uppercase text-xs">Career History</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mt-2 font-serif">Professional Experience</h2>
+                <p class="text-slate-500 mt-4">Click on a role to reveal detailed achievements and metrics.</p>
+            </div>
+
+            <div class="space-y-4">
+                
+                <!-- Role 1: SalesRuby -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-primary shrink-0">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Acting Multimedia Lead (AFRES)</h3>
+                                <p class="text-sm text-slate-500">SalesRuby | Lagos | Dec 2025 - Present</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                        <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Summit Leadership:</strong> Directed the visual narrative and social media strategy for the Africa Revenue Summit (AFRES), a premier gathering of over 200 CEOs.</li>
+                                <li><strong>Content Production:</strong> Spearheaded end-to-end creation of high-impact promotional videos, speaker graphics, and teasers attracting top-tier delegates (Mastercard, Guinness).</li>
+                                <li><strong>Campaign Management:</strong> Managed social channels driving engagement for pre-conference sessions and complex ticket tiers.</li>
+                                <li><strong>Live Coverage:</strong> Coordinated real-time multimedia coverage and photography for the 2-day summit.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 2: Teaching -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 shrink-0">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Mathematics Teacher</h3>
+                                <p class="text-sm text-slate-500">Thamesmead Private School | Oct - Dec 2025</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                         <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Engagement Boost:</strong> Increased student engagement by 30% through interactive teaching methods and practical demonstrations.</li>
+                                <li><strong>Curriculum Design:</strong> Designed lesson plans that simplified complex mathematical concepts for diverse learning needs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 3: NYSC -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 shrink-0">
+                                <i class="fas fa-flag-checkered"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Co-Liaising Officer (NYSC)</h3>
+                                <p class="text-sm text-slate-500">National Youth Service Corps | Aug 2024 - Aug 2025</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                         <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Leadership:</strong> Represented Batch B2 Corpers in official engagements with Local Government Inspection officers.</li>
+                                <li><strong>Training:</strong> Led technical training sessions in Basic Electricity and Computer Studies, improving student proficiency scores by 20%.</li>
+                                <li><strong>Community Relations:</strong> Built strong relationships with community leaders to promote educational development.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 4: WHO -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 shrink-0">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Independent Cluster Supervisor</h3>
+                                <p class="text-sm text-slate-500">World Health Organization | Apr - Jun 2025</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                         <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Perfect Compliance:</strong> Supervised multiple field teams achieving 100% compliance with WHO data standards.</li>
+                                <li><strong>Error Reduction:</strong> Conducted digital audits and troubleshooting, reducing reporting errors by 25%.</li>
+                                <li><strong>Logistics:</strong> Coordinated logistics and reporting across clusters ensuring timely campaign delivery.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 5: Mesobest (Social Media/IT) -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 shrink-0">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Social Media / IT Assistant</h3>
+                                <p class="text-sm text-slate-500">MESOBEST TECHNOLOGY NG | Sept 2022 - Aug 2024</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                         <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Brand Growth:</strong> Managed and optimized social media platforms, increasing brand visibility by 40%.</li>
+                                <li><strong>IT Support:</strong> Provided comprehensive support across hardware, software, and network systems, reducing downtime by 20%.</li>
+                                <li><strong>E-commerce:</strong> Supported e-commerce and web management initiatives, contributing to a 25% growth in online engagement.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 6: Ikeja Electric -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 shrink-0">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Engineering Intern</h3>
+                                <p class="text-sm text-slate-500">Ikeja Electric | Aug 2021 - Jan 2022</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                         <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Field Operations:</strong> Achieved a 95% completion rate in field operations by applying core Electrical & Electronics Engineering concepts.</li>
+                                <li><strong>Maintenance:</strong> Reduced downtime by supporting efficient maintenance procedures and equipment testing for distribution transformers.</li>
+                                <li><strong>Teamwork:</strong> Contributed to cross-functional teamwork and technical problem-solving under senior mentorship.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 7: Mesobest (Tutor) -->
+                <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="p-6 flex items-center justify-between hover:bg-white transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 shrink-0">
+                                <i class="fas fa-chalkboard"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-dark">Facilitator / Tutor</h3>
+                                <p class="text-sm text-slate-500">MESOBEST TECHNOLOGY NG | Aug 2019 - July 2021</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
+                    </div>
+                    <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-20">
+                         <div class="py-6 space-y-3">
+                            <p class="text-slate-700 font-medium mb-2">Key Achievements:</p>
+                            <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
+                                <li><strong>Mentorship:</strong> Mentored 50+ students in digital skills including content creation, marketing, programming, and web development.</li>
+                                <li><strong>Digital Delivery:</strong> Delivered lessons via Google Meet, WhatsApp, YouTube, and Zoom, adapting content for maximum reach.</li>
+                                <li><strong>Strategy:</strong> Designed tailored content strategies to boost engagement and strengthen brand presence.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects (Slideshow + Feature Card + Grid) -->
+    <section id="projects" class="py-24 bg-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="mb-16">
+                <span class="text-primary font-bold tracking-wider uppercase text-xs">Portfolio Highlights</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 font-serif">Featured Projects</h2>
+            </div>
+            
+            <!-- Project 1: AFRES Slideshow -->
+            <div class="bg-white/5 rounded-2xl overflow-hidden shadow-2xl mb-20 border border-white/10">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <!-- Slideshow Container -->
+                    <div class="relative h-96 lg:h-auto bg-black/50 flex items-center justify-center group">
+                        <div id="slides-container" class="w-full h-full relative overflow-hidden">
+                            <!-- 5 Slides -->
+                            <img src="slides/slide1.jpg" class="slide active" alt="AFRES Highlight 1" onerror="this.style.display='none'; document.getElementById('slide-placeholder').style.display='flex'">
+                            <img src="slides/slide2.jpg" class="slide" alt="AFRES Highlight 2">
+                            <img src="slides/slide3.jpg" class="slide" alt="AFRES Highlight 3">
+                            <img src="slides/slide4.jpg" class="slide" alt="AFRES Highlight 4">
+                            <img src="slides/slide5.jpg" class="slide" alt="AFRES Highlight 5">
+                            
+                            <!-- Fallback -->
+                            <div id="slide-placeholder" class="hidden absolute inset-0 flex-col items-center justify-center text-neutral">
+                                <i class="fas fa-images text-5xl mb-4"></i>
+                                <p>Add images to /slides folder</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls -->
+                        <div class="absolute bottom-6 right-6 flex gap-2">
+                            <button onclick="changeSlide(-1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center backdrop-blur-sm transition">
+                                <i class="fas fa-arrow-left text-sm"></i>
+                            </button>
+                            <button onclick="changeSlide(1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center backdrop-blur-sm transition">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-10 lg:p-16 flex flex-col justify-center">
+                        <span class="text-primary font-bold tracking-wider text-xs uppercase mb-2">Multimedia Lead</span>
+                        <h3 class="text-3xl font-bold mb-6">Africa Revenue Summit (AFRES)</h3>
+                        <p class="text-slate-300 mb-8 leading-relaxed text-lg font-light">
+                            Managed the end-to-end multimedia strategy for Africa’s premier gathering of 200+ CEOs. Delivered high-impact visual assets including promotional teasers, speaker reveals, and live event coverage that drove ticket sales and brand visibility.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-4 py-1.5 border border-white/20 text-white text-xs font-medium rounded-full">Video Production</span>
+                            <span class="px-4 py-1.5 border border-white/20 text-white text-xs font-medium rounded-full">Event Photography</span>
+                            <span class="px-4 py-1.5 border border-white/20 text-white text-xs font-medium rounded-full">Strategic Planning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: MBTech Feature Card (Redesigned) -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <!-- Image Side -->
+                    <div class="h-64 md:h-auto bg-slate-100 relative group overflow-hidden">
+                        <img src="mbtech-preview.jpg" alt="MB Tech Project Preview" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
+                        <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    
+                    <!-- Text Side -->
+                    <div class="p-8 md:p-12 flex flex-col justify-center text-slate-800">
+                        <span class="text-primary font-bold tracking-wider text-xs uppercase mb-2">Web Development</span>
+                        <h3 class="text-2xl font-bold text-dark mb-4">MB Tech Solutions (mbtech.ng)</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">
+                            A comprehensive web development project demonstrating full-stack capabilities. This solution features a responsive interface, modern design principles, and optimized performance for seamless user experience across devices.
+                        </p>
+                        
+                        <div class="mb-8">
+                            <h4 class="text-sm font-bold text-dark mb-2">Key Tech Stack:</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">HTML5/CSS3</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">JavaScript</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">Responsive Design</span>
+                            </div>
+                        </div>
+
+                        <a href="https://emmy-kingz.github.io/mbtech.ng/" target="_blank" class="inline-flex items-center justify-center w-full md:w-auto px-6 py-3 bg-dark text-white rounded-lg font-bold hover:bg-primary transition shadow-lg">
+                            Explore Live Site <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More Projects Grid -->
+            <div>
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-bold text-white mb-4">Other Selected Works</h3>
+                    <div class="w-12 h-1 bg-primary mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Project Item 1 -->
+                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
+                        <img src="projects/project1.jpg" alt="Project 1" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+1'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Design</span>
+                            <h4 class="text-lg font-bold text-white">Project Title 1</h4>
+                        </div>
+                    </div>
+                    <!-- Project Item 2 -->
+                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
+                        <img src="projects/project2.jpg" alt="Project 2" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+2'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Development</span>
+                            <h4 class="text-lg font-bold text-white">Project Title 2</h4>
+                        </div>
+                    </div>
+                    <!-- Project Item 3 -->
+                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
+                        <img src="projects/project3.jpg" alt="Project 3" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+3'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Strategy</span>
+                            <h4 class="text-lg font-bold text-white">Project Title 3</h4>
+                        </div>
+                    </div>
+                    <!-- Project Item 4 -->
+                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
+                        <img src="projects/project4.jpg" alt="Project 4" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+4'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Brand</span>
+                            <h4 class="text-lg font-bold text-white">Project Title 4</h4>
+                        </div>
+                    </div>
+                    <!-- Project Item 5 -->
+                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
+                        <img src="projects/project5.jpg" alt="Project 5" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+5'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Content</span>
+                            <h4 class="text-lg font-bold text-white">Project Title 5</h4>
+                        </div>
+                    </div>
+                    <!-- Project Item 6 -->
+                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
+                        <img src="projects/project6.jpg" alt="Project 6" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+6'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Marketing</span>
+                            <h4 class="text-lg font-bold text-white">Project Title 6</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 bg-white border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark font-serif">Impact & Feedback</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Quote 1 -->
+                <div class="bg-slate-50 p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="text-primary text-4xl mb-6 font-serif">"</div>
+                    <p class="text-slate-600 mb-6 italic">Emmanuel's ability to translate complex engineering data into clear visual stories is unmatched. The AFRES summit coverage was world-class.</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">JD</div>
+                        <div>
+                            <p class="text-sm font-bold text-dark">John Doe</p>
+                            <p class="text-xs text-slate-500">Event Director, SalesRuby</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quote 2 -->
+                <div class="bg-slate-50 p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="text-primary text-4xl mb-6 font-serif">"</div>
+                    <p class="text-slate-600 mb-6 italic">His technical oversight during the WHO campaign ensured 100% data compliance. A rare mix of technical rigor and leadership.</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">SJ</div>
+                        <div>
+                            <p class="text-sm font-bold text-dark">Sarah Johnson</p>
+                            <p class="text-xs text-slate-500">Program Coordinator, WHO</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quote 3 -->
+                <div class="bg-slate-50 p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="text-primary text-4xl mb-6 font-serif">"</div>
+                    <p class="text-slate-600 mb-6 italic">He improved our student proficiency by 20% in just one term. Emmanuel is a dedicated instructor and mentor.</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">MK</div>
+                        <div>
+                            <p class="text-sm font-bold text-dark">Musa Kabir</p>
+                            <p class="text-xs text-slate-500">Principal, GTC Soba</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (New Folder Integration) -->
+    <section id="gallery" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="text-primary font-bold tracking-wider uppercase text-xs">Visual Diary</span>
+                    <h2 class="text-3xl font-bold text-dark mt-2 font-serif">Life in Pictures</h2>
+                </div>
+                <div class="hidden md:block w-32 h-px bg-slate-200 mb-4"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <img src="gallery/photo1.jpg" alt="Gallery 1" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpg'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
+                        <i class="fas fa-plus text-2xl"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <img src="gallery/photo2.jpg" alt="Gallery 2" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpg'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
+                        <i class="fas fa-plus text-2xl"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <img src="gallery/photo3.jpg" alt="Gallery 3" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpg'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
+                        <i class="fas fa-plus text-2xl"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <img src="gallery/photo4.jpg" alt="Gallery 4" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo4.jpg'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
+                        <i class="fas fa-plus text-2xl"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <img src="gallery/photo5.jpg" alt="Gallery 5" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo5.jpg'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
+                        <i class="fas fa-plus text-2xl"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <img src="gallery/photo6.jpg" alt="Gallery 6" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo6.jpg'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
+                        <i class="fas fa-plus text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Newsletter / Contact -->
+    <footer id="contact" class="bg-dark text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+                
+                <!-- Contact Info -->
+                <div>
+                    <h2 class="text-3xl font-bold font-serif mb-6">Let's create something<br>extraordinary together.</h2>
+                    <p class="text-slate-400 mb-10 text-lg font-light max-w-md">
+                        Open to opportunities in Multimedia Strategy, Digital Marketing, and Engineering Consultancy.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <a href="mailto:emmanuel.amobi03@gmail.com" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span class="text-lg group-hover:text-primary transition">emmanuel.amobi03@gmail.com</span>
+                        </a>
+                        <a href="https://wa.me/2348075598791" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-green-500 transition">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <span class="text-lg group-hover:text-green-500 transition">+234 810 900 6065</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Newsletter Form -->
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                    <h3 class="text-xl font-bold mb-2">Subscribe to my Newsletter</h3>
+                    <p class="text-slate-400 text-sm mb-6">Insights on Tech, Multimedia, and Personal Growth.</p>
+                    
+                    <form action="mailto:emmanuel.amobi03@gmail.com" method="post" enctype="text/plain" class="space-y-4">
+                        <div>
+                            <label class="sr-only">Name</label>
+                            <input type="text" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="sr-only">Email</label>
+                            <input type="email" placeholder="Your Email Address" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary">
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-lg bg-primary hover:bg-secondary font-bold transition">
+                            Subscribe Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/emmanuel-amobi/" target="_blank" class="text-slate-400 hover:text-white transition" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/emmanuelamobii" target="_blank" class="text-slate-400 hover:text-white transition" aria-label="Facebook">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-white transition" aria-label="Instagram">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-white transition" aria-label="TikTok">
+                        <i class="fab fa-tiktok text-xl"></i>
+                    </a>
+                    <!-- Twitter -->
+                    <a href="https://twitter.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-white transition" aria-label="Twitter">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Accordion Logic
+        function toggleAccordion(element) {
+            const content = element.querySelector('.experience-content');
+            const isActive = element.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.experience-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Toggle current
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // Slideshow Logic (Supports 5 slides)
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlides(n) {
+            if (slides.length === 0) return;
+            
+            if (n >= slides.length) slideIndex = 0;
+            if (n < 0) slideIndex = slides.length - 1;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[slideIndex].classList.add('active');
+        }
+
+        function changeSlide(n) {
+            slideIndex += n;
+            showSlides(slideIndex);
+        }
+
+        // Auto-advance slides every 5 seconds
+        if(slides.length > 0) {
+            setInterval(() => changeSlide(1), 5000);
+        }
+    </script>
+</body>
+</html>
