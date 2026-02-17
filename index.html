@@ -162,13 +162,28 @@
             transform: scale(1.05);
         }
 
-        /* Image Pan Effect */
-        #mbtech-container img {
-            transition: transform 0.1s ease-out; /* Smooth movement */
+        /* Lightbox Styles */
+        #lightbox {
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.hidden {
+            pointer-events: none;
+            opacity: 0;
+        }
+        #lightbox:not(.hidden) {
+            pointer-events: auto;
+            opacity: 1;
         }
     </style>
 </head>
 <body class="font-sans text-slate-800 bg-white antialiased">
+
+    <!-- Lightbox Overlay -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4">
+        <!-- Close Button: Large hit area for mobile -->
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-gray-300 text-5xl focus:outline-none p-4">&times;</button>
+        <img id="lightbox-img" src="" alt="Full View" class="max-h-[90vh] max-w-full object-contain rounded-lg shadow-2xl">
+    </div>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
@@ -675,16 +690,21 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2">
                     <div class="relative h-96 lg:h-auto bg-black/50 flex items-center justify-center group">
                         <div id="slides-container" class="w-full h-full relative overflow-hidden">
-                            <img src="slides/slide1.jpeg" class="slide active" alt="AFRES Highlight 1" loading="lazy" decoding="async" onerror="this.style.display='none'; document.getElementById('slide-placeholder').style.display='flex'">
-                            <img src="slides/slide2.jpeg" class="slide" alt="AFRES Highlight 2" loading="lazy" decoding="async">
-                            <img src="slides/slide3.jpeg" class="slide" alt="AFRES Highlight 3" loading="lazy" decoding="async">
-                            <img src="slides/slide4.jpeg" class="slide" alt="AFRES Highlight 4" loading="lazy" decoding="async">
-                            <img src="slides/slide5.jpeg" class="slide" alt="AFRES Highlight 5" loading="lazy" decoding="async">
+                            <!-- Mobile Hint Overlay for Slideshow -->
+                            <div class="absolute inset-0 z-20 pointer-events-none md:hidden flex items-center justify-center">
+                                <div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full"><i class="fas fa-search-plus"></i> Tap to Zoom</div>
+                            </div>
+                            
+                            <img src="slides/slide1.jpeg" class="slide active cursor-zoom-in" onclick="openLightbox(this.src)" alt="AFRES Highlight 1" loading="lazy" decoding="async" onerror="this.style.display='none'; document.getElementById('slide-placeholder').style.display='flex'">
+                            <img src="slides/slide2.jpeg" class="slide cursor-zoom-in" onclick="openLightbox(this.src)" alt="AFRES Highlight 2" loading="lazy" decoding="async">
+                            <img src="slides/slide3.jpeg" class="slide cursor-zoom-in" onclick="openLightbox(this.src)" alt="AFRES Highlight 3" loading="lazy" decoding="async">
+                            <img src="slides/slide4.jpeg" class="slide cursor-zoom-in" onclick="openLightbox(this.src)" alt="AFRES Highlight 4" loading="lazy" decoding="async">
+                            <img src="slides/slide5.jpeg" class="slide cursor-zoom-in" onclick="openLightbox(this.src)" alt="AFRES Highlight 5" loading="lazy" decoding="async">
                             <div id="slide-placeholder" class="hidden absolute inset-0 flex-col items-center justify-center text-neutral">
                                 <i class="fas fa-images text-5xl mb-4"></i><p>Add images to /slides folder</p>
                             </div>
                         </div>
-                        <div class="absolute bottom-6 right-6 flex gap-2">
+                        <div class="absolute bottom-6 right-6 flex gap-2 z-30">
                             <button onclick="changeSlide(-1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center backdrop-blur-sm transition"><i class="fas fa-arrow-left text-sm"></i></button>
                             <button onclick="changeSlide(1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center backdrop-blur-sm transition"><i class="fas fa-arrow-right text-sm"></i></button>
                         </div>
@@ -697,16 +717,21 @@
                 </div>
             </div>
 
-            <!-- MBTech Feature Card with Hover Effect -->
+            <!-- MBTech Feature Card with Pop-out (No Hover/Pan) -->
             <div class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 mb-20">
                 <div class="grid grid-cols-1 md:grid-cols-2">
-                    <!-- Image Container with Hover Pan -->
-                    <div id="mbtech-container" class="h-64 md:h-auto bg-slate-100 relative group overflow-hidden cursor-crosshair">
-                        <!-- Scale up initially to allow panning -->
-                        <img src="mbtech-preview.png" alt="MB Tech Project Preview" class="w-full h-full object-cover transform scale-100 group-hover:scale-[2]" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
-                        <!-- Overlay hint -->
-                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:hidden transition-opacity duration-300 pointer-events-none">
-                            <span class="text-white font-medium bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm"><i class="fas fa-search-plus mr-2"></i> Hover to Magnify</span>
+                    <!-- Image Container with Click-to-Open Lightbox -->
+                    <div class="h-64 md:h-auto bg-slate-100 relative overflow-hidden group">
+                        <!-- Mobile Hint -->
+                        <div class="absolute top-2 right-2 z-10 md:hidden">
+                            <div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i> Tap to Zoom</div>
+                        </div>
+                        
+                        <img src="mbtech-preview.png" alt="MB Tech Project Preview" class="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition duration-500" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
+                        
+                        <!-- Desktop Hint Overlay -->
+                        <div class="absolute inset-0 bg-black/20 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none">
+                            <i class="fas fa-expand text-white text-3xl drop-shadow-md"></i>
                         </div>
                     </div>
                     
@@ -735,9 +760,14 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[450px]">
                         <!-- Image Side -->
                         <div class="relative h-64 lg:h-auto bg-black/50 overflow-hidden">
-                            <img src="projects/project1.jpg" id="project-img-0" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100 z-10" alt="Project 1">
-                            <img src="projects/project2.jpeg" id="project-img-1" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 z-0" alt="Project 2">
-                            <img src="projects/project3.png" id="project-img-2" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 z-0" alt="Project 3">
+                            <!-- Mobile Hint -->
+                            <div class="absolute top-2 right-2 z-20 md:hidden">
+                                <div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i> Tap to Zoom</div>
+                            </div>
+
+                            <img src="projects/project1.jpg" id="project-img-0" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100 z-10 cursor-zoom-in" onclick="openLightbox(this.src)" alt="Project 1">
+                            <img src="projects/project2.jpeg" id="project-img-1" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 z-0 cursor-zoom-in" onclick="openLightbox(this.src)" alt="Project 2">
+                            <img src="projects/project3.png" id="project-img-2" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 z-0 cursor-zoom-in" onclick="openLightbox(this.src)" alt="Project 3">
                         </div>
                         
                         <!-- Info Side -->
@@ -761,34 +791,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- More Projects Grid -->
-            <div>
-                <div class="text-center mb-12">
-                    <h3 class="text-2xl font-bold text-white mb-4">Gallery Grid</h3>
-                    <div class="w-12 h-1 bg-primary mx-auto rounded-full"></div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project1.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+1'">
-                    </div>
-                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project2.jpeg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+2'">
-                    </div>
-                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project3.png" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+3'">
-                    </div>
-                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project4.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+4'">
-                    </div>
-                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project5.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+5'">
-                    </div>
-                    <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project6.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+6'">
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -802,12 +804,30 @@
                 </div>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden"><img src="gallery/photo1.jpeg" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpeg'"></div>
-                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden"><img src="gallery/photo2.jpeg" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpeg'"></div>
-                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden"><img src="gallery/photo3.jpeg" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpeg'"></div>
-                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden"><img src="gallery/photo4.png" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo4.png'"></div>
-                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden"><img src="gallery/photo5.png" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo5.png'"></div>
-                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden"><img src="gallery/photo6.png" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo6.png'"></div>
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
+                    <img src="gallery/photo1.jpeg" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpeg'">
+                </div>
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
+                    <img src="gallery/photo2.jpeg" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpeg'">
+                </div>
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
+                    <img src="gallery/photo3.jpeg" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpeg'">
+                </div>
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
+                    <img src="gallery/photo4.png" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo4.png'">
+                </div>
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
+                    <img src="gallery/photo5.png" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo5.png'">
+                </div>
+                <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
+                    <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
+                    <img src="gallery/photo6.png" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo6.png'">
+                </div>
             </div>
         </div>
     </section>
@@ -869,18 +889,27 @@
             if (!isActive) { element.classList.add('active'); }
         }
 
-        // Image Magnify/Pan Logic
-        const container = document.getElementById('mbtech-container');
-        const img = container.querySelector('img');
-        
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            // Calculate mouse position as percentage (0-100) within the container
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            
-            // Set the transform origin to the mouse position so zooming happens towards cursor
-            img.style.transformOrigin = `${x}% ${y}%`;
+        // Lightbox Functions
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            // Restore background scrolling
+            document.body.style.overflow = '';
+            setTimeout(() => lightboxImg.src = '', 300);
+        }
+
+        // Close on click outside image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
         });
 
         // Slideshow Logic
