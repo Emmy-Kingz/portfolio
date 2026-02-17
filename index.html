@@ -207,12 +207,7 @@
                 <div class="lg:col-span-5 relative group">
                     <div class="absolute inset-0 bg-primary/10 transform translate-x-4 translate-y-4 rounded-2xl transition duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/5]">
-                        <!-- Updated to .jpeg -->
-                        <img src="myphoto.jpeg" alt="Emmanuel Amobi" class="w-full h-full object-cover hover:scale-105 transition duration-700" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x800/f1f5f9/94a3b8?text=Emmanuel+Amobi';">
-                    </div>
-                </div>
-                
-                <!-- Content -->
+                <!-- Content (7 cols) -->
                 <div class="lg:col-span-7">
                     <h2 class="text-3xl font-bold text-dark mb-6 font-serif">The Tech-Creative Hybrid</h2>
                     <p class="text-slate-600 mb-4 leading-relaxed text-lg">
@@ -222,18 +217,23 @@
                         My career is defined by adaptability and measurable impact. From achieving a 95% completion rate in field operations at Ikeja Electric to ensuring 100% data compliance as a WHO Cluster Supervisor, I bring a standard of excellence to every project.
                     </p>
                     
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
+                    <!-- Stats Grid: Balanced 2x2 on Mobile, 4-across on Desktop -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-slate-100">
                         <div>
                             <h4 class="text-3xl font-bold text-primary">100%</h4>
-                            <p class="text-sm text-slate-500 font-medium mt-1">Data Compliance<br>(WHO Project)</p>
+                            <p class="text-sm text-slate-500 font-medium mt-1 leading-snug">Data Compliance<br><span class="text-xs opacity-80">(WHO Project)</span></p>
                         </div>
                         <div>
                             <h4 class="text-3xl font-bold text-primary">200+</h4>
-                            <p class="text-sm text-slate-500 font-medium mt-1">C-Suite Execs<br>Engaged (AFRES)</p>
+                            <p class="text-sm text-slate-500 font-medium mt-1 leading-snug">C-Suite Execs<br><span class="text-xs opacity-80">Engaged</span></p>
                         </div>
                         <div>
                             <h4 class="text-3xl font-bold text-primary">95%</h4>
-                            <p class="text-sm text-slate-500 font-medium mt-1">Efficiency Rate<br>(Engineering)</p>
+                            <p class="text-sm text-slate-500 font-medium mt-1 leading-snug">Efficiency Rate<br><span class="text-xs opacity-80">(Engineering)</span></p>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-bold text-primary">6+</h4>
+                            <p class="text-sm text-slate-500 font-medium mt-1 leading-snug">Years of<br><span class="text-xs opacity-80">Experience</span></p>
                         </div>
                     </div>
                 </div>
