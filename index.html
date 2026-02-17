@@ -6,6 +6,9 @@
     <title>Emmanuel Amobi | Multimedia Lead & Engineer</title>
     <meta name="description" content="Portfolio of Emmanuel Amobi - Digital Creator, Engineer, and Multimedia Lead bridging the gap between tech and creative storytelling.">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -101,8 +104,8 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="#" class="flex items-center gap-3 group">
-                        <!-- Logo Image with fallback text -->
-                        <img src="logo.png" alt="EA Logo" class="h-10 w-auto object-contain transition group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <!-- Logo Image: Eager load for immediate visibility -->
+                        <img src="logo.png" alt="EA Logo" class="h-10 w-auto object-contain transition group-hover:scale-105" loading="eager" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <span class="text-2xl font-serif font-bold text-dark hidden">EA<span class="text-primary">.</span></span>
                     </a>
                 </div>
@@ -173,8 +176,8 @@
                 <div class="lg:col-span-5 relative group">
                     <div class="absolute inset-0 bg-primary/10 transform translate-x-4 translate-y-4 rounded-2xl transition duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/5]">
-                        <!-- Profile Image with fallback -->
-                        <img src="myphoto.jpg" alt="Emmanuel Amobi" class="w-full h-full object-cover hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/600x800/f1f5f9/94a3b8?text=Emmanuel+Amobi';">
+                        <!-- Profile Image: Lazy load -->
+                        <img src="myphoto.jpg" alt="Emmanuel Amobi" class="w-full h-full object-cover hover:scale-105 transition duration-700" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x800/f1f5f9/94a3b8?text=Emmanuel+Amobi';">
                     </div>
                 </div>
                 
@@ -468,11 +471,11 @@
                     <div class="relative h-96 lg:h-auto bg-black/50 flex items-center justify-center group">
                         <div id="slides-container" class="w-full h-full relative overflow-hidden">
                             <!-- 5 Slides -->
-                            <img src="slides/slide1.jpg" class="slide active" alt="AFRES Highlight 1" onerror="this.style.display='none'; document.getElementById('slide-placeholder').style.display='flex'">
-                            <img src="slides/slide2.jpg" class="slide" alt="AFRES Highlight 2">
-                            <img src="slides/slide3.jpg" class="slide" alt="AFRES Highlight 3">
-                            <img src="slides/slide4.jpg" class="slide" alt="AFRES Highlight 4">
-                            <img src="slides/slide5.jpg" class="slide" alt="AFRES Highlight 5">
+                            <img src="slides/slide1.jpg" class="slide active" alt="AFRES Highlight 1" loading="lazy" decoding="async" onerror="this.style.display='none'; document.getElementById('slide-placeholder').style.display='flex'">
+                            <img src="slides/slide2.jpg" class="slide" alt="AFRES Highlight 2" loading="lazy" decoding="async">
+                            <img src="slides/slide3.jpg" class="slide" alt="AFRES Highlight 3" loading="lazy" decoding="async">
+                            <img src="slides/slide4.jpg" class="slide" alt="AFRES Highlight 4" loading="lazy" decoding="async">
+                            <img src="slides/slide5.jpg" class="slide" alt="AFRES Highlight 5" loading="lazy" decoding="async">
                             
                             <!-- Fallback -->
                             <div id="slide-placeholder" class="hidden absolute inset-0 flex-col items-center justify-center text-neutral">
@@ -513,7 +516,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <!-- Image Side -->
                     <div class="h-64 md:h-auto bg-slate-100 relative group overflow-hidden">
-                        <img src="mbtech-preview.jpg" alt="MB Tech Project Preview" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
+                        <img src="mbtech-preview.jpg" alt="MB Tech Project Preview" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
                         <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition duration-300"></div>
                     </div>
                     
@@ -551,7 +554,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Project Item 1 -->
                     <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project1.jpg" alt="Project 1" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+1'">
+                        <img src="projects/project1.jpg" alt="Project 1" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+1'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
                             <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Design</span>
                             <h4 class="text-lg font-bold text-white">Project Title 1</h4>
@@ -559,7 +562,7 @@
                     </div>
                     <!-- Project Item 2 -->
                     <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project2.jpg" alt="Project 2" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+2'">
+                        <img src="projects/project2.jpg" alt="Project 2" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+2'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
                             <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Development</span>
                             <h4 class="text-lg font-bold text-white">Project Title 2</h4>
@@ -567,7 +570,7 @@
                     </div>
                     <!-- Project Item 3 -->
                     <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project3.jpg" alt="Project 3" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+3'">
+                        <img src="projects/project3.jpg" alt="Project 3" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+3'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
                             <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Strategy</span>
                             <h4 class="text-lg font-bold text-white">Project Title 3</h4>
@@ -575,7 +578,7 @@
                     </div>
                     <!-- Project Item 4 -->
                     <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project4.jpg" alt="Project 4" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+4'">
+                        <img src="projects/project4.jpg" alt="Project 4" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+4'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
                             <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Brand</span>
                             <h4 class="text-lg font-bold text-white">Project Title 4</h4>
@@ -583,7 +586,7 @@
                     </div>
                     <!-- Project Item 5 -->
                     <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project5.jpg" alt="Project 5" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+5'">
+                        <img src="projects/project5.jpg" alt="Project 5" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+5'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
                             <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Content</span>
                             <h4 class="text-lg font-bold text-white">Project Title 5</h4>
@@ -591,7 +594,7 @@
                     </div>
                     <!-- Project Item 6 -->
                     <div class="group relative aspect-video bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition duration-300">
-                        <img src="projects/project6.jpg" alt="Project 6" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+6'">
+                        <img src="projects/project6.jpg" alt="Project 6" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Project+6'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
                             <span class="text-primary text-xs font-bold uppercase tracking-wider mb-1">Marketing</span>
                             <h4 class="text-lg font-bold text-white">Project Title 6</h4>
@@ -667,42 +670,42 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <!-- Gallery Item 1 -->
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
-                    <img src="gallery/photo1.jpg" alt="Gallery 1" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpg'">
+                    <img src="gallery/photo1.jpg" alt="Gallery 1" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpg'">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
                         <i class="fas fa-plus text-2xl"></i>
                     </div>
                 </div>
                 <!-- Gallery Item 2 -->
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
-                    <img src="gallery/photo2.jpg" alt="Gallery 2" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpg'">
+                    <img src="gallery/photo2.jpg" alt="Gallery 2" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpg'">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
                         <i class="fas fa-plus text-2xl"></i>
                     </div>
                 </div>
                 <!-- Gallery Item 3 -->
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
-                    <img src="gallery/photo3.jpg" alt="Gallery 3" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpg'">
+                    <img src="gallery/photo3.jpg" alt="Gallery 3" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpg'">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
                         <i class="fas fa-plus text-2xl"></i>
                     </div>
                 </div>
                 <!-- Gallery Item 4 -->
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
-                    <img src="gallery/photo4.jpg" alt="Gallery 4" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo4.jpg'">
+                    <img src="gallery/photo4.jpg" alt="Gallery 4" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo4.jpg'">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
                         <i class="fas fa-plus text-2xl"></i>
                     </div>
                 </div>
                 <!-- Gallery Item 5 -->
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
-                    <img src="gallery/photo5.jpg" alt="Gallery 5" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo5.jpg'">
+                    <img src="gallery/photo5.jpg" alt="Gallery 5" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo5.jpg'">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
                         <i class="fas fa-plus text-2xl"></i>
                     </div>
                 </div>
                 <!-- Gallery Item 6 -->
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
-                    <img src="gallery/photo6.jpg" alt="Gallery 6" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=gallery/photo6.jpg'">
+                    <img src="gallery/photo6.jpg" alt="Gallery 6" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo6.jpg'">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white">
                         <i class="fas fa-plus text-2xl"></i>
                     </div>
