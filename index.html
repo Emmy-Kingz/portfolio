@@ -112,16 +112,21 @@
             transform: rotate(180deg);
         }
 
-        /* Timeline Styles */
+        /* Responsive Timeline Styles */
         .timeline-line::before {
             content: '';
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 28px; /* Adjust based on icon size */
+            left: 20px; /* Aligned for mobile w-10 icon */
             width: 2px;
             background: #e2e8f0;
             z-index: 0;
+        }
+        @media (min-width: 768px) {
+            .timeline-line::before {
+                left: 28px; /* Aligned for desktop w-14 icon */
+            }
         }
         
         /* Animation Classes */
@@ -162,6 +167,15 @@
             transform: scale(1.05);
         }
 
+        /* Seamless Image Loading */
+        .lazy-img {
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out, transform 0.5s ease;
+        }
+        .lazy-img.loaded {
+            opacity: 1;
+        }
+
         /* Lightbox Styles */
         #lightbox {
             transition: opacity 0.3s ease;
@@ -180,7 +194,6 @@
 
     <!-- Lightbox Overlay -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4">
-        <!-- Close Button: Large hit area for mobile -->
         <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-gray-300 text-5xl focus:outline-none p-4">&times;</button>
         <img id="lightbox-img" src="" alt="Full View" class="max-h-[90vh] max-w-full object-contain rounded-lg shadow-2xl">
     </div>
@@ -204,8 +217,8 @@
                     <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-primary transition">Experience</a>
                     <a href="#projects" class="text-sm font-medium text-slate-600 hover:text-primary transition">Projects</a>
                     <a href="#gallery" class="text-sm font-medium text-slate-600 hover:text-primary transition">Gallery</a>
-                    <a href="https://wa.me/2347084672771" target="_blank" class="px-5 py-2.5 rounded-full bg-green-600 text-white hover:bg-green-700 transition shadow-lg text-sm font-medium flex items-center gap-2">
-                        <i class="fab fa-whatsapp"></i> Chat
+                    <a href="https://wa.me/2348075598791" target="_blank" class="px-5 py-2.5 rounded-full bg-green-600 text-white hover:bg-green-700 transition shadow-lg text-sm font-medium flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-lg"></i> Chat
                     </a>
                 </div>
 
@@ -226,7 +239,7 @@
                 <a href="#experience" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Experience</a>
                 <a href="#projects" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Projects</a>
                 <a href="#gallery" class="block py-3 text-base font-medium text-slate-700 hover:text-primary border-b border-gray-50">Gallery</a>
-                <a href="https://wa.me/2347084672771" class="block mt-4 text-center py-3 rounded-lg text-base font-bold bg-green-600 text-white">
+                <a href="https://wa.me/2348075598791" class="block mt-4 text-center py-3 rounded-lg text-base font-bold bg-green-600 text-white shadow-md">
                     <i class="fab fa-whatsapp mr-2"></i> WhatsApp Me
                 </a>
             </div>
@@ -234,17 +247,17 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-bg">
+    <header class="relative pt-28 pb-16 md:pt-32 md:pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="inline-flex items-center gap-2 px-3 py-1 mb-8 text-xs font-bold tracking-widest text-primary uppercase bg-blue-50 border border-blue-100 rounded-full">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                     Open to Work
                 </div>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-dark mb-6 leading-[1.1] tracking-tight font-serif">
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-dark mb-6 leading-[1.2] sm:leading-[1.1] tracking-tight font-serif">
                     Bridging Engineering Precision with <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Creative Storytelling</span>
                 </h1>
-                <p class="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
+                <p class="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
                     I am Emmanuel Amobi. Digital Creator, Engineer, and Multimedia Lead. I engineer visual narratives for C-suite audiences and optimize technical systems for growth.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
@@ -260,14 +273,14 @@
     </header>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
+    <section id="about" class="py-16 md:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <!-- Visual -->
                 <div class="lg:col-span-5 relative group">
                     <div class="absolute inset-0 bg-primary/10 transform translate-x-4 translate-y-4 rounded-2xl transition duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/5]">
-                        <img src="myphoto.jpeg" alt="Emmanuel Amobi" class="w-full h-full object-cover hover:scale-105 transition duration-700" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/600x800/f1f5f9/94a3b8?text=Emmanuel+Amobi';">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-100 aspect-square md:aspect-[4/5] bg-slate-100 animate-pulse" id="about-img-wrapper">
+                        <img src="myphoto.jpeg" alt="Emmanuel Amobi" class="w-full h-full object-cover hover:scale-105 transition duration-700 lazy-img" loading="lazy" decoding="async" onload="document.getElementById('about-img-wrapper').classList.remove('animate-pulse')" onerror="this.src='https://placehold.co/600x800/f1f5f9/94a3b8?text=Emmanuel+Amobi';">
                     </div>
                 </div>
                 
@@ -305,7 +318,7 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-24 bg-slate-50">
+    <section id="services" class="py-16 md:py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <span class="text-primary font-bold tracking-wider uppercase text-xs">Expertise</span>
@@ -314,10 +327,9 @@
             </div>
 
             <!-- Service Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                
-                <!-- 1. Content Creation -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
+                <!-- Services Cards -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
                     <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center mb-6 text-purple-600">
                         <i class="fas fa-pen-nib text-xl"></i>
                     </div>
@@ -333,8 +345,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Digital Marketing -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
                     <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mb-6 text-blue-600">
                         <i class="fas fa-bullhorn text-xl"></i>
                     </div>
@@ -350,8 +361,7 @@
                     </div>
                 </div>
 
-                <!-- 3. Engineering Services -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
                     <div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center mb-6 text-orange-600">
                         <i class="fas fa-bolt text-xl"></i>
                     </div>
@@ -367,8 +377,7 @@
                     </div>
                 </div>
 
-                <!-- 4. Professional Training -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
                     <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-6 text-green-600">
                         <i class="fas fa-chalkboard-user text-xl"></i>
                     </div>
@@ -384,8 +393,7 @@
                     </div>
                 </div>
 
-                <!-- 5. Project Management -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
                     <div class="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center mb-6 text-indigo-600">
                         <i class="fas fa-tasks text-xl"></i>
                     </div>
@@ -401,8 +409,7 @@
                     </div>
                 </div>
 
-                <!-- 6. Web/IT Services -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition duration-300 flex flex-col">
                     <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center mb-6 text-slate-700">
                         <i class="fas fa-code text-xl"></i>
                     </div>
@@ -417,18 +424,16 @@
                         <span>$45/hr</span>
                     </div>
                 </div>
-
             </div>
 
             <!-- Cost Estimator Calculator -->
-            <div class="max-w-3xl mx-auto bg-dark rounded-2xl p-8 md:p-10 text-white shadow-2xl border border-white/10">
+            <div class="max-w-3xl mx-auto bg-dark rounded-2xl p-6 md:p-10 text-white shadow-2xl border border-white/10">
                 <div class="text-center mb-8">
                     <h3 class="text-2xl font-bold mb-2">Get an Instant Quote</h3>
                     <p class="text-slate-400 text-sm">Select a service and your location to estimate project costs.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <!-- Service Select -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Service</label>
                         <select id="serviceSelect" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition cursor-pointer">
@@ -441,7 +446,6 @@
                         </select>
                     </div>
 
-                    <!-- Location Toggle -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Client Location</label>
                         <div class="flex bg-white/10 rounded-lg p-1 border border-white/20">
@@ -452,7 +456,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <!-- Hours Input -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Estimated Hours</label>
                         <div class="relative">
@@ -461,14 +464,12 @@
                         </div>
                     </div>
 
-                    <!-- Total Display -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center mt-2 md:mt-0">
                         <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Estimated Cost</p>
                         <div id="totalCost" class="text-3xl font-bold text-green-400">₦150,000</div>
                     </div>
                 </div>
 
-                <!-- Call to Action Logic -->
                 <div class="mt-8 text-center">
                     <a id="calculator-cta" href="mailto:emmanuel.amobi03@gmail.com" class="inline-block w-full md:w-auto px-8 py-3 bg-white text-dark font-bold rounded-lg hover:bg-slate-200 transition">
                         Book this Service
@@ -477,220 +478,46 @@
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- Experience Section (Animated Timeline) -->
-    <section id="experience" class="py-24 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-primary font-bold tracking-wider uppercase text-xs">Professional Journey</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-dark mt-2 font-serif">Experience Timeline</h2>
-                <p class="text-slate-500 mt-4">A track record of operational success and creative leadership.</p>
-            </div>
-
-            <!-- Timeline Container -->
-            <div class="relative timeline-line space-y-12">
+            <!-- NEW: Tools & Platforms Showcase -->
+            <div class="max-w-4xl mx-auto mt-16 bg-white rounded-2xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 relative overflow-hidden">
+                <div class="text-center mb-6 md:mb-8">
+                    <h3 class="text-xl md:text-2xl font-bold text-dark font-serif">Tools & Platforms I Use</h3>
+                    <p class="text-primary font-bold text-sm tracking-wider uppercase mt-2 transition-opacity duration-300" id="tool-category-title">Web & IT Services</p>
+                </div>
                 
-                <!-- Role 1: SalesRuby (Present) -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <!-- Dot -->
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-primary flex items-center justify-center z-10 shadow-lg">
-                        <div class="w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
-                        <div class="absolute w-3 h-3 bg-green-500 rounded-full"></div>
-                    </div>
-                    <!-- Card -->
-                    <div class="experience-item bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-md hover:shadow-lg transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-xl font-bold text-dark">Social Media Content Intern</h3>
-                                <p class="text-primary font-semibold text-sm mt-1">SalesRuby | Dec 2025 - Present</p>
-                                <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide font-bold">Acting Multimedia Lead (AFRES)</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-white border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li><strong>Summit Leadership:</strong> Directed the visual narrative and social media strategy for the Africa Revenue Summit (AFRES), a gathering of 200+ CEOs.</li>
-                                    <li><strong>Content Production:</strong> Spearheaded creation of high-impact promotional videos and teasers attracting top-tier delegates.</li>
-                                    <li><strong>Campaign Management:</strong> Managed social channels driving engagement for pre-conference sessions and complex ticket tiers.</li>
-                                    <li><strong>Live Coverage:</strong> Coordinated real-time multimedia coverage and photography for the 2-day summit.</li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="relative min-h-[140px] md:min-h-[100px] flex items-center justify-center">
+                    <div id="tools-grid" class="flex flex-wrap justify-center gap-3 md:gap-4 transition-opacity duration-300 opacity-100">
+                        <!-- Injected via JS -->
                     </div>
                 </div>
 
-                <!-- Role 2: Thamesmead -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-slate-200 flex items-center justify-center z-10 text-slate-400">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="experience-item bg-white rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-dark">Mathematics Teacher</h3>
-                                <p class="text-slate-500 text-sm mt-1">Thamesmead Private School | Oct 2025 - Dec 2025</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-slate-50 border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li>Increased student engagement by 30% through interactive teaching methods and practical demonstrations.</li>
-                                    <li>Designed lesson plans that simplified complex concepts, improving comprehension and participation.</li>
-                                    <li>Adapted instruction to diverse learning needs, resulting in improved performance across subjects.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Timer Bar -->
+                <div class="w-full bg-slate-100 h-1.5 rounded-full mt-8 overflow-hidden">
+                    <div id="tools-progress" class="bg-primary h-full w-0"></div>
                 </div>
-
-                <!-- Role 3: NYSC -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-slate-200 flex items-center justify-center z-10 text-slate-400">
-                        <i class="fas fa-flag-checkered"></i>
-                    </div>
-                    <div class="experience-item bg-white rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-dark">Co-Liaising Officer / Class Instructor</h3>
-                                <p class="text-slate-500 text-sm mt-1">National Youth Service Corps | Aug 2024 - Aug 2025</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-slate-50 border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li>Represented Batch B2 Corpers in official engagements with Local Government Inspection officers.</li>
-                                    <li>Organized technical training sessions, leading to a 20% improvement in student proficiency scores.</li>
-                                    <li>Built strong relationships with community leaders, youth groups, and Christian organizations.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                
+                <!-- Category Indicators -->
+                <div class="flex justify-center space-x-2 mt-4" id="tools-dots">
+                    <!-- Injected via JS -->
                 </div>
-
-                <!-- Role 4: WHO -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-slate-200 flex items-center justify-center z-10 text-slate-400">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="experience-item bg-white rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-dark">Independent Cluster Supervisor</h3>
-                                <p class="text-slate-500 text-sm mt-1">World Health Organization | Apr 2025 - Jun 2025</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-slate-50 border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li>Supervised multiple field teams, achieving 100% compliance with WHO data standards.</li>
-                                    <li>Conducted digital audits and troubleshooting, reducing reporting errors by 25%.</li>
-                                    <li>Coordinated logistics and reporting across clusters, ensuring timely campaign delivery.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Role 5: Mesobest (Social Media) -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-slate-200 flex items-center justify-center z-10 text-slate-400">
-                        <i class="fas fa-laptop"></i>
-                    </div>
-                    <div class="experience-item bg-white rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-dark">Social Media / IT Assistant</h3>
-                                <p class="text-slate-500 text-sm mt-1">MESOBEST TECHNOLOGY NG | Sep 2022 - Aug 2024</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-slate-50 border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li>Managed and optimized social media platforms, increasing brand visibility by 40%.</li>
-                                    <li>Provided IT support across hardware, software, and network systems, reducing downtime by 20%.</li>
-                                    <li>Supported e-commerce initiatives, contributing to a 25% growth in online engagement.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Role 6: Ikeja Electric -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-slate-200 flex items-center justify-center z-10 text-slate-400">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="experience-item bg-white rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-dark">Engineering Intern</h3>
-                                <p class="text-slate-500 text-sm mt-1">Ikeja Electric | Aug 2021 - Jan 2022</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-slate-50 border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li>Applied Electrical & Electronics Engineering concepts to real-world challenges.</li>
-                                    <li>Reduced downtime by supporting efficient maintenance procedures, achieving a 95% completion rate in field operations.</li>
-                                    <li>Contributed to cross-functional teamwork and technical problem-solving.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Role 7: Mesobest (Tutor) -->
-                <div class="relative pl-12 reveal-on-scroll">
-                    <div class="absolute left-0 top-2 w-14 h-14 rounded-full bg-white border-4 border-slate-200 flex items-center justify-center z-10 text-slate-400">
-                        <i class="fas fa-chalkboard"></i>
-                    </div>
-                    <div class="experience-item bg-white rounded-xl border border-slate-200 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition" onclick="toggleAccordion(this)">
-                        <div class="p-6 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-dark">Facilitator / Tutor</h3>
-                                <p class="text-slate-500 text-sm mt-1">MESOBEST TECHNOLOGY NG | Aug 2019 - Jul 2021</p>
-                            </div>
-                            <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 chevron"></i>
-                        </div>
-                        <div class="experience-content bg-slate-50 border-t border-slate-100 px-6 sm:pl-8">
-                            <div class="py-6">
-                                <ul class="list-disc list-outside ml-4 text-slate-600 space-y-2 text-sm leading-relaxed">
-                                    <li>Designed tailored content strategies to boost engagement and strengthen brand presence.</li>
-                                    <li>Delivered lessons via platforms like Google Meet, WhatsApp, YouTube, and Zoom.</li>
-                                    <li>Mentored 50+ students in digital skills including content creation and web development.</li>
-                                    <li>Introduced digital feedback tools to streamline assessments.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-24 bg-dark text-white">
+    <section id="projects" class="py-16 md:py-24 bg-dark text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-             <div class="mb-16">
+             <div class="mb-12 md:mb-16">
                 <span class="text-primary font-bold tracking-wider uppercase text-xs">Portfolio Highlights</span>
                 <h2 class="text-3xl md:text-4xl font-bold mt-2 font-serif">Featured Projects</h2>
             </div>
             
             <!-- AFRES Slideshow -->
-            <div class="bg-white/5 rounded-2xl overflow-hidden shadow-2xl mb-20 border border-white/10">
+            <div class="bg-white/5 rounded-2xl overflow-hidden shadow-2xl mb-12 md:mb-20 border border-white/10">
                 <div class="grid grid-cols-1 lg:grid-cols-2">
-                    <div class="relative h-96 lg:h-auto bg-black/50 flex items-center justify-center group">
+                    <div class="relative h-64 sm:h-96 lg:h-auto bg-black/50 flex items-center justify-center group">
                         <div id="slides-container" class="w-full h-full relative overflow-hidden">
-                            <!-- Mobile Hint Overlay for Slideshow -->
                             <div class="absolute inset-0 z-20 pointer-events-none md:hidden flex items-center justify-center">
                                 <div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full"><i class="fas fa-search-plus"></i> Tap to Zoom</div>
                             </div>
@@ -704,42 +531,38 @@
                                 <i class="fas fa-images text-5xl mb-4"></i><p>Add images to /slides folder</p>
                             </div>
                         </div>
-                        <div class="absolute bottom-6 right-6 flex gap-2 z-30">
+                        <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 flex gap-2 z-30">
                             <button onclick="changeSlide(-1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center backdrop-blur-sm transition"><i class="fas fa-arrow-left text-sm"></i></button>
                             <button onclick="changeSlide(1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center backdrop-blur-sm transition"><i class="fas fa-arrow-right text-sm"></i></button>
                         </div>
                     </div>
-                    <div class="p-10 lg:p-16 flex flex-col justify-center">
+                    <div class="p-8 md:p-10 lg:p-16 flex flex-col justify-center">
                         <span class="text-primary font-bold tracking-wider text-xs uppercase mb-2">Multimedia Lead</span>
-                        <h3 class="text-3xl font-bold mb-6">Africa Revenue Summit (AFRES)</h3>
-                        <p class="text-slate-300 mb-8 leading-relaxed text-lg font-light">Managed the end-to-end multimedia strategy for Africa’s premier gathering of 200+ CEOs. Delivered high-impact visual assets including promotional teasers.</p>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Africa Revenue Summit (AFRES)</h3>
+                        <p class="text-slate-300 mb-6 md:mb-8 leading-relaxed text-base md:text-lg font-light">Managed the end-to-end multimedia strategy for Africa’s premier gathering of 200+ CEOs. Delivered high-impact visual assets including promotional teasers.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- MBTech Feature Card with Pop-out (No Hover/Pan) -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 mb-20">
+            <!-- MBTech Feature Card -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 mb-12 md:mb-20">
                 <div class="grid grid-cols-1 md:grid-cols-2">
-                    <!-- Image Container with Click-to-Open Lightbox -->
-                    <div class="h-64 md:h-auto bg-slate-100 relative overflow-hidden group">
-                        <!-- Mobile Hint -->
+                    <div class="h-56 sm:h-64 md:h-auto bg-slate-100 relative overflow-hidden group animate-pulse" id="mbtech-img-wrapper">
                         <div class="absolute top-2 right-2 z-10 md:hidden">
                             <div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i> Tap to Zoom</div>
                         </div>
                         
-                        <img src="mbtech-preview.png" alt="MB Tech Project Preview" class="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition duration-500" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
+                        <img src="mbtech-preview.png" alt="MB Tech Project Preview" class="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition duration-500 lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onload="document.getElementById('mbtech-img-wrapper').classList.remove('animate-pulse')" onerror="this.src='https://placehold.co/800x600/e2e8f0/64748b?text=MB+Tech+Project+Preview'">
                         
-                        <!-- Desktop Hint Overlay -->
                         <div class="absolute inset-0 bg-black/20 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none">
                             <i class="fas fa-expand text-white text-3xl drop-shadow-md"></i>
                         </div>
                     </div>
                     
-                    <!-- Text Side -->
                     <div class="p-8 md:p-12 flex flex-col justify-center text-slate-800">
                         <span class="text-primary font-bold tracking-wider text-xs uppercase mb-2">Web Development</span>
-                        <h3 class="text-2xl font-bold text-dark mb-4">MB Tech Solutions (mbtech.ng)</h3>
-                        <p class="text-slate-600 mb-6 leading-relaxed">
+                        <h3 class="text-2xl font-bold text-dark mb-4">MB Tech Solutions</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">
                             A comprehensive web development project demonstrating full-stack capabilities. This solution features a responsive interface and modern design principles.
                         </p>
                         <a href="https://emmy-kingz.github.io/mbtech.ng/" target="_blank" class="inline-flex items-center justify-center w-full md:w-auto px-6 py-3 bg-dark text-white rounded-lg font-bold hover:bg-primary transition shadow-lg">
@@ -749,18 +572,16 @@
                 </div>
             </div>
 
-            <!-- New Other Selected Works Slider (Dynamic) -->
+            <!-- Other Selected Works Slider -->
             <div>
-                <div class="text-center mb-12">
+                <div class="text-center mb-10 md:mb-12">
                     <h3 class="text-2xl font-bold text-white mb-4">Other Selected Works</h3>
                     <div class="w-12 h-1 bg-primary mx-auto rounded-full"></div>
                 </div>
 
                 <div class="bg-white/5 rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[450px]">
-                        <!-- Image Side -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[400px] md:min-h-[450px]">
                         <div class="relative h-64 lg:h-auto bg-black/50 overflow-hidden">
-                            <!-- Mobile Hint -->
                             <div class="absolute top-2 right-2 z-20 md:hidden">
                                 <div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i> Tap to Zoom</div>
                             </div>
@@ -770,22 +591,20 @@
                             <img src="projects/project3.png" id="project-img-2" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 z-0 cursor-zoom-in" onclick="openLightbox(this.src)" alt="Project 3">
                         </div>
                         
-                        <!-- Info Side -->
                         <div class="p-8 lg:p-12 flex flex-col justify-center relative">
                             <div id="project-info-content" class="project-info-text">
                                 <span class="text-primary font-bold tracking-wider text-xs uppercase mb-2 block" id="proj-cat">Design & Creative</span>
-                                <h3 class="text-3xl font-bold mb-4 text-white" id="proj-title">Brand Identity System</h3>
-                                <p class="text-slate-300 leading-relaxed font-light text-lg" id="proj-desc">
-                                    Developed a cohesive visual identity for a fintech startup, including logo design, brand guidelines, and marketing collateral that increased brand recognition by 40%.
+                                <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white" id="proj-title">Brand Identity System</h3>
+                                <p class="text-slate-300 leading-relaxed font-light text-base md:text-lg" id="proj-desc">
+                                    Developed a cohesive visual identity for a fintech startup, including logo design, brand guidelines, and marketing collateral.
                                 </p>
                                 <a id="proj-link" href="#" target="_blank" class="inline-block mt-4 text-primary font-semibold hover:text-white transition hidden">View Project &rarr;</a>
                             </div>
                             
-                            <!-- Indicators -->
                             <div class="flex space-x-3 mt-8">
-                                <div class="h-1.5 w-12 bg-primary rounded-full transition-all duration-300 cursor-pointer" id="dot-0" onclick="manualProjectSlide(0)"></div>
-                                <div class="h-1.5 w-12 bg-white/20 rounded-full transition-all duration-300 cursor-pointer" id="dot-1" onclick="manualProjectSlide(1)"></div>
-                                <div class="h-1.5 w-12 bg-white/20 rounded-full transition-all duration-300 cursor-pointer" id="dot-2" onclick="manualProjectSlide(2)"></div>
+                                <div class="h-1.5 w-10 md:w-12 bg-primary rounded-full transition-all duration-300 cursor-pointer" id="dot-0" onclick="manualProjectSlide(0)"></div>
+                                <div class="h-1.5 w-10 md:w-12 bg-white/20 rounded-full transition-all duration-300 cursor-pointer" id="dot-1" onclick="manualProjectSlide(1)"></div>
+                                <div class="h-1.5 w-10 md:w-12 bg-white/20 rounded-full transition-all duration-300 cursor-pointer" id="dot-2" onclick="manualProjectSlide(2)"></div>
                             </div>
                         </div>
                     </div>
@@ -795,74 +614,90 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-24 bg-white">
+    <section id="gallery" class="py-16 md:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-end mb-12">
+            <div class="flex justify-between items-end mb-10 md:mb-12">
                 <div>
                     <span class="text-primary font-bold tracking-wider uppercase text-xs">Visual Diary</span>
                     <h2 class="text-3xl font-bold text-dark mt-2 font-serif">Life in Pictures</h2>
                 </div>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
                     <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
-                    <img src="gallery/photo1.jpeg" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpeg'">
+                    <img src="gallery/photo1.jpeg" class="w-full h-full object-cover cursor-zoom-in lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo1.jpeg'">
                 </div>
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
                     <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
-                    <img src="gallery/photo2.jpeg" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpeg'">
+                    <img src="gallery/photo2.jpeg" class="w-full h-full object-cover cursor-zoom-in lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo2.jpeg'">
                 </div>
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
                     <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
-                    <img src="gallery/photo3.jpeg" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpeg'">
+                    <img src="gallery/photo3.jpeg" class="w-full h-full object-cover cursor-zoom-in lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo3.jpeg'">
                 </div>
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
                     <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
-                    <img src="gallery/photo4.png" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo4.png'">
+                    <img src="gallery/photo4.png" class="w-full h-full object-cover cursor-zoom-in lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo4.png'">
                 </div>
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
                     <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
-                    <img src="gallery/photo5.png" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo5.png'">
+                    <img src="gallery/photo5.png" class="w-full h-full object-cover cursor-zoom-in lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo5.png'">
                 </div>
                 <div class="gallery-item aspect-square bg-slate-100 rounded-xl overflow-hidden relative group">
                     <div class="absolute top-2 right-2 z-10 md:hidden"><div class="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"><i class="fas fa-expand"></i></div></div>
-                    <img src="gallery/photo6.png" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo6.png'">
+                    <img src="gallery/photo6.png" class="w-full h-full object-cover cursor-zoom-in lazy-img" onclick="openLightbox(this.src)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/400?text=gallery/photo6.png'">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer / Contact -->
-    <footer id="contact" class="bg-dark text-white pt-20 pb-10">
+    <footer id="contact" class="bg-dark text-white pt-16 pb-10 md:pt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-16 md:mb-20">
                 <!-- Contact Info -->
-                <div>
-                    <h2 class="text-3xl font-bold font-serif mb-6">Let's create something<br>extraordinary together.</h2>
+                <div class="flex flex-col justify-center">
+                    <h2 class="text-3xl md:text-4xl font-bold font-serif mb-6 leading-tight">Let's create something<br>extraordinary together.</h2>
                     <p class="text-slate-400 mb-10 text-lg font-light max-w-md">Open to opportunities in Multimedia Strategy, Digital Marketing, and Engineering Consultancy.</p>
                     <div class="space-y-6">
-                        <a href="mailto:emmanuel.amobi03@gmail.com" class="flex items-center gap-4 group">
+                        <a href="mailto:emmanuel.amobi03@gmail.com" class="flex items-center gap-4 group w-fit">
                             <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition"><i class="fas fa-envelope"></i></div>
-                            <span class="text-lg group-hover:text-primary transition">emmanuel.amobi03@gmail.com</span>
+                            <span class="text-base md:text-lg group-hover:text-primary transition break-all">emmanuel.amobi03@gmail.com</span>
                         </a>
-                        <!-- New Phone Number -->
-                        <a href="https://wa.me/2347084672771" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-green-500 transition"><i class="fab fa-whatsapp"></i></div>
-                            <span class="text-lg group-hover:text-green-500 transition">+234 708 467 2771</span>
+                        <!-- Updated Phone Number -->
+                        <a href="https://wa.me/2348075598791" class="flex items-center gap-4 group w-fit">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-green-500 transition"><i class="fab fa-whatsapp text-lg"></i></div>
+                            <span class="text-base md:text-lg group-hover:text-green-500 transition">+234 807 559 8791</span>
                         </a>
                     </div>
                 </div>
-                <!-- Newsletter -->
-                <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                    <h3 class="text-xl font-bold mb-2">Subscribe to my Newsletter</h3>
-                    <p class="text-slate-400 text-sm mb-6">Insights on Tech, Multimedia, and Personal Growth.</p>
-                    <form action="mailto:emmanuel.amobi03@gmail.com" method="post" enctype="text/plain" class="space-y-4">
-                        <div><input type="text" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
-                        <div><input type="email" placeholder="Your Email Address" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
-                        <button type="submit" class="w-full py-3 rounded-lg bg-primary hover:bg-secondary font-bold transition">Subscribe Now</button>
+
+                <!-- Dynamic Contact Form (Replaces Newsletter) -->
+                <div class="bg-white/5 p-6 md:p-8 rounded-2xl border border-white/10">
+                    <h3 class="text-2xl font-bold mb-2">Send a Message</h3>
+                    <p class="text-slate-400 text-sm mb-6">Have a project in mind? Let's discuss it.</p>
+                    
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <input type="text" id="contactName" placeholder="Your Name" required 
+                                class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary transition">
+                        </div>
+                        <div>
+                            <input type="email" id="contactEmail" placeholder="Your Email Address" required 
+                                class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary transition">
+                        </div>
+                        <div>
+                            <textarea id="contactMessage" placeholder="Your Message" rows="4" required 
+                                class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary transition resize-none"></textarea>
+                        </div>
+                        <button type="submit" id="contactSubmitBtn" class="w-full py-3 rounded-lg bg-primary hover:bg-secondary font-bold transition flex justify-center items-center gap-2">
+                            <span id="contactSubmitText">Send Message</span>
+                            <i class="fas fa-paper-plane" id="contactSubmitIcon"></i>
+                        </button>
                     </form>
                 </div>
             </div>
+
             <!-- Socials -->
             <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
@@ -896,18 +731,15 @@
         function openLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.remove('hidden');
-            // Prevent background scrolling
             document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             lightbox.classList.add('hidden');
-            // Restore background scrolling
             document.body.style.overflow = '';
             setTimeout(() => lightboxImg.src = '', 300);
         }
 
-        // Close on click outside image
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
@@ -925,19 +757,19 @@
         function changeSlide(n) { slideIndex += n; showSlides(slideIndex); }
         if(slides.length > 0) { setInterval(() => changeSlide(1), 5000); }
 
-        // --- NEW PROJECT SLIDER LOGIC ---
+        // Project Slider Logic
         const projectData = [
             {
                 title: "Digital Bootcamp (Q1 2025)",
                 cat: "Professional Training",
                 desc: "An intensive digital skills bootcamp covering content creation, digital marketing, and video editing. Facilitated physical and virtual sessions for students in Zaria and Kaduna.",
-                link: "" // No link for this one
+                link: "" 
             },
             {
                 title: "Digital Nomad 1.0 (Hangout)",
                 cat: "Community & Events",
                 desc: "A free digital hangout aimed at connecting creators and tech enthusiasts. Featured sessions on content strategy, graphics design, and social media management.",
-                link: "" // No link for this one
+                link: "" 
             },
             {
                 title: "MBTech Invest (Crypto App)",
@@ -951,9 +783,7 @@
         let projTimer;
 
         function updateProjectSlide(index) {
-            // Update Text
             const content = document.getElementById('project-info-content');
-            // Small fade out/in effect for text
             content.style.opacity = 0;
             
             setTimeout(() => {
@@ -961,7 +791,6 @@
                 document.getElementById('proj-title').textContent = projectData[index].title;
                 document.getElementById('proj-desc').textContent = projectData[index].desc;
                 
-                // Handle Link Button
                 const linkBtn = document.getElementById('proj-link');
                 if(projectData[index].link) {
                     linkBtn.href = projectData[index].link;
@@ -974,7 +803,6 @@
                 content.style.opacity = 1;
             }, 300);
 
-            // Update Images
             for (let i = 0; i < 3; i++) {
                 const img = document.getElementById(`project-img-${i}`);
                 const dot = document.getElementById(`dot-${i}`);
@@ -982,13 +810,11 @@
                 if (i === index) {
                     img.classList.remove('opacity-0', 'z-0');
                     img.classList.add('opacity-100', 'z-10');
-                    
                     dot.classList.remove('bg-white/20');
                     dot.classList.add('bg-primary');
                 } else {
                     img.classList.remove('opacity-100', 'z-10');
                     img.classList.add('opacity-0', 'z-0');
-                    
                     dot.classList.remove('bg-primary');
                     dot.classList.add('bg-white/20');
                 }
@@ -1004,13 +830,11 @@
             clearInterval(projTimer);
             currentProjIndex = index;
             updateProjectSlide(currentProjIndex);
-            projTimer = setInterval(nextProject, 5000); // Restart timer
+            projTimer = setInterval(nextProject, 5000); 
         }
+        projTimer = setInterval(nextProject, 5000); 
 
-        // Init Project Slider
-        projTimer = setInterval(nextProject, 5000); // 5000ms = 5 seconds
-
-        // --- CALCULATOR LOGIC ---
+        // Calculator Logic
         const serviceSelect = document.getElementById('serviceSelect');
         const hoursInput = document.getElementById('hoursInput');
         const totalDisplay = document.getElementById('totalCost');
@@ -1018,7 +842,6 @@
         const btnNgn = document.getElementById('btn-ngn');
         const btnUsd = document.getElementById('btn-usd');
 
-        // Rates Configuration (Hourly)
         const rates = {
             content: { ngn: 15000, usd: 25 },
             marketing: { ngn: 20000, usd: 30 },
@@ -1032,8 +855,6 @@
 
         function setCurrency(currency) {
             currentCurrency = currency;
-            
-            // Toggle Button Styles
             if(currency === 'NGN') {
                 btnNgn.classList.add('bg-primary', 'text-white');
                 btnNgn.classList.remove('text-slate-400');
@@ -1054,7 +875,6 @@
             const rate = rates[serviceKey][currentCurrency.toLowerCase()];
             const total = hours * rate;
 
-            // Format Currency
             const formatter = new Intl.NumberFormat(currentCurrency === 'NGN' ? 'en-NG' : 'en-US', {
                 style: 'currency',
                 currency: currentCurrency,
@@ -1063,14 +883,13 @@
 
             totalDisplay.textContent = formatter.format(total);
             
-            // Update CTA Link for easy booking
             const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
             const subject = encodeURIComponent(`Booking Inquiry: ${serviceName}`);
             const body = encodeURIComponent(`Hi Emmanuel,\n\nI used your rate calculator and I'm interested in the ${serviceName} service.\nEstimated Hours: ${hours}\nEstimated Budget: ${formatter.format(total)}\n\nLooking forward to hearing from you.`);
             
-            // Mobile: WhatsApp, Desktop: Email
             if(window.innerWidth < 768) {
-                 ctaBtn.href = `https://wa.me/2347084672771?text=${body}`;
+                 // Updated number specifically as requested
+                 ctaBtn.href = `https://wa.me/2348075598791?text=${body}`;
                  ctaBtn.innerHTML = '<i class="fab fa-whatsapp mr-2"></i> Book via WhatsApp';
                  ctaBtn.classList.remove('bg-white', 'text-dark');
                  ctaBtn.classList.add('bg-green-600', 'text-white');
@@ -1082,14 +901,173 @@
             }
         }
 
-        // Event Listeners
         serviceSelect.addEventListener('change', calculateCost);
         hoursInput.addEventListener('input', calculateCost);
-        
-        // Init
         calculateCost();
 
-        // --- SCROLL ANIMATION OBSERVER ---
+        // --- DYNAMIC CONTACT FORM SCRIPT (Replaces Newsletter) ---
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const message = document.getElementById('contactMessage').value;
+
+                const subject = encodeURIComponent(`Portfolio Contact: ${name}`);
+                const bodyText = `Hello Emmanuel,\n\n${message}\n\nFrom: ${name}\nEmail: ${email}`;
+                const body = encodeURIComponent(bodyText);
+
+                if (window.innerWidth < 768) {
+                    // Mobile: Redirect to WhatsApp with message pre-filled
+                    const phone = "2348075598791"; // 08075598791
+                    window.open(`https://wa.me/${phone}?text=${body}`, '_blank');
+                } else {
+                    // Web: Open default Email client
+                    window.location.href = `mailto:emmanuel.amobi03@gmail.com?subject=${subject}&body=${body}`;
+                }
+
+                // UI Feedback
+                const btnText = document.getElementById('contactSubmitText');
+                const btnIcon = document.getElementById('contactSubmitIcon');
+                
+                btnText.innerText = 'Redirecting...';
+                btnIcon.className = 'fas fa-spinner fa-spin';
+                
+                setTimeout(() => {
+                    btnText.innerText = 'Message Setup Complete!';
+                    btnIcon.className = 'fas fa-check';
+                    contactForm.reset();
+                    
+                    setTimeout(() => { 
+                        btnText.innerText = 'Send Message';
+                        btnIcon.className = 'fas fa-paper-plane'; 
+                    }, 4000);
+                }, 1000);
+            });
+        }
+
+        // --- TOOLS & PLATFORMS SLIDER LOGIC ---
+        const toolsCategoryData = [
+            {
+                title: "Creative & Design",
+                tools: [
+                    { name: "Adobe Premiere", icon: "fas fa-video", color: "text-purple-600" },
+                    { name: "Photoshop", icon: "fas fa-image", color: "text-blue-600" },
+                    { name: "Illustrator", icon: "fas fa-bezier-curve", color: "text-orange-600" },
+                    { name: "Figma", icon: "fab fa-figma", color: "text-pink-500" },
+                    { name: "Canva", icon: "fas fa-paint-brush", color: "text-blue-400" }
+                ]
+            },
+            {
+                title: "Web & IT Development",
+                tools: [
+                    { name: "HTML5 & CSS3", icon: "fab fa-html5", color: "text-orange-500" },
+                    { name: "JavaScript", icon: "fab fa-js", color: "text-yellow-400" },
+                    { name: "React JS", icon: "fab fa-react", color: "text-cyan-400" },
+                    { name: "Tailwind CSS", icon: "fas fa-wind", color: "text-teal-400" },
+                    { name: "WordPress", icon: "fab fa-wordpress", color: "text-blue-700" },
+                    { name: "GitHub", icon: "fab fa-github", color: "text-gray-800" }
+                ]
+            },
+            {
+                title: "Digital Marketing",
+                tools: [
+                    { name: "Google Analytics", icon: "fas fa-chart-line", color: "text-orange-500" },
+                    { name: "Meta Ads", icon: "fab fa-facebook", color: "text-blue-600" },
+                    { name: "Mailchimp", icon: "fab fa-mailchimp", color: "text-yellow-500" },
+                    { name: "SEO Tools", icon: "fas fa-search", color: "text-green-500" }
+                ]
+            },
+            {
+                title: "Engineering & Hardware",
+                tools: [
+                    { name: "AutoCAD", icon: "fas fa-drafting-compass", color: "text-red-500" },
+                    { name: "Arduino / IoT", icon: "fas fa-microchip", color: "text-teal-600" },
+                    { name: "Solar Systems", icon: "fas fa-solar-panel", color: "text-orange-500" },
+                    { name: "MATLAB", icon: "fas fa-calculator", color: "text-blue-500" },
+                    { name: "Packet Tracer", icon: "fas fa-network-wired", color: "text-green-600" }
+                ]
+            }
+        ];
+
+        let currentToolCategory = 0;
+        let toolTimer;
+
+        function startToolProgress() {
+            const bar = document.getElementById('tools-progress');
+            if(!bar) return;
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+            void bar.offsetWidth; // Force reflow
+            bar.style.transition = 'width 15s linear';
+            bar.style.width = '100%';
+        }
+
+        function renderTools(index) {
+            const grid = document.getElementById('tools-grid');
+            const title = document.getElementById('tool-category-title');
+            const dots = document.getElementById('tools-dots');
+            if(!grid || !title || !dots) return;
+
+            grid.classList.remove('opacity-100');
+            grid.classList.add('opacity-0');
+            title.classList.remove('opacity-100');
+            title.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                const data = toolsCategoryData[index];
+                title.textContent = data.title;
+                
+                grid.innerHTML = data.tools.map(tool => `
+                    <span class="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-1 hover:shadow-md cursor-default">
+                        <i class="${tool.icon} ${tool.color} text-lg"></i> ${tool.name}
+                    </span>
+                `).join('');
+                
+                dots.innerHTML = toolsCategoryData.map((_, i) => `
+                    <button onclick="manualToolSwitch(${i})" class="h-2 rounded-full transition-all duration-300 ${i === index ? 'w-6 bg-primary' : 'w-2 bg-slate-300'} focus:outline-none"></button>
+                `).join('');
+
+                grid.classList.remove('opacity-0');
+                grid.classList.add('opacity-100');
+                title.classList.remove('opacity-0');
+                title.classList.add('opacity-100');
+                
+                startToolProgress();
+            }, 300);
+        }
+
+        function nextToolCategory() {
+            currentToolCategory = (currentToolCategory + 1) % toolsCategoryData.length;
+            renderTools(currentToolCategory);
+        }
+
+        function manualToolSwitch(index) {
+            clearInterval(toolTimer);
+            currentToolCategory = index;
+            renderTools(currentToolCategory);
+            toolTimer = setInterval(nextToolCategory, 15000);
+        }
+
+        // Initialize Tools Slider
+        renderTools(currentToolCategory);
+        toolTimer = setInterval(nextToolCategory, 15000);
+
+        // Seamless Image Loading Observer
+        document.addEventListener("DOMContentLoaded", () => {
+            const lazyImages = document.querySelectorAll('.lazy-img');
+            lazyImages.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', () => img.classList.add('loaded'));
+                }
+            });
+        });
+
+        // Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
