@@ -42,7 +42,7 @@
         "https://twitter.com/emmanuelamobi_",
         "https://www.tiktok.com/@emmanuelamobi_"
       ],
-      "alumniOf": "Anambra State University",
+      "alumniOf": "Chukwuemeka Odumegwu Ojukwu University, Anambra State",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lagos",
@@ -174,6 +174,22 @@
             pointer-events: auto;
             opacity: 1;
         }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            transition: opacity 0.2s ease;
+        }
+        .modal-container {
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .modal-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal-overlay:not(.hidden) {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="font-sans text-slate-800 bg-white antialiased">
@@ -185,6 +201,39 @@
         <img id="lightbox-img" src="" alt="Full View" class="max-h-[90vh] max-w-full object-contain rounded-lg shadow-2xl">
     </div>
 
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay hidden fixed inset-0 z-[200] bg-black/70 flex items-center justify-center p-4">
+        <div class="modal-container bg-white rounded-2xl max-w-md w-full shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center p-5 border-b border-slate-200">
+                <h3 class="text-xl font-bold text-dark">Book This Service</h3>
+                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+            </div>
+            <div class="p-5 space-y-4">
+                <div class="bg-slate-50 p-3 rounded-lg text-sm">
+                    <p class="font-semibold text-dark" id="modalServiceName">Service: Content Creation</p>
+                    <p id="modalHours">Hours: 10</p>
+                    <p id="modalTotal">Total: ₦150,000</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Your Name *</label>
+                    <input type="text" id="bookingName" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Address *</label>
+                    <input type="email" id="bookingEmail" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Message / Requirements</label>
+                    <textarea id="bookingMessage" rows="3" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" placeholder="Tell me more about your project..."></textarea>
+                </div>
+                <button id="submitBookingBtn" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-secondary transition">
+                    Submit Inquiry
+                </button>
+                <p id="bookingStatus" class="text-xs text-center text-slate-500 mt-2"></p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -198,7 +247,7 @@
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
+               <div class="hidden md:flex space-x-8 items-center">
                     <a href="#about" class="text-sm font-medium text-slate-600 hover:text-primary transition">About</a>
                     <a href="#services" class="text-sm font-medium text-slate-600 hover:text-primary transition">Services</a>
                     <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-primary transition">Experience</a>
@@ -245,7 +294,7 @@
                     Bridging Engineering Precision with <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Creative Storytelling</span>
                 </h1>
                 <p class="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
-                    I am Emmanuel Amobi. Digital Creator, Engineer, and Multimedia Lead. I engineer visual narratives for C-suite audiences and optimize technical systems for growth.
+                    I am Emmanuel Amobi, a multi-talented invidual with experience as a Digital Creator, Engineer, Multimedia Lead, IT Consultant and Tech Instructor. I use an engineer’s mindset to build digital systems and a creator’s lens to explain them. My work has taken me from supervising high-stakes data for the World Health Organisation to driving content innovation at SalesRuby. I don’t just manage technology; I optimize it for growth and translate its value for the leaders who desire 5x growth.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="#projects" class="px-8 py-4 rounded-full bg-primary text-white font-semibold hover:bg-secondary transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-center">
@@ -841,14 +890,17 @@
                         </a>
                     </div>
                 </div>
-                <!-- Newsletter -->
+                <!-- Lead Form -->
                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                    <h3 class="text-xl font-bold mb-2">Subscribe to my Newsletter</h3>
-                    <p class="text-slate-400 text-sm mb-6">Insights on Tech, Multimedia, and Personal Growth.</p>
-                    <form action="mailto:emmanuel.amobi03@gmail.com" method="post" enctype="text/plain" class="space-y-4">
-                        <div><input type="text" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
-                        <div><input type="email" placeholder="Your Email Address" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
-                        <button type="submit" class="w-full py-3 rounded-lg bg-primary hover:bg-secondary font-bold transition">Subscribe Now</button>
+                    <h3 class="text-xl font-bold mb-2">Send a Message / Inquiry</h3>
+                    <p class="text-slate-400 text-sm mb-6">I'll get back to you within 24 hours.</p>
+                    <form id="leadForm" class="space-y-4">
+                        <div><input type="text" id="leadName" placeholder="Your Name *" required class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
+                        <div><input type="email" id="leadEmail" placeholder="Your Email Address *" required class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
+                        <div><input type="text" id="leadSubject" placeholder="Subject (e.g., Service Inquiry, Collaboration)" class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></div>
+                        <div><textarea id="leadMessage" rows="3" placeholder="Tell me about your project or question..." required class="w-full px-4 py-3 rounded-lg bg-dark border border-slate-700 text-white focus:outline-none focus:border-primary"></textarea></div>
+                        <button type="submit" class="w-full py-3 rounded-lg bg-primary hover:bg-secondary font-bold transition">Send Message</button>
+                        <p id="leadFormStatus" class="text-xs text-center text-slate-400 mt-2"></p>
                     </form>
                 </div>
             </div>
@@ -866,228 +918,312 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
-
-        function toggleAccordion(element) {
-            const isActive = element.classList.contains('active');
-            document.querySelectorAll('.experience-item').forEach(item => { item.classList.remove('active'); });
-            if (!isActive) { element.classList.add('active'); }
-        }
-
-        // Lightbox Functions
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-
-        function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.remove('hidden');
-            // Prevent background scrolling
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            lightbox.classList.add('hidden');
-            // Restore background scrolling
-            document.body.style.overflow = '';
-            setTimeout(() => lightboxImg.src = '', 300);
-        }
-
-        // Close on click outside image
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-
-        // Slideshow Logic
-        let slideIndex = 0;
-        const slides = document.querySelectorAll('.slide');
-        function showSlides(n) {
-            if (slides.length === 0) return;
-            if (n >= slides.length) slideIndex = 0;
-            if (n < 0) slideIndex = slides.length - 1;
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[slideIndex].classList.add('active');
-        }
-        function changeSlide(n) { slideIndex += n; showSlides(slideIndex); }
-        if(slides.length > 0) { setInterval(() => changeSlide(1), 5000); }
-
-        // --- NEW PROJECT SLIDER LOGIC ---
-        const projectData = [
-            {
-                title: "Digital Bootcamp (Q1 2025)",
-                cat: "Professional Training",
-                desc: "An intensive digital skills bootcamp covering content creation, digital marketing, and video editing. Facilitated physical and virtual sessions for students in Zaria and Kaduna.",
-                link: "" // No link for this one
-            },
-            {
-                title: "Digital Nomad 1.0 (Hangout)",
-                cat: "Community & Events",
-                desc: "A free digital hangout aimed at connecting creators and tech enthusiasts. Featured sessions on content strategy, graphics design, and social media management.",
-                link: "" // No link for this one
-            },
-            {
-                title: "MBTech Invest (Crypto App)",
-                cat: "Web Development",
-                desc: "A comprehensive web application for crypto brokers featuring three distinct investment plans and a smart admin control panel for managing user assets.",
-                link: "https://emmy-kingz.github.io/mbtechinvest/"
-            }
-        ];
-
-        let currentProjIndex = 0;
-        let projTimer;
-
-        function updateProjectSlide(index) {
-            // Update Text
-            const content = document.getElementById('project-info-content');
-            // Small fade out/in effect for text
-            content.style.opacity = 0;
-            
-            setTimeout(() => {
-                document.getElementById('proj-cat').textContent = projectData[index].cat;
-                document.getElementById('proj-title').textContent = projectData[index].title;
-                document.getElementById('proj-desc').textContent = projectData[index].desc;
-                
-                // Handle Link Button
-                const linkBtn = document.getElementById('proj-link');
-                if(projectData[index].link) {
-                    linkBtn.href = projectData[index].link;
-                    linkBtn.classList.remove('hidden');
-                    linkBtn.innerHTML = 'View Live App &rarr;';
-                } else {
-                    linkBtn.classList.add('hidden');
-                }
-
-                content.style.opacity = 1;
-            }, 300);
-
-            // Update Images
-            for (let i = 0; i < 3; i++) {
-                const img = document.getElementById(`project-img-${i}`);
-                const dot = document.getElementById(`dot-${i}`);
-                
-                if (i === index) {
-                    img.classList.remove('opacity-0', 'z-0');
-                    img.classList.add('opacity-100', 'z-10');
-                    
-                    dot.classList.remove('bg-white/20');
-                    dot.classList.add('bg-primary');
-                } else {
-                    img.classList.remove('opacity-100', 'z-10');
-                    img.classList.add('opacity-0', 'z-0');
-                    
-                    dot.classList.remove('bg-primary');
-                    dot.classList.add('bg-white/20');
-                }
-            }
-        }
-
-        function nextProject() {
-            currentProjIndex = (currentProjIndex + 1) % 3;
-            updateProjectSlide(currentProjIndex);
-        }
-
-        function manualProjectSlide(index) {
-            clearInterval(projTimer);
-            currentProjIndex = index;
-            updateProjectSlide(currentProjIndex);
-            projTimer = setInterval(nextProject, 5000); // Restart timer
-        }
-
-        // Init Project Slider
-        projTimer = setInterval(nextProject, 5000); // 5000ms = 5 seconds
-
-        // --- CALCULATOR LOGIC ---
-        const serviceSelect = document.getElementById('serviceSelect');
-        const hoursInput = document.getElementById('hoursInput');
-        const totalDisplay = document.getElementById('totalCost');
-        const ctaBtn = document.getElementById('calculator-cta');
-        const btnNgn = document.getElementById('btn-ngn');
-        const btnUsd = document.getElementById('btn-usd');
-
-        // Rates Configuration (Hourly)
-        const rates = {
-            content: { ngn: 15000, usd: 25 },
-            marketing: { ngn: 20000, usd: 30 },
-            engineering: { ngn: 30000, usd: 50 },
-            training: { ngn: 25000, usd: 40 },
-            project: { ngn: 35000, usd: 60 },
-            web: { ngn: 25000, usd: 45 }
+    <!-- Firebase + Firestore Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyAl5cDLWFhyooWdsaEoEjhvuxiwpxnT9Wo",
+            authDomain: "emmy-kingz.firebaseapp.com",
+            projectId: "emmy-kingz",
+            storageBucket: "emmy-kingz.firebasestorage.app",
+            messagingSenderId: "915502186621",
+            appId: "1:915502186621:web:501cd6bae4974dd90f3114",
+            measurementId: "G-SLS8MFWCP6"
         };
-
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // DOM elements
+        const openBookingBtn = document.getElementById('openBookingBtn');
+        const bookingModal = document.getElementById('bookingModal');
+        const submitBookingBtn = document.getElementById('submitBookingBtn');
+        const bookingStatus = document.getElementById('bookingStatus');
+        const modalServiceName = document.getElementById('modalServiceName');
+        const modalHours = document.getElementById('modalHours');
+        const modalTotal = document.getElementById('modalTotal');
+        
+        // Global variables for current booking data
+        let currentServiceName = '';
+        let currentHours = 10;
+        let currentTotal = '';
+        let currentServiceKey = 'content';
         let currentCurrency = 'NGN';
-
-        function setCurrency(currency) {
+        
+        // Function to open modal with current calculator values
+        window.openBookingModal = function() {
+            const serviceSelect = document.getElementById('serviceSelect');
+            const hoursInput = document.getElementById('hoursInput');
+            const totalDisplay = document.getElementById('totalCost');
+            if (serviceSelect && hoursInput && totalDisplay) {
+                currentServiceName = serviceSelect.options[serviceSelect.selectedIndex].text;
+                currentHours = parseInt(hoursInput.value) || 0;
+                currentTotal = totalDisplay.textContent;
+                currentServiceKey = serviceSelect.value;
+                modalServiceName.textContent = `Service: ${currentServiceName}`;
+                modalHours.textContent = `Hours: ${currentHours}`;
+                modalTotal.textContent = `Total: ${currentTotal}`;
+            }
+            bookingModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            bookingStatus.textContent = '';
+        };
+        
+        window.closeBookingModal = function() {
+            bookingModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        };
+        
+        // Attach event to open button
+        if (openBookingBtn) {
+            openBookingBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.openBookingModal();
+            });
+        }
+        
+        // Submit booking to Firestore
+        if (submitBookingBtn) {
+            submitBookingBtn.addEventListener('click', async () => {
+                const name = document.getElementById('bookingName').value.trim();
+                const email = document.getElementById('bookingEmail').value.trim();
+                const message = document.getElementById('bookingMessage').value.trim();
+                
+                if (!name || !email) {
+                    bookingStatus.textContent = 'Please fill in your name and email.';
+                    bookingStatus.classList.add('text-red-400');
+                    return;
+                }
+                
+                submitBookingBtn.disabled = true;
+                submitBookingBtn.textContent = 'Sending...';
+                bookingStatus.textContent = '';
+                
+                try {
+                    await addDoc(collection(db, 'service_inquiries'), {
+                        name: name,
+                        email: email,
+                        service: currentServiceName,
+                        serviceKey: currentServiceKey,
+                        hours: currentHours,
+                        estimatedTotal: currentTotal,
+                        message: message || '',
+                        currency: currentCurrency,
+                        timestamp: serverTimestamp(),
+                        type: 'booking'
+                    });
+                    bookingStatus.textContent = '✓ Inquiry sent! I will contact you shortly.';
+                    bookingStatus.classList.remove('text-red-400');
+                    bookingStatus.classList.add('text-green-400');
+                    document.getElementById('bookingName').value = '';
+                    document.getElementById('bookingEmail').value = '';
+                    document.getElementById('bookingMessage').value = '';
+                    setTimeout(() => closeBookingModal(), 2000);
+                } catch (error) {
+                    console.error('Firestore error:', error);
+                    bookingStatus.textContent = 'Error sending inquiry. Please try again or contact directly.';
+                    bookingStatus.classList.add('text-red-400');
+                } finally {
+                    submitBookingBtn.disabled = false;
+                    submitBookingBtn.textContent = 'Submit Inquiry';
+                }
+            });
+        }
+        
+        // Lead Form submission
+        const leadForm = document.getElementById('leadForm');
+        const leadFormStatus = document.getElementById('leadFormStatus');
+        
+        if (leadForm) {
+            leadForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('leadName').value.trim();
+                const email = document.getElementById('leadEmail').value.trim();
+                const subject = document.getElementById('leadSubject').value.trim();
+                const message = document.getElementById('leadMessage').value.trim();
+                
+                if (!name || !email || !message) {
+                    leadFormStatus.textContent = 'Please fill in required fields (Name, Email, Message).';
+                    leadFormStatus.classList.add('text-red-400');
+                    return;
+                }
+                
+                const submitBtn = leadForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                leadFormStatus.textContent = '';
+                
+                try {
+                    await addDoc(collection(db, 'lead_messages'), {
+                        name: name,
+                        email: email,
+                        subject: subject || 'General Inquiry',
+                        message: message,
+                        timestamp: serverTimestamp(),
+                        type: 'contact'
+                    });
+                    leadFormStatus.textContent = '✓ Message sent successfully! I will reply soon.';
+                    leadFormStatus.classList.remove('text-red-400');
+                    leadFormStatus.classList.add('text-green-400');
+                    leadForm.reset();
+                } catch (error) {
+                    console.error('Lead form error:', error);
+                    leadFormStatus.textContent = 'Error sending message. Please email me directly.';
+                    leadFormStatus.classList.add('text-red-400');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                }
+            });
+        }
+        
+        // Reuse calculator functions from original, but ensure setCurrency updates global
+        window.setCurrency = function(currency) {
             currentCurrency = currency;
-            
-            // Toggle Button Styles
-            if(currency === 'NGN') {
-                btnNgn.classList.add('bg-primary', 'text-white');
-                btnNgn.classList.remove('text-slate-400');
-                btnUsd.classList.remove('bg-primary', 'text-white');
-                btnUsd.classList.add('text-slate-400');
+            const btnNgn = document.getElementById('btn-ngn');
+            const btnUsd = document.getElementById('btn-usd');
+            if (currency === 'NGN') {
+                btnNgn?.classList.add('bg-primary', 'text-white');
+                btnNgn?.classList.remove('text-slate-400');
+                btnUsd?.classList.remove('bg-primary', 'text-white');
+                btnUsd?.classList.add('text-slate-400');
             } else {
-                btnUsd.classList.add('bg-primary', 'text-white');
-                btnUsd.classList.remove('text-slate-400');
-                btnNgn.classList.remove('bg-primary', 'text-white');
-                btnNgn.classList.add('text-slate-400');
+                btnUsd?.classList.add('bg-primary', 'text-white');
+                btnUsd?.classList.remove('text-slate-400');
+                btnNgn?.classList.remove('bg-primary', 'text-white');
+                btnNgn?.classList.add('text-slate-400');
             }
             calculateCost();
-        }
-
+        };
+        
         function calculateCost() {
+            const serviceSelect = document.getElementById('serviceSelect');
+            const hoursInput = document.getElementById('hoursInput');
+            const totalDisplay = document.getElementById('totalCost');
+            if (!serviceSelect || !hoursInput || !totalDisplay) return;
+            const rates = {
+                content: { ngn: 15000, usd: 25 },
+                marketing: { ngn: 20000, usd: 30 },
+                engineering: { ngn: 30000, usd: 50 },
+                training: { ngn: 25000, usd: 40 },
+                project: { ngn: 35000, usd: 60 },
+                web: { ngn: 25000, usd: 45 }
+            };
             const serviceKey = serviceSelect.value;
             const hours = parseInt(hoursInput.value) || 0;
             const rate = rates[serviceKey][currentCurrency.toLowerCase()];
             const total = hours * rate;
-
-            // Format Currency
             const formatter = new Intl.NumberFormat(currentCurrency === 'NGN' ? 'en-NG' : 'en-US', {
                 style: 'currency',
                 currency: currentCurrency,
                 minimumFractionDigits: 0
             });
-
             totalDisplay.textContent = formatter.format(total);
-            
-            // Update CTA Link for easy booking
-            const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
-            const subject = encodeURIComponent(`Booking Inquiry: ${serviceName}`);
-            const body = encodeURIComponent(`Hi Emmanuel,\n\nI used your rate calculator and I'm interested in the ${serviceName} service.\nEstimated Hours: ${hours}\nEstimated Budget: ${formatter.format(total)}\n\nLooking forward to hearing from you.`);
-            
-            // Mobile: WhatsApp, Desktop: Email
-            if(window.innerWidth < 768) {
-                 ctaBtn.href = `https://wa.me/2347084672771?text=${body}`;
-                 ctaBtn.innerHTML = '<i class="fab fa-whatsapp mr-2"></i> Book via WhatsApp';
-                 ctaBtn.classList.remove('bg-white', 'text-dark');
-                 ctaBtn.classList.add('bg-green-600', 'text-white');
-            } else {
-                 ctaBtn.href = `mailto:emmanuel.amobi03@gmail.com?subject=${subject}&body=${body}`;
-                 ctaBtn.innerHTML = 'Book via Email';
-                 ctaBtn.classList.add('bg-white', 'text-dark');
-                 ctaBtn.classList.remove('bg-green-600', 'text-white');
+        }
+        
+        // Event listeners for calculator
+        const serviceSelect = document.getElementById('serviceSelect');
+        const hoursInput = document.getElementById('hoursInput');
+        if (serviceSelect) serviceSelect.addEventListener('change', calculateCost);
+        if (hoursInput) hoursInput.addEventListener('input', calculateCost);
+        calculateCost();
+        
+        // Also keep existing accordion, lightbox, slideshow functions (non-module)
+        window.toggleAccordion = function(element) {
+            const isActive = element.classList.contains('active');
+            document.querySelectorAll('.experience-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) element.classList.add('active');
+        };
+        
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        window.openLightbox = function(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+        window.closeLightbox = function() {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = '';
+            setTimeout(() => lightboxImg.src = '', 300);
+        };
+        if (lightbox) lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        
+        // Slideshow
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        function showSlides(n) {
+            if (!slides.length) return;
+            if (n >= slides.length) slideIndex = 0;
+            if (n < 0) slideIndex = slides.length - 1;
+            slides.forEach(s => s.classList.remove('active'));
+            if (slides[slideIndex]) slides[slideIndex].classList.add('active');
+        }
+        window.changeSlide = function(n) { slideIndex += n; showSlides(slideIndex); };
+        if (slides.length) { setInterval(() => changeSlide(1), 5000); showSlides(0); }
+        
+        // Project Slider (simplified from original)
+        const projectData = [
+            { title: "Digital Bootcamp (Q1 2025)", cat: "Professional Training", desc: "An intensive digital skills bootcamp covering content creation, digital marketing, and video editing. Facilitated physical and virtual sessions for students in Zaria and Kaduna.", link: "" },
+            { title: "Digital Nomad 1.0 (Hangout)", cat: "Community & Events", desc: "A free digital hangout aimed at connecting creators and tech enthusiasts. Featured sessions on content strategy, graphics design, and social media management.", link: "" },
+            { title: "MBTech Invest (Crypto App)", cat: "Web Development", desc: "A comprehensive web application for crypto brokers featuring three distinct investment plans and a smart admin control panel for managing user assets.", link: "https://emmy-kingz.github.io/mbtechinvest/" }
+        ];
+        let currentProjIndex = 0;
+        let projTimer;
+        function updateProjectSlide(index) {
+            const content = document.getElementById('project-info-content');
+            if (!content) return;
+            content.style.opacity = 0;
+            setTimeout(() => {
+                const catEl = document.getElementById('proj-cat');
+                const titleEl = document.getElementById('proj-title');
+                const descEl = document.getElementById('proj-desc');
+                const linkBtn = document.getElementById('proj-link');
+                if (catEl) catEl.textContent = projectData[index].cat;
+                if (titleEl) titleEl.textContent = projectData[index].title;
+                if (descEl) descEl.textContent = projectData[index].desc;
+                if (linkBtn) {
+                    if (projectData[index].link) {
+                        linkBtn.href = projectData[index].link;
+                        linkBtn.classList.remove('hidden');
+                        linkBtn.innerHTML = 'View Live App &rarr;';
+                    } else linkBtn.classList.add('hidden');
+                }
+                content.style.opacity = 1;
+            }, 300);
+            for (let i = 0; i < 3; i++) {
+                const img = document.getElementById(`project-img-${i}`);
+                const dot = document.getElementById(`dot-${i}`);
+                if (i === index) {
+                    img?.classList.add('opacity-100', 'z-10');
+                    img?.classList.remove('opacity-0', 'z-0');
+                    dot?.classList.add('bg-primary');
+                    dot?.classList.remove('bg-white/20');
+                } else {
+                    img?.classList.add('opacity-0', 'z-0');
+                    img?.classList.remove('opacity-100', 'z-10');
+                    dot?.classList.add('bg-white/20');
+                    dot?.classList.remove('bg-primary');
+                }
             }
         }
-
-        // Event Listeners
-        serviceSelect.addEventListener('change', calculateCost);
-        hoursInput.addEventListener('input', calculateCost);
+        window.nextProject = function() { currentProjIndex = (currentProjIndex + 1) % 3; updateProjectSlide(currentProjIndex); };
+        window.manualProjectSlide = function(index) { clearInterval(projTimer); currentProjIndex = index; updateProjectSlide(currentProjIndex); projTimer = setInterval(nextProject, 5000); };
+        if (document.getElementById('project-img-0')) { projTimer = setInterval(nextProject, 5000); updateProjectSlide(0); }
         
-        // Init
-        calculateCost();
-
-        // --- SCROLL ANIMATION OBSERVER ---
+        // Scroll reveal observer
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
+            entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        
+        // Mobile menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
     </script>
 </body>
 </html>
