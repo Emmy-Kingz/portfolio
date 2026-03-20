@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Emmanuel Amobi</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        body { background: #f8fafc; font-family: 'Inter', sans-serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .stat-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02); }
+        .tab-btn.active { border-bottom-width: 2px; border-color: #0056b3; color: #0056b3; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; font-weight: 600; }
+        tr:hover { background-color: #f1f5f9; }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- Navigation (matches main portfolio) -->
+    <nav class="glass-nav sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3 group">
+                        <img src="logo.png" alt="EA Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="text-2xl font-serif font-bold text-dark hidden">EA<span class="text-primary">.</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-primary transition">← Back to Portfolio</a>
+                </div>
+                <div class="md:hidden">
+                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-primary"><i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div id="login-container" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-slate-800">Admin Access</h1>
+                <p class="text-slate-500 text-sm mt-1">Secure login required</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                    <input type="email" id="login-email" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                    <input type="password" id="login-password" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" required>
+                </div>
+                <button id="login-btn" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition">Sign In</button>
+                <p id="login-status" class="text-sm text-center text-red-500 mt-2"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container (hidden until login) -->
+    <div id="dashboard-container" class="hidden min-h-screen pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header with Logout and Export -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-dark">Admin Dashboard</h1>
+                    <p class="text-slate-500">Manage bookings & lead messages</p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button id="export-service" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm"><i class="fas fa-download mr-2"></i>Service Inquiries</button>
+                    <button id="export-leads" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm"><i class="fas fa-download mr-2"></i>Lead Messages</button>
+                    <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-sm"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
+                </div>
+            </div>
+
+            <!-- Analytics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-500 text-sm">Total Service Inquiries</p>
+                            <p id="total-service-count" class="text-3xl font-bold text-dark">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i class="fas fa-calendar-alt text-xl"></i></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-500 text-sm">Total Lead Messages</p>
+                            <p id="total-leads-count" class="text-3xl font-bold text-dark">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600"><i class="fas fa-envelope text-xl"></i></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-500 text-sm">This Week (Bookings)</p>
+                            <p id="week-bookings" class="text-3xl font-bold text-dark">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i class="fas fa-chart-line text-xl"></i></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-500 text-sm">This Week (Leads)</p>
+                            <p id="week-leads" class="text-3xl font-bold text-dark">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600"><i class="fas fa-users text-xl"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+                    <h3 class="text-lg font-semibold text-dark mb-4">Daily Bookings (Last 7 Days)</h3>
+                    <canvas id="bookingsChart" height="200"></canvas>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+                    <h3 class="text-lg font-semibold text-dark mb-4">Daily Leads (Last 7 Days)</h3>
+                    <canvas id="leadsChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Tabs for detailed tables -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="flex border-b border-slate-200 px-4">
+                    <button class="tab-btn active px-4 py-3 text-primary font-semibold border-b-2 border-primary" data-tab="service">Service Inquiries</button>
+                    <button class="tab-btn px-4 py-3 text-slate-600 hover:text-primary" data-tab="leads">Lead Messages</button>
+                </div>
+                <div id="service-tab" class="tab-content p-4">
+                    <div class="table-container">
+                        <table id="service-table" class="min-w-full">
+                            <thead>
+                                <tr><th>Name</th><th>Email</th><th>Service</th><th>Hours</th><th>Total</th><th>Message</th><th>Date</th>\\
+                            </thead>
+                            <tbody id="service-tbody">
+                                <tr><td colspan="7" class="text-center text-slate-500">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="leads-tab" class="tab-content hidden p-4">
+                    <div class="table-container">
+                        <table id="leads-table" class="min-w-full">
+                            <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead>
+                            <tbody id="leads-tbody"><tr><td colspan="5" class="text-center text-slate-500">Loading...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (matches main portfolio) -->
+    <footer class="bg-dark text-white py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAl5cDLWFhyooWdsaEoEjhvuxiwpxnT9Wo",
+            authDomain: "emmy-kingz.firebaseapp.com",
+            projectId: "emmy-kingz",
+            storageBucket: "emmy-kingz.firebasestorage.app",
+            messagingSenderId: "915502186621",
+            appId: "1:915502186621:web:501cd6bae4974dd90f3114",
+            measurementId: "G-SLS8MFWCP6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // DOM elements
+        const loginContainer = document.getElementById('login-container');
+        const dashboardContainer = document.getElementById('dashboard-container');
+        const loginBtn = document.getElementById('login-btn');
+        const loginEmail = document.getElementById('login-email');
+        const loginPassword = document.getElementById('login-password');
+        const loginStatus = document.getElementById('login-status');
+        const logoutBtn = document.getElementById('logout-btn');
+        const exportServiceBtn = document.getElementById('export-service');
+        const exportLeadsBtn = document.getElementById('export-leads');
+        
+        let serviceData = [];
+        let leadsData = [];
+        let bookingsChart, leadsChart;
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'border-primary', 'text-primary'));
+                btn.classList.add('active', 'border-primary', 'text-primary');
+                document.getElementById('service-tab').classList.add('hidden');
+                document.getElementById('leads-tab').classList.add('hidden');
+                document.getElementById(`${tab}-tab`).classList.remove('hidden');
+            });
+        });
+
+        // Helper to get last 7 days (date strings YYYY-MM-DD)
+        function getLast7Days() {
+            const days = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                days.push(d.toISOString().slice(0,10));
+            }
+            return days;
+        }
+
+        // Count entries per day for last 7 days
+        function countPerDay(data, dateKey = 'timestamp') {
+            const days = getLast7Days();
+            const counts = new Array(7).fill(0);
+            data.forEach(item => {
+                if (!item[dateKey]) return;
+                const dateStr = item[dateKey].split(' ')[0]; // format from toLocaleString is "MM/DD/YYYY, HH:MM:SS" but we need YYYY-MM-DD
+                // Better to store raw timestamp. Since we have timestamp from Firestore, we'll parse.
+            });
+            // More robust: use raw timestamp from Firestore. But we don't have it in serviceData because we stored formatted date.
+            // We'll store raw timestamp in serviceData and leadsData.
+            // So modify fetch functions to keep timestamp as Date object.
+            return counts;
+        }
+
+        // Fetch and display service inquiries, also update charts
+        async function fetchServiceInquiries() {
+            const tbody = document.getElementById('service-tbody');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center">Loading...</td></tr>';
+            try {
+                const q = query(collection(db, 'service_inquiries'), orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(q);
+                serviceData = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const timestamp = data.timestamp ? data.timestamp.toDate() : null;
+                    serviceData.push({
+                        id: doc.id,
+                        name: data.name || '',
+                        email: data.email || '',
+                        service: data.service || '',
+                        hours: data.hours || '',
+                        total: data.estimatedTotal || '',
+                        message: data.message || '',
+                        date: timestamp ? timestamp.toLocaleString() : '',
+                        timestamp: timestamp
+                    });
+                });
+                renderServiceTable();
+                updateDashboardStats();
+                updateCharts();
+            } catch (error) {
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-red-500">Error loading data</td></tr>';
+            }
+        }
+
+        function renderServiceTable() {
+            const tbody = document.getElementById('service-tbody');
+            if (serviceData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center">No inquiries yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = serviceData.map(item => `
+                <tr>
+                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</td>
+                    <td class="max-w-[200px] truncate" title="${escapeHtml(item.email)}">${escapeHtml(item.email)}</td>
+                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.service)}">${escapeHtml(item.service)}</td>
+                    <td>${escapeHtml(item.hours)}</td>
+                    <td>${escapeHtml(item.total)}</td>
+                    <td class="max-w-[250px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
+                    <td>${escapeHtml(item.date)}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function fetchLeadMessages() {
+            const tbody = document.getElementById('leads-tbody');
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center">Loading...</td></tr>';
+            try {
+                const q = query(collection(db, 'lead_messages'), orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(q);
+                leadsData = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const timestamp = data.timestamp ? data.timestamp.toDate() : null;
+                    leadsData.push({
+                        id: doc.id,
+                        name: data.name || '',
+                        email: data.email || '',
+                        subject: data.subject || '',
+                        message: data.message || '',
+                        date: timestamp ? timestamp.toLocaleString() : '',
+                        timestamp: timestamp
+                    });
+                });
+                renderLeadsTable();
+                updateDashboardStats();
+                updateCharts();
+            } catch (error) {
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-red-500">Error loading data</td></tr>';
+            }
+        }
+
+        function renderLeadsTable() {
+            const tbody = document.getElementById('leads-tbody');
+            if (leadsData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">No messages yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = leadsData.map(item => `
+                <tr>
+                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</td>
+                    <td class="max-w-[200px] truncate" title="${escapeHtml(item.email)}">${escapeHtml(item.email)}</td>
+                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.subject)}">${escapeHtml(item.subject)}</td>
+                    <td class="max-w-[300px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
+                    <td>${escapeHtml(item.date)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('total-service-count').textContent = serviceData.length;
+            document.getElementById('total-leads-count').textContent = leadsData.length;
+
+            // Count this week (last 7 days)
+            const now = new Date();
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(now.getDate() - 7);
+            const weekBookings = serviceData.filter(item => item.timestamp && item.timestamp >= sevenDaysAgo).length;
+            const weekLeads = leadsData.filter(item => item.timestamp && item.timestamp >= sevenDaysAgo).length;
+            document.getElementById('week-bookings').textContent = weekBookings;
+            document.getElementById('week-leads').textContent = weekLeads;
+        }
+
+        function updateCharts() {
+            const days = getLast7Days();
+            // Count bookings per day
+            const bookingsCounts = new Array(7).fill(0);
+            serviceData.forEach(item => {
+                if (!item.timestamp) return;
+                const dateStr = item.timestamp.toISOString().slice(0,10);
+                const idx = days.indexOf(dateStr);
+                if (idx !== -1) bookingsCounts[idx]++;
+            });
+            // Count leads per day
+            const leadsCounts = new Array(7).fill(0);
+            leadsData.forEach(item => {
+                if (!item.timestamp) return;
+                const dateStr = item.timestamp.toISOString().slice(0,10);
+                const idx = days.indexOf(dateStr);
+                if (idx !== -1) leadsCounts[idx]++;
+            });
+
+            // Format days for display (e.g., "Mar 20")
+            const labels = days.map(d => {
+                const date = new Date(d);
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            });
+
+            if (bookingsChart) bookingsChart.destroy();
+            if (leadsChart) leadsChart.destroy();
+
+            const ctxBookings = document.getElementById('bookingsChart').getContext('2d');
+            const ctxLeads = document.getElementById('leadsChart').getContext('2d');
+
+            bookingsChart = new Chart(ctxBookings, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Bookings',
+                        data: bookingsCounts,
+                        backgroundColor: '#0056b3',
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } } }
+            });
+
+            leadsChart = new Chart(ctxLeads, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Leads',
+                        data: leadsCounts,
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249,115,22,0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#f97316'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true }
+            });
+        }
+
+        // Export to CSV
+        function exportToCSV(data, filename, columns) {
+            const csvRows = [];
+            csvRows.push(columns.map(col => `"${col.label}"`).join(','));
+            for (const row of data) {
+                const values = columns.map(col => {
+                    let val = row[col.key] || '';
+                    val = String(val).replace(/"/g, '""');
+                    return `"${val}"`;
+                });
+                csvRows.push(values.join(','));
+            }
+            const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        exportServiceBtn.addEventListener('click', () => {
+            const columns = [
+                { label: 'Name', key: 'name' }, { label: 'Email', key: 'email' },
+                { label: 'Service', key: 'service' }, { label: 'Hours', key: 'hours' },
+                { label: 'Total', key: 'total' }, { label: 'Message', key: 'message' },
+                { label: 'Date', key: 'date' }
+            ];
+            exportToCSV(serviceData, 'service_inquiries.csv', columns);
+        });
+
+        exportLeadsBtn.addEventListener('click', () => {
+            const columns = [
+                { label: 'Name', key: 'name' }, { label: 'Email', key: 'email' },
+                { label: 'Subject', key: 'subject' }, { label: 'Message', key: 'message' },
+                { label: 'Date', key: 'date' }
+            ];
+            exportToCSV(leadsData, 'lead_messages.csv', columns);
+        });
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Authentication
+        loginBtn.addEventListener('click', async () => {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            if (!email || !password) {
+                loginStatus.textContent = 'Please enter email and password';
+                return;
+            }
+            loginStatus.textContent = '';
+            loginBtn.disabled = true;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                loginStatus.textContent = 'Login failed: ' + error.message;
+                loginBtn.disabled = false;
+            }
+        });
+
+        logoutBtn.addEventListener('click', async () => {
+            await signOut(auth);
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === 'emmanuel.amobi03@gmail.com') {
+                loginContainer.classList.add('hidden');
+                dashboardContainer.classList.remove('hidden');
+                fetchServiceInquiries();
+                fetchLeadMessages();
+            } else {
+                if (user && user.email !== 'emmanuel.amobi03@gmail.com') {
+                    alert('Unauthorized access. This dashboard is for superadmin only.');
+                    signOut(auth);
+                }
+                loginContainer.classList.remove('hidden');
+                dashboardContainer.classList.add('hidden');
+                loginBtn.disabled = false;
+                loginStatus.textContent = '';
+                loginEmail.value = '';
+                loginPassword.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
