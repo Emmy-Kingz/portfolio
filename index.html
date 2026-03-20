@@ -421,14 +421,12 @@
             </div>
 
             <!-- Cost Estimator Calculator -->
-            <div class="max-w-3xl mx-auto bg-dark rounded-2xl p-8 md:p-10 text-white shadow-2xl border border-white/10">
+           <div class="max-w-3xl mx-auto bg-dark rounded-2xl p-8 md:p-10 text-white shadow-2xl border border-white/10">
                 <div class="text-center mb-8">
                     <h3 class="text-2xl font-bold mb-2">Get an Instant Quote</h3>
                     <p class="text-slate-400 text-sm">Select a service and your location to estimate project costs.</p>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <!-- Service Select -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Service</label>
                         <select id="serviceSelect" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition cursor-pointer">
@@ -440,8 +438,6 @@
                             <option value="web" class="bg-dark">Web/IT Services</option>
                         </select>
                     </div>
-
-                    <!-- Location Toggle -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Client Location</label>
                         <div class="flex bg-white/10 rounded-lg p-1 border border-white/20">
@@ -450,9 +446,7 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <!-- Hours Input -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Estimated Hours</label>
                         <div class="relative">
@@ -460,23 +454,18 @@
                             <span class="absolute right-4 top-3.5 text-slate-400 text-sm">hrs</span>
                         </div>
                     </div>
-
-                    <!-- Total Display -->
                     <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
                         <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Estimated Cost</p>
                         <div id="totalCost" class="text-3xl font-bold text-green-400">₦150,000</div>
                     </div>
                 </div>
-
-                <!-- Call to Action Logic -->
                 <div class="mt-8 text-center">
-                    <a id="calculator-cta" href="mailto:emmanuel.amobi03@gmail.com" class="inline-block w-full md:w-auto px-8 py-3 bg-white text-dark font-bold rounded-lg hover:bg-slate-200 transition">
+                    <button id="openBookingBtn" class="inline-block w-full md:w-auto px-8 py-3 bg-white text-dark font-bold rounded-lg hover:bg-slate-200 transition">
                         Book this Service
-                    </a>
-                    <p class="text-xs text-slate-500 mt-3">*Final quote may vary based on project complexity.</p>
+                    </button>
+                    <p class="text-xs text-slate-500 mt-3">*Final quote may vary based on project complexity and timeline.</p>
                 </div>
             </div>
-
         </div>
     </section>
 
