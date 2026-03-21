@@ -138,12 +138,18 @@
             <!-- Tabs -->
             <div class="bg-white rounded-xl shadow-sm p-1 inline-flex mb-6 border border-gray-100"><button id="inquiries-tab" class="px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-primary/10 text-primary">Service Inquiries</button><button id="leads-tab" class="px-6 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800 transition-all duration-200">General Leads</button></div>
 
-            <!-- Inquiries Content (with action column) -->
+            <!-- Inquiries Content (with search) -->
             <div id="inquiries-content" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-4 border-b border-gray-100">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="inquiries-search" placeholder="Search by name, email, service, or message..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-primary">
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
-                        Dashboard<th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Service</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Hours</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Total</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>\\
+                            <tr><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Service</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Hours</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Total</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>\\
                         </thead>
                         <tbody id="inquiries-table-body" class="divide-y divide-gray-100"></tbody>
                     </table>
@@ -151,8 +157,14 @@
                 <div id="inquiries-loading" class="py-12 text-center hidden"><div class="spinner mx-auto"></div></div>
             </div>
 
-            <!-- Leads Content (with action column) -->
+            <!-- Leads Content (with search) -->
             <div id="leads-content" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hidden">
+                <div class="p-4 border-b border-gray-100">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="leads-search" placeholder="Search by name, email, subject, or message..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-primary">
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -244,25 +256,27 @@
 
         let serviceData = [], leadsData = [];
 
-        // Fetch Service Inquiries
-        async function fetchServiceInquiries() {
-            const tbody = document.getElementById('inquiries-table-body');
-            const totalEl = document.getElementById('total-inquiries');
-            const loader = document.getElementById('inquiries-loading');
-            tbody.innerHTML = ''; loader.classList.remove('hidden');
-            try {
-                const q = query(collection(db, 'service_inquiries'), orderBy('timestamp', 'desc'));
-                const snap = await getDocs(q);
-                serviceData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                totalEl.textContent = serviceData.length;
-                renderServiceTable();
-            } catch (err) { console.error(err); tbody.innerHTML = `<tr><td colspan="8" class="text-center text-red-500 py-8">Error: ${err.message}</td></tr>`; }
-            finally { loader.classList.add('hidden'); }
-        }
+        // Search and render for Service Inquiries
+        const inquiriesSearch = document.getElementById('inquiries-search');
+        let inquiriesFiltered = [];
+
         function renderServiceTable() {
             const tbody = document.getElementById('inquiries-table-body');
-            if (!serviceData.length) { tbody.innerHTML = '<tr><td colspan="8" class="text-center text-gray-500 py-8">No service inquiries yet.</td></tr>'; return; }
-            tbody.innerHTML = serviceData.map(item => `
+            const searchTerm = inquiriesSearch.value.toLowerCase().trim();
+            if (!searchTerm) {
+                inquiriesFiltered = serviceData;
+            } else {
+                inquiriesFiltered = serviceData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(searchTerm)) ||
+                    (item.email && item.email.toLowerCase().includes(searchTerm)) ||
+                    (item.service && item.service.toLowerCase().includes(searchTerm)) ||
+                    (item.message && item.message.toLowerCase().includes(searchTerm)) ||
+                    (item.hours && String(item.hours).includes(searchTerm)) ||
+                    (item.estimatedTotal && item.estimatedTotal.toLowerCase().includes(searchTerm))
+                );
+            }
+            if (!inquiriesFiltered.length) { tbody.innerHTML = '<tr><td colspan="8" class="text-center text-gray-500 py-8">No matching service inquiries.</td></tr>'; return; }
+            tbody.innerHTML = inquiriesFiltered.map(item => `
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="px-6 py-4 text-sm font-semibold text-gray-900">${escapeHtml(item.name)}</td>
                     <td class="px-6 py-4 text-xs text-gray-600">${escapeHtml(item.email)}</td>
@@ -279,6 +293,54 @@
             `).join('');
         }
 
+        // Search and render for Lead Messages
+        const leadsSearch = document.getElementById('leads-search');
+        let leadsFiltered = [];
+
+        function renderLeadsTable() {
+            const tbody = document.getElementById('leads-table-body');
+            const searchTerm = leadsSearch.value.toLowerCase().trim();
+            if (!searchTerm) {
+                leadsFiltered = leadsData;
+            } else {
+                leadsFiltered = leadsData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(searchTerm)) ||
+                    (item.email && item.email.toLowerCase().includes(searchTerm)) ||
+                    (item.subject && item.subject.toLowerCase().includes(searchTerm)) ||
+                    (item.message && item.message.toLowerCase().includes(searchTerm))
+                );
+            }
+            if (!leadsFiltered.length) { tbody.innerHTML = '<tr><td colspan="6" class="text-center text-gray-500 py-8">No matching lead messages.</td></tr>'; return; }
+            tbody.innerHTML = leadsFiltered.map(item => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 text-sm font-semibold text-gray-900">${escapeHtml(item.name)}</td>
+                    <td class="px-6 py-4 text-xs text-gray-600">${escapeHtml(item.email)}</td>
+                    <td class="px-6 py-4 text-sm">${escapeHtml(item.subject)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600 max-w-[300px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
+                    <td class="px-6 py-4 text-xs text-gray-400">${formatDate(item.timestamp)}</td>
+                    <td class="px-6 py-4">
+                        <button class="text-red-500 hover:text-red-700" onclick="deleteInquiry('lead_messages', '${item.id}')"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Fetch Service Inquiries
+        async function fetchServiceInquiries() {
+            const tbody = document.getElementById('inquiries-table-body');
+            const totalEl = document.getElementById('total-inquiries');
+            const loader = document.getElementById('inquiries-loading');
+            tbody.innerHTML = ''; loader.classList.remove('hidden');
+            try {
+                const q = query(collection(db, 'service_inquiries'), orderBy('timestamp', 'desc'));
+                const snap = await getDocs(q);
+                serviceData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                totalEl.textContent = serviceData.length;
+                renderServiceTable();
+            } catch (err) { console.error(err); tbody.innerHTML = `<tr><td colspan="8" class="text-center text-red-500 py-8">Error: ${err.message}</td></tr>`; }
+            finally { loader.classList.add('hidden'); }
+        }
+
         // Fetch Lead Messages
         async function fetchLeadMessages() {
             const tbody = document.getElementById('leads-table-body');
@@ -293,22 +355,6 @@
                 renderLeadsTable();
             } catch (err) { console.error(err); tbody.innerHTML = `<tr><td colspan="6" class="text-center text-red-500 py-8">Error: ${err.message}</td></tr>`; }
             finally { loader.classList.add('hidden'); }
-        }
-        function renderLeadsTable() {
-            const tbody = document.getElementById('leads-table-body');
-            if (!leadsData.length) { tbody.innerHTML = '<tr><td colspan="6" class="text-center text-gray-500 py-8">No lead messages yet.</td></tr>'; return; }
-            tbody.innerHTML = leadsData.map(item => `
-                <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="px-6 py-4 text-sm font-semibold text-gray-900">${escapeHtml(item.name)}</td>
-                    <td class="px-6 py-4 text-xs text-gray-600">${escapeHtml(item.email)}</td>
-                    <td class="px-6 py-4 text-sm">${escapeHtml(item.subject)}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600 max-w-[300px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
-                    <td class="px-6 py-4 text-xs text-gray-400">${formatDate(item.timestamp)}</td>
-                    <td class="px-6 py-4">
-                        <button class="text-red-500 hover:text-red-700" onclick="deleteInquiry('lead_messages', '${item.id}')"><i class="fas fa-trash-alt"></i></button>
-                    </td>
-                </tr>
-            `).join('');
         }
 
         // Edit Modal
@@ -390,6 +436,10 @@
         function exportToCSV(data, filename, columns) { const rows = [columns.map(c => `"${c.label}"`).join(',')]; for (const row of data) { rows.push(columns.map(c => { let v = row[c.key] || ''; if (c.key === 'timestamp') v = formatDate(v); return `"${String(v).replace(/"/g, '""')}"`; }).join(',')); } const blob = new Blob([rows.join('\n')], { type: 'text/csv' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href); }
         document.getElementById('export-service').addEventListener('click', () => exportToCSV(serviceData, 'service_inquiries.csv', [{label:'Name',key:'name'},{label:'Email',key:'email'},{label:'Service',key:'service'},{label:'Hours',key:'hours'},{label:'Total',key:'estimatedTotal'},{label:'Message',key:'message'},{label:'Date',key:'timestamp'}]));
         document.getElementById('export-leads').addEventListener('click', () => exportToCSV(leadsData, 'lead_messages.csv', [{label:'Name',key:'name'},{label:'Email',key:'email'},{label:'Subject',key:'subject'},{label:'Message',key:'message'},{label:'Date',key:'timestamp'}]));
+
+        // Search event listeners
+        inquiriesSearch.addEventListener('input', renderServiceTable);
+        leadsSearch.addEventListener('input', renderLeadsTable);
 
         // Tabs
         inquiriesTab.addEventListener('click', () => { inquiriesTab.className = 'px-6 py-2.5 rounded-lg text-sm font-medium bg-primary/10 text-primary'; leadsTab.className = 'px-6 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800'; inquiriesContent.classList.remove('hidden'); leadsContent.classList.add('hidden'); });
