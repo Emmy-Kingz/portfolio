@@ -35,7 +35,6 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom Styles matching Index -->
     <style>
         :root {
             --primary: #0056b3;
@@ -54,69 +53,20 @@
             flex-direction: column;
         }
         
-        .font-heading { 
-            font-family: 'Space Grotesk', sans-serif; 
-        }
-        
-        .text-gradient { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
-        
-        .bg-gradient-primary { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-        }
-        
-        .glass-nav { 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(12px); 
-            border-bottom: 1px solid rgba(0,0,0,0.05); 
-        }
-        
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.6); 
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); 
-        }
-
-        .stat-card { 
-            transition: all 0.3s ease; 
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.04);
-        }
-        .stat-card:hover { 
-            transform: translateY(-4px); 
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02); 
-            border-color: rgba(0, 86, 179, 0.1);
-        }
-        
-        .btn-primary { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            color: white; 
-            transition: all 0.3s ease; 
-        }
-        .btn-primary:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2); 
-        }
-
-        /* Custom Scrollbar */
+        .font-heading { font-family: 'Space Grotesk', sans-serif; }
+        .text-gradient { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bg-gradient-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); }
+        .stat-card { transition: all 0.3s ease; background: #ffffff; border: 1px solid rgba(0,0,0,0.04); }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02); border-color: rgba(0, 86, 179, 0.1); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2); }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        .spinner {
-            border: 3px solid rgba(0, 86, 179, 0.1);
-            border-radius: 50%;
-            border-top: 3px solid var(--primary);
-            width: 24px;
-            height: 24px;
-            -webkit-animation: spin 1s linear infinite;
-            animation: spin 1s linear infinite;
-        }
+        .spinner { border: 3px solid rgba(0, 86, 179, 0.1); border-radius: 50%; border-top: 3px solid var(--primary); width: 24px; height: 24px; -webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -140,7 +90,7 @@
             
             <div class="space-y-5">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-regular fa-envelope text-gray-400"></i>
@@ -149,7 +99,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-solid fa-lock text-gray-400"></i>
@@ -289,36 +239,24 @@
                 <div class="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold font-heading text-sm">E</div>
                 <p class="text-sm text-gray-500 font-medium">© 2025 Emmanuel Amobi. All rights reserved.</p>
             </div>
-            
             <div class="flex items-center gap-4">
-                <a href="https://linkedin.com/in/emmanuel-amobi" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/10 transition-all">
-                    <i class="fa-brands fa-linkedin-in text-sm"></i>
-                </a>
-                <a href="https://github.com/Emmy-Kingz" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-dark hover:bg-dark/10 transition-all">
-                    <i class="fa-brands fa-github text-sm"></i>
-                </a>
-                <a href="https://instagram.com/emmanuelamobi_" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-accent/10 transition-all">
-                    <i class="fa-brands fa-instagram text-sm"></i>
-                </a>
+                <a href="https://linkedin.com/in/emmanuel-amobi" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/10 transition-all"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                <a href="https://github.com/Emmy-Kingz" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-dark hover:bg-dark/10 transition-all"><i class="fa-brands fa-github text-sm"></i></a>
+                <a href="https://instagram.com/emmanuelamobi_" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-accent/10 transition-all"><i class="fa-brands fa-instagram text-sm"></i></a>
             </div>
-
-            <div class="text-xs text-gray-400 font-medium flex items-center gap-1">
-                Built with <i class="fa-solid fa-heart text-accent mx-0.5"></i> for Excellence
-            </div>
+            <div class="text-xs text-gray-400 font-medium flex items-center gap-1">Built with <i class="fa-solid fa-heart text-accent mx-0.5"></i> for Excellence</div>
         </div>
     </footer>
 
-    <!-- Firebase SDK Setup (Correct Config) -->
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-        // Your correct Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyAl5cDLWFhyooWdsaEoEjhvuxiwpxnT9Wo",
             authDomain: "emmy-kingz.firebaseapp.com",
-            databaseURL: "https://emmy-kingz-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "emmy-kingz",
             storageBucket: "emmy-kingz.firebasestorage.app",
             messagingSenderId: "915502186621",
@@ -343,8 +281,18 @@
         const inquiriesContent = document.getElementById('inquiries-content');
         const leadsContent = document.getElementById('leads-content');
 
-        // Helper: format date
-        const formatDate = (timestamp) => {
+        // Safe escape function
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function formatDate(timestamp) {
             if (!timestamp) return 'N/A';
             try {
                 const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -358,30 +306,18 @@
             } catch {
                 return 'Invalid Date';
             }
-        };
+        }
 
-        // Helper: escape HTML
-        const escapeHtml = (str) => {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        };
+        function getServiceBadge(service) {
+            const safeService = escapeHtml(service || 'N/A');
+            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">${safeService}</span>`;
+        }
 
-        // Service badge
-        const getServiceBadge = (service) => {
-            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">${escapeHtml(service || 'N/A')}</span>`;
-        };
-
-        // Data storage
         let serviceData = [];
         let leadsData = [];
 
         // Fetch Service Inquiries
-        const fetchServiceInquiries = async () => {
+        async function fetchServiceInquiries() {
             const tableBody = document.getElementById('inquiries-table-body');
             const totalEl = document.getElementById('total-inquiries');
             const loader = document.getElementById('inquiries-loading');
@@ -409,14 +345,14 @@
                 totalEl.textContent = serviceData.length;
                 renderServiceTable();
             } catch (error) {
-                console.error(error);
-                tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-red-500 py-8">Error loading data. Check console.</td></tr>';
+                console.error('Firestore error:', error);
+                tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-red-500 py-8">Error: ${error.message}</td></tr>`;
             } finally {
                 loader.classList.add('hidden');
             }
-        };
+        }
 
-        const renderServiceTable = () => {
+        function renderServiceTable() {
             const tableBody = document.getElementById('inquiries-table-body');
             if (serviceData.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-gray-500 py-8">No service inquiries yet.</td></tr>';
@@ -433,10 +369,10 @@
                     <td class="px-6 py-4 text-xs text-gray-400">${formatDate(item.timestamp)}</td>
                 </tr>
             `).join('');
-        };
+        }
 
         // Fetch Lead Messages
-        const fetchLeadMessages = async () => {
+        async function fetchLeadMessages() {
             const tableBody = document.getElementById('leads-table-body');
             const totalEl = document.getElementById('total-leads');
             const loader = document.getElementById('leads-loading');
@@ -462,14 +398,14 @@
                 totalEl.textContent = leadsData.length;
                 renderLeadsTable();
             } catch (error) {
-                console.error(error);
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-red-500 py-8">Error loading data. Check console.</td></tr>';
+                console.error('Firestore error:', error);
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500 py-8">Error: ${error.message}</td></tr>`;
             } finally {
                 loader.classList.add('hidden');
             }
-        };
+        }
 
-        const renderLeadsTable = () => {
+        function renderLeadsTable() {
             const tableBody = document.getElementById('leads-table-body');
             if (leadsData.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500 py-8">No lead messages yet.</td></tr>';
@@ -484,10 +420,10 @@
                     <td class="px-6 py-4 text-xs text-gray-400">${formatDate(item.timestamp)}</td>
                 </tr>
             `).join('');
-        };
+        }
 
         // Export to CSV
-        const exportToCSV = (data, filename, columns) => {
+        function exportToCSV(data, filename, columns) {
             const csvRows = [];
             csvRows.push(columns.map(col => `"${col.label}"`).join(','));
             for (const row of data) {
@@ -508,7 +444,7 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        };
+        }
 
         // Export handlers
         document.getElementById('export-service').addEventListener('click', () => {
