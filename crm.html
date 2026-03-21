@@ -149,7 +149,16 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
-                            <tr><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Service</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Hours</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Total</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>\\
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Service</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Hours</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Total</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
+                            </tr>
                         </thead>
                         <tbody id="inquiries-table-body" class="divide-y divide-gray-100"></tbody>
                     </table>
@@ -168,7 +177,14 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
-                            <tr><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Subject</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th><th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>\\
+                            32
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Subject</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
+                            </tr>
                         </thead>
                         <tbody id="leads-table-body" class="divide-y divide-gray-100"></tbody>
                     </table>
@@ -275,7 +291,7 @@
                     (item.estimatedTotal && item.estimatedTotal.toLowerCase().includes(searchTerm))
                 );
             }
-            if (!inquiriesFiltered.length) { tbody.innerHTML = '<tr><td colspan="8" class="text-center text-gray-500 py-8">No matching service inquiries.</td></tr>'; return; }
+            if (!inquiriesFiltered.length) { tbody.innerHTML = '}<tr><td colspan="8" class="text-center text-gray-500 py-8">No matching service inquiries.</td></tr>'; return; }
             tbody.innerHTML = inquiriesFiltered.map(item => `
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="px-6 py-4 text-sm font-semibold text-gray-900">${escapeHtml(item.name)}</td>
