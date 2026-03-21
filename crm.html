@@ -4,508 +4,424 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Emmanuel Amobi</title>
-    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    
+    <!-- Fonts from Index -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS & Configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0056b3',
+                        secondary: '#00a8cc',
+                        accent: '#ff6b6b',
+                        dark: '#1a1a2e',
+                        light: '#f8f9fa'
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Custom Styles matching Index -->
     <style>
-        body { background: #f8fafc; font-family: 'Inter', sans-serif; }
-        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .stat-card { transition: transform 0.2s, box-shadow 0.2s; }
-        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02); }
-        .tab-btn.active { border-bottom-width: 2px; border-color: #0056b3; color: #0056b3; }
-        .table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background-color: #f8fafc; font-weight: 600; }
-        tr:hover { background-color: #f1f5f9; }
+        :root {
+            --primary: #0056b3;
+            --secondary: #00a8cc;
+            --accent: #ff6b6b;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+        }
+        
+        body { 
+            background: #f8fafc; 
+            font-family: 'Inter', sans-serif; 
+            color: #334155;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .font-heading { 
+            font-family: 'Space Grotesk', sans-serif; 
+        }
+        
+        .text-gradient { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        
+        .bg-gradient-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+        }
+        
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+        }
+        
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); 
+        }
+
+        .stat-card { 
+            transition: all 0.3s ease; 
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .stat-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02); 
+            border-color: rgba(0, 86, 179, 0.1);
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            color: white; 
+            transition: all 0.3s ease; 
+        }
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2); 
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .spinner {
+            border: 3px solid rgba(0, 86, 179, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid var(--primary);
+            width: 24px;
+            height: 24px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="font-sans">
+<body class="antialiased selection:bg-primary/20 selection:text-primary">
 
-    <!-- Navigation (matches main portfolio) -->
-    <nav class="glass-nav sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex items-center gap-3 group">
-                        <img src="logo.png" alt="EA Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="text-2xl font-serif font-bold text-dark hidden">EA<span class="text-primary">.</span></span>
-                    </a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-primary transition">← Back to Portfolio</a>
-                </div>
-                <div class="md:hidden">
-                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-primary"><i class="fas fa-arrow-left"></i></a>
-                </div>
-            </div>
+    <!-- LOGIN CONTAINER -->
+    <div id="login-container" class="flex-grow flex items-center justify-center relative overflow-hidden hidden px-4 py-20">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
         </div>
-    </nav>
 
-    <!-- Login Container -->
-    <div id="login-container" class="min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-            <div class="text-center mb-6">
-                <h1 class="text-2xl font-bold text-slate-800">Admin Access</h1>
-                <p class="text-slate-500 text-sm mt-1">Secure login required</p>
+        <div class="max-w-md w-full glass-card rounded-2xl p-8 sm:p-10 relative z-10">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-shield-halved text-2xl text-primary"></i>
+                </div>
+                <h2 class="font-heading text-3xl font-bold text-dark mb-2">Admin <span class="text-gradient">Portal</span></h2>
+                <p class="text-gray-500 text-sm">Secure access to your CRM dashboard.</p>
             </div>
-            <div class="space-y-4">
+            
+            <div class="space-y-5">
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                    <input type="email" id="login-email" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" required>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="login-email" class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none bg-white/50" placeholder="admin@example.com">
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
-                    <input type="password" id="login-password" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-primary" required>
-                </div>
-                <button id="login-btn" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition">Sign In</button>
-                <p id="login-status" class="text-sm text-center text-red-500 mt-2"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard Container (hidden until login) -->
-    <div id="dashboard-container" class="hidden min-h-screen pb-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Header with Logout and Export -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                <div>
-                    <h1 class="text-3xl font-bold text-dark">Admin Dashboard</h1>
-                    <p class="text-slate-500">Manage bookings & lead messages</p>
-                </div>
-                <div class="flex flex-wrap gap-3">
-                    <button id="export-service" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm"><i class="fas fa-download mr-2"></i>Service Inquiries</button>
-                    <button id="export-leads" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition shadow-sm"><i class="fas fa-download mr-2"></i>Lead Messages</button>
-                    <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-sm"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
-                </div>
-            </div>
-
-            <!-- Analytics Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-500 text-sm">Total Service Inquiries</p>
-                            <p id="total-service-count" class="text-3xl font-bold text-dark">0</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
                         </div>
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i class="fas fa-calendar-alt text-xl"></i></div>
+                        <input type="password" id="login-password" class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none bg-white/50" placeholder="••••••••">
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-500 text-sm">Total Lead Messages</p>
-                            <p id="total-leads-count" class="text-3xl font-bold text-dark">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600"><i class="fas fa-envelope text-xl"></i></div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-500 text-sm">This Week (Bookings)</p>
-                            <p id="week-bookings" class="text-3xl font-bold text-dark">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i class="fas fa-chart-line text-xl"></i></div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-500 text-sm">This Week (Leads)</p>
-                            <p id="week-leads" class="text-3xl font-bold text-dark">0</p>
-                        </div>
-                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600"><i class="fas fa-users text-xl"></i></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts Row -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
-                    <h3 class="text-lg font-semibold text-dark mb-4">Daily Bookings (Last 7 Days)</h3>
-                    <canvas id="bookingsChart" height="200"></canvas>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
-                    <h3 class="text-lg font-semibold text-dark mb-4">Daily Leads (Last 7 Days)</h3>
-                    <canvas id="leadsChart" height="200"></canvas>
-                </div>
-            </div>
-
-            <!-- Tabs for detailed tables -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-                <div class="flex border-b border-slate-200 px-4">
-                    <button class="tab-btn active px-4 py-3 text-primary font-semibold border-b-2 border-primary" data-tab="service">Service Inquiries</button>
-                    <button class="tab-btn px-4 py-3 text-slate-600 hover:text-primary" data-tab="leads">Lead Messages</button>
-                </div>
-                <div id="service-tab" class="tab-content p-4">
-                    <div class="table-container">
-                        <table id="service-table" class="min-w-full">
-                            <thead>
-                                <tr><th>Name</th><th>Email</th><th>Service</th><th>Hours</th><th>Total</th><th>Message</th><th>Date</th>\\
-                            </thead>
-                            <tbody id="service-tbody">
-                                <tr><td colspan="7" class="text-center text-slate-500">Loading...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div id="leads-tab" class="tab-content hidden p-4">
-                    <div class="table-container">
-                        <table id="leads-table" class="min-w-full">
-                            <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead>
-                            <tbody id="leads-tbody"><tr><td colspan="5" class="text-center text-slate-500">Loading...</td></tr></tbody>
-                        </table>
-                    </div>
-                </div>
+                <button id="login-btn" class="w-full btn-primary py-3 rounded-xl font-semibold flex justify-center items-center gap-2 mt-2">
+                    <span>Sign In</span>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+                <div id="login-status" class="text-red-500 text-sm text-center mt-2 h-5 font-medium"></div>
             </div>
         </div>
     </div>
 
-    <!-- Footer (matches main portfolio) -->
-    <footer class="bg-dark text-white py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
+    <!-- DASHBOARD CONTAINER -->
+    <div id="dashboard-container" class="flex-grow hidden flex flex-col">
+        <!-- Navbar -->
+        <nav class="glass-nav sticky top-0 z-40 px-6 py-4 flex justify-between items-center shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold font-heading text-xl shadow-lg shadow-primary/20">
+                    E
+                </div>
+                <div>
+                    <h1 class="font-heading text-xl font-bold text-dark hidden sm:block">Emmanuel <span class="text-primary">Amobi</span></h1>
+                    <span class="text-xs text-gray-500 font-medium tracking-wider uppercase hidden sm:block">CRM Dashboard</span>
+                </div>
+            </div>
+            <button id="logout-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-accent transition-colors font-medium text-sm">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                <span class="hidden sm:inline">Logout</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+            <div class="mb-8">
+                <h2 class="font-heading text-2xl sm:text-3xl font-bold text-dark mb-1">Welcome back, <span class="text-gradient">Admin</span></h2>
+                <p class="text-gray-500">Here's an overview of your recent leads and inquiries.</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="stat-card rounded-2xl p-6 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full -z-10"></div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Service Inquiries</p>
+                            <h3 class="font-heading text-4xl font-bold text-dark" id="total-inquiries">-</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card rounded-2xl p-6 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-bl-full -z-10"></div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">General Leads</p>
+                            <h3 class="font-heading text-4xl font-bold text-dark" id="total-leads">-</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary text-xl">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-white rounded-xl shadow-sm p-1 inline-flex mb-6 border border-gray-100">
+                <button id="inquiries-tab" class="px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-primary/10 text-primary">
+                    Service Inquiries
+                </button>
+                <button id="leads-tab" class="px-6 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800 transition-all duration-200">
+                    General Leads
+                </button>
+            </div>
+
+            <!-- Inquiries Content -->
+            <div id="inquiries-content" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Contact</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Service</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Budget</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inquiries-table-body" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+                <div id="inquiries-loading" class="py-12 text-center hidden"><div class="spinner mx-auto"></div></div>
+            </div>
+
+            <!-- Leads Content (Initially Hidden) -->
+            <div id="leads-content" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Subject</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+                <div id="leads-loading" class="py-12 text-center hidden"><div class="spinner mx-auto"></div></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER (Matches Index) -->
+    <footer class="bg-white border-t border-gray-100 py-8 px-6 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold font-heading text-sm">E</div>
+                <p class="text-sm text-gray-500 font-medium">© 2024 Emmanuel Amobi. All rights reserved.</p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="https://linkedin.com/in/emmanuelamobi" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/10 transition-all">
+                    <i class="fa-brands fa-linkedin-in text-sm"></i>
+                </a>
+                <a href="https://github.com/Emmy-Kingz" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-dark hover:bg-dark/10 transition-all">
+                    <i class="fa-brands fa-github text-sm"></i>
+                </a>
+                <a href="https://instagram.com/emmy_kingz" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-accent/10 transition-all">
+                    <i class="fa-brands fa-instagram text-sm"></i>
+                </a>
+            </div>
+
+            <div class="text-xs text-gray-400 font-medium flex items-center gap-1">
+                Built with <i class="fa-solid fa-heart text-accent mx-0.5"></i> for Excellence
+            </div>
         </div>
     </footer>
 
+    <!-- Firebase SDK Setup -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyAl5cDLWFhyooWdsaEoEjhvuxiwpxnT9Wo",
-            authDomain: "emmy-kingz.firebaseapp.com",
-            projectId: "emmy-kingz",
-            storageBucket: "emmy-kingz.firebasestorage.app",
-            messagingSenderId: "915502186621",
-            appId: "1:915502186621:web:501cd6bae4974dd90f3114",
-            measurementId: "G-SLS8MFWCP6"
+            apiKey: "AIzaSyD-YOUR_KEY_HERE-p7u5gS88", 
+            authDomain: "portfoio-ad5b1.firebaseapp.com",
+            projectId: "portfoio-ad5b1",
+            storageBucket: "portfoio-ad5b1.appspot.com",
+            messagingSenderId: "125633659223",
+            appId: "1:125633659223:web:9479b1202e72404e1ba1c3",
+            measurementId: "G-DFZ2ZZL6F3"
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // DOM elements
+        // Elements
         const loginContainer = document.getElementById('login-container');
         const dashboardContainer = document.getElementById('dashboard-container');
         const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
         const loginEmail = document.getElementById('login-email');
         const loginPassword = document.getElementById('login-password');
         const loginStatus = document.getElementById('login-status');
-        const logoutBtn = document.getElementById('logout-btn');
-        const exportServiceBtn = document.getElementById('export-service');
-        const exportLeadsBtn = document.getElementById('export-leads');
-        
-        let serviceData = [];
-        let leadsData = [];
-        let bookingsChart, leadsChart;
+        const inquiriesTab = document.getElementById('inquiries-tab');
+        const leadsTab = document.getElementById('leads-tab');
+        const inquiriesContent = document.getElementById('inquiries-content');
+        const leadsContent = document.getElementById('leads-content');
 
-        // Tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tab = btn.getAttribute('data-tab');
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'border-primary', 'text-primary'));
-                btn.classList.add('active', 'border-primary', 'text-primary');
-                document.getElementById('service-tab').classList.add('hidden');
-                document.getElementById('leads-tab').classList.add('hidden');
-                document.getElementById(`${tab}-tab`).classList.remove('hidden');
-            });
+        // Helpers
+        const formatDate = (dateString) => {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+        };
+
+        const getServiceBadge = (service) => {
+            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">${service || 'N/A'}</span>`;
+        };
+
+        // Tabs
+        inquiriesTab.addEventListener('click', () => {
+            inquiriesTab.className = 'px-6 py-2.5 rounded-lg text-sm font-medium bg-primary/10 text-primary';
+            leadsTab.className = 'px-6 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800';
+            inquiriesContent.classList.remove('hidden');
+            leadsContent.classList.add('hidden');
         });
 
-        // Helper to get last 7 days (date strings YYYY-MM-DD)
-        function getLast7Days() {
-            const days = [];
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                days.push(d.toISOString().slice(0,10));
-            }
-            return days;
-        }
+        leadsTab.addEventListener('click', () => {
+            leadsTab.className = 'px-6 py-2.5 rounded-lg text-sm font-medium bg-primary/10 text-primary';
+            inquiriesTab.className = 'px-6 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800';
+            leadsContent.classList.remove('hidden');
+            inquiriesContent.classList.add('hidden');
+        });
 
-        // Count entries per day for last 7 days
-        function countPerDay(data, dateKey = 'timestamp') {
-            const days = getLast7Days();
-            const counts = new Array(7).fill(0);
-            data.forEach(item => {
-                if (!item[dateKey]) return;
-                const dateStr = item[dateKey].split(' ')[0]; // format from toLocaleString is "MM/DD/YYYY, HH:MM:SS" but we need YYYY-MM-DD
-                // Better to store raw timestamp. Since we have timestamp from Firestore, we'll parse.
-            });
-            // More robust: use raw timestamp from Firestore. But we don't have it in serviceData because we stored formatted date.
-            // We'll store raw timestamp in serviceData and leadsData.
-            // So modify fetch functions to keep timestamp as Date object.
-            return counts;
-        }
-
-        // Fetch and display service inquiries, also update charts
-        async function fetchServiceInquiries() {
-            const tbody = document.getElementById('service-tbody');
-            tbody.innerHTML = '<tr><td colspan="7" class="text-center">Loading...</td></tr>';
+        // Data Fetching
+        const fetchData = async (collectionName, tableBodyId, totalId, loaderId, type) => {
+            const tableBody = document.getElementById(tableBodyId);
+            const totalEl = document.getElementById(totalId);
+            const loader = document.getElementById(loaderId);
+            
+            tableBody.innerHTML = '';
+            loader.classList.remove('hidden');
+            
             try {
-                const q = query(collection(db, 'service_inquiries'), orderBy('timestamp', 'desc'));
-                const snapshot = await getDocs(q);
-                serviceData = [];
-                snapshot.forEach(doc => {
+                const q = query(collection(db, collectionName), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                totalEl.textContent = querySnapshot.size;
+                loader.classList.add('hidden');
+
+                querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    const timestamp = data.timestamp ? data.timestamp.toDate() : null;
-                    serviceData.push({
-                        id: doc.id,
-                        name: data.name || '',
-                        email: data.email || '',
-                        service: data.service || '',
-                        hours: data.hours || '',
-                        total: data.estimatedTotal || '',
-                        message: data.message || '',
-                        date: timestamp ? timestamp.toLocaleString() : '',
-                        timestamp: timestamp
-                    });
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-gray-50 transition-colors';
+                    
+                    if (type === 'service') {
+                        tr.innerHTML = `
+                            <td class="px-6 py-4 text-sm font-semibold text-gray-900">${data.name || 'N/A'}</td>
+                            <td class="px-6 py-4 text-xs text-gray-600">${data.email || 'N/A'}</td>
+                            <td class="px-6 py-4">${getServiceBadge(data.service)}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-emerald-600">${data.budget || 'N/A'}</td>
+                            <td class="px-6 py-4 text-xs text-gray-400">${formatDate(data.timestamp)}</td>
+                        `;
+                    } else {
+                        tr.innerHTML = `
+                            <td class="px-6 py-4 text-sm font-semibold text-gray-900">${data.name || 'N/A'}</td>
+                            <td class="px-6 py-4 text-xs text-gray-600">${data.email || 'N/A'}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 font-medium">${data.subject || 'N/A'}</td>
+                            <td class="px-6 py-4 text-xs text-gray-400">${formatDate(data.timestamp)}</td>
+                        `;
+                    }
+                    tableBody.appendChild(tr);
                 });
-                renderServiceTable();
-                updateDashboardStats();
-                updateCharts();
             } catch (error) {
                 console.error(error);
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-red-500">Error loading data</td></tr>';
+                loader.classList.add('hidden');
             }
-        }
+        };
 
-        function renderServiceTable() {
-            const tbody = document.getElementById('service-tbody');
-            if (serviceData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center">No inquiries yet.</td></tr>';
-                return;
-            }
-            tbody.innerHTML = serviceData.map(item => `
-                <tr>
-                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</td>
-                    <td class="max-w-[200px] truncate" title="${escapeHtml(item.email)}">${escapeHtml(item.email)}</td>
-                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.service)}">${escapeHtml(item.service)}</td>
-                    <td>${escapeHtml(item.hours)}</td>
-                    <td>${escapeHtml(item.total)}</td>
-                    <td class="max-w-[250px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
-                    <td>${escapeHtml(item.date)}</td>
-                </tr>
-            `).join('');
-        }
-
-        async function fetchLeadMessages() {
-            const tbody = document.getElementById('leads-tbody');
-            tbody.innerHTML = '<tr><td colspan="5" class="text-center">Loading...</td></tr>';
-            try {
-                const q = query(collection(db, 'lead_messages'), orderBy('timestamp', 'desc'));
-                const snapshot = await getDocs(q);
-                leadsData = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const timestamp = data.timestamp ? data.timestamp.toDate() : null;
-                    leadsData.push({
-                        id: doc.id,
-                        name: data.name || '',
-                        email: data.email || '',
-                        subject: data.subject || '',
-                        message: data.message || '',
-                        date: timestamp ? timestamp.toLocaleString() : '',
-                        timestamp: timestamp
-                    });
-                });
-                renderLeadsTable();
-                updateDashboardStats();
-                updateCharts();
-            } catch (error) {
-                console.error(error);
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-red-500">Error loading data</td></tr>';
-            }
-        }
-
-        function renderLeadsTable() {
-            const tbody = document.getElementById('leads-tbody');
-            if (leadsData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center">No messages yet.</td></tr>';
-                return;
-            }
-            tbody.innerHTML = leadsData.map(item => `
-                <tr>
-                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</td>
-                    <td class="max-w-[200px] truncate" title="${escapeHtml(item.email)}">${escapeHtml(item.email)}</td>
-                    <td class="max-w-[150px] truncate" title="${escapeHtml(item.subject)}">${escapeHtml(item.subject)}</td>
-                    <td class="max-w-[300px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
-                    <td>${escapeHtml(item.date)}</td>
-                </tr>
-            `).join('');
-        }
-
-        function updateDashboardStats() {
-            document.getElementById('total-service-count').textContent = serviceData.length;
-            document.getElementById('total-leads-count').textContent = leadsData.length;
-
-            // Count this week (last 7 days)
-            const now = new Date();
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(now.getDate() - 7);
-            const weekBookings = serviceData.filter(item => item.timestamp && item.timestamp >= sevenDaysAgo).length;
-            const weekLeads = leadsData.filter(item => item.timestamp && item.timestamp >= sevenDaysAgo).length;
-            document.getElementById('week-bookings').textContent = weekBookings;
-            document.getElementById('week-leads').textContent = weekLeads;
-        }
-
-        function updateCharts() {
-            const days = getLast7Days();
-            // Count bookings per day
-            const bookingsCounts = new Array(7).fill(0);
-            serviceData.forEach(item => {
-                if (!item.timestamp) return;
-                const dateStr = item.timestamp.toISOString().slice(0,10);
-                const idx = days.indexOf(dateStr);
-                if (idx !== -1) bookingsCounts[idx]++;
-            });
-            // Count leads per day
-            const leadsCounts = new Array(7).fill(0);
-            leadsData.forEach(item => {
-                if (!item.timestamp) return;
-                const dateStr = item.timestamp.toISOString().slice(0,10);
-                const idx = days.indexOf(dateStr);
-                if (idx !== -1) leadsCounts[idx]++;
-            });
-
-            // Format days for display (e.g., "Mar 20")
-            const labels = days.map(d => {
-                const date = new Date(d);
-                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            });
-
-            if (bookingsChart) bookingsChart.destroy();
-            if (leadsChart) leadsChart.destroy();
-
-            const ctxBookings = document.getElementById('bookingsChart').getContext('2d');
-            const ctxLeads = document.getElementById('leadsChart').getContext('2d');
-
-            bookingsChart = new Chart(ctxBookings, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Bookings',
-                        data: bookingsCounts,
-                        backgroundColor: '#0056b3',
-                        borderRadius: 6
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } } }
-            });
-
-            leadsChart = new Chart(ctxLeads, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Leads',
-                        data: leadsCounts,
-                        borderColor: '#f97316',
-                        backgroundColor: 'rgba(249,115,22,0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointBackgroundColor: '#f97316'
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: true }
-            });
-        }
-
-        // Export to CSV
-        function exportToCSV(data, filename, columns) {
-            const csvRows = [];
-            csvRows.push(columns.map(col => `"${col.label}"`).join(','));
-            for (const row of data) {
-                const values = columns.map(col => {
-                    let val = row[col.key] || '';
-                    val = String(val).replace(/"/g, '""');
-                    return `"${val}"`;
-                });
-                csvRows.push(values.join(','));
-            }
-            const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        exportServiceBtn.addEventListener('click', () => {
-            const columns = [
-                { label: 'Name', key: 'name' }, { label: 'Email', key: 'email' },
-                { label: 'Service', key: 'service' }, { label: 'Hours', key: 'hours' },
-                { label: 'Total', key: 'total' }, { label: 'Message', key: 'message' },
-                { label: 'Date', key: 'date' }
-            ];
-            exportToCSV(serviceData, 'service_inquiries.csv', columns);
-        });
-
-        exportLeadsBtn.addEventListener('click', () => {
-            const columns = [
-                { label: 'Name', key: 'name' }, { label: 'Email', key: 'email' },
-                { label: 'Subject', key: 'subject' }, { label: 'Message', key: 'message' },
-                { label: 'Date', key: 'date' }
-            ];
-            exportToCSV(leadsData, 'lead_messages.csv', columns);
-        });
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        // Authentication
+        // Auth
         loginBtn.addEventListener('click', async () => {
-            const email = loginEmail.value.trim();
-            const password = loginPassword.value.trim();
-            if (!email || !password) {
-                loginStatus.textContent = 'Please enter email and password';
-                return;
-            }
             loginStatus.textContent = '';
             loginBtn.disabled = true;
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
             } catch (error) {
-                loginStatus.textContent = 'Login failed: ' + error.message;
+                loginStatus.textContent = 'Invalid credentials.';
                 loginBtn.disabled = false;
             }
         });
 
-        logoutBtn.addEventListener('click', async () => {
-            await signOut(auth);
-        });
+        logoutBtn.addEventListener('click', () => signOut(auth));
 
         onAuthStateChanged(auth, (user) => {
             if (user && user.email === 'emmanuel.amobi03@gmail.com') {
                 loginContainer.classList.add('hidden');
                 dashboardContainer.classList.remove('hidden');
-                fetchServiceInquiries();
-                fetchLeadMessages();
+                fetchData('services', 'inquiries-table-body', 'total-inquiries', 'inquiries-loading', 'service');
+                fetchData('contacts', 'leads-table-body', 'total-leads', 'leads-loading', 'contact');
             } else {
-                if (user && user.email !== 'emmanuel.amobi03@gmail.com') {
-                    alert('Unauthorized access. This dashboard is for superadmin only.');
-                    signOut(auth);
-                }
                 loginContainer.classList.remove('hidden');
                 dashboardContainer.classList.add('hidden');
                 loginBtn.disabled = false;
-                loginStatus.textContent = '';
-                loginEmail.value = '';
-                loginPassword.value = '';
             }
         });
     </script>
