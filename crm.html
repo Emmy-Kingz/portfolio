@@ -167,7 +167,7 @@
     </div>
 
     <!-- DASHBOARD CONTAINER -->
-    <div id="dashboard-container" class="flex-grow hidden flex flex-col">
+    <div id="dashboard-container" class="flex-grow hidden flex-col">
         <!-- Navbar -->
         <nav class="glass-nav sticky top-0 z-40 px-6 py-4 flex justify-between items-center shadow-sm">
             <div class="flex items-center gap-3">
@@ -220,6 +220,16 @@
                 </div>
             </div>
 
+            <!-- Export Buttons -->
+            <div class="flex flex-wrap gap-3 mb-6">
+                <button id="export-service" class="bg-green-600 text-white px-5 py-2.5 rounded-lg hover:bg-green-700 transition shadow-sm text-sm font-medium flex items-center gap-2">
+                    <i class="fas fa-download text-xs"></i> Export Service Inquiries (CSV)
+                </button>
+                <button id="export-leads" class="bg-green-600 text-white px-5 py-2.5 rounded-lg hover:bg-green-700 transition shadow-sm text-sm font-medium flex items-center gap-2">
+                    <i class="fas fa-download text-xs"></i> Export Lead Messages (CSV)
+                </button>
+            </div>
+
             <!-- Tabs -->
             <div class="bg-white rounded-xl shadow-sm p-1 inline-flex mb-6 border border-gray-100">
                 <button id="inquiries-tab" class="px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-primary/10 text-primary">
@@ -237,9 +247,11 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Contact</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Service</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Budget</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Hours</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Total</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
                             </tr>
                         </thead>
@@ -258,6 +270,7 @@
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Subject</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Message</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
                             </tr>
                         </thead>
@@ -274,17 +287,17 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold font-heading text-sm">E</div>
-                <p class="text-sm text-gray-500 font-medium">© 2024 Emmanuel Amobi. All rights reserved.</p>
+                <p class="text-sm text-gray-500 font-medium">© 2025 Emmanuel Amobi. All rights reserved.</p>
             </div>
             
             <div class="flex items-center gap-4">
-                <a href="https://linkedin.com/in/emmanuelamobi" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/10 transition-all">
+                <a href="https://linkedin.com/in/emmanuel-amobi" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/10 transition-all">
                     <i class="fa-brands fa-linkedin-in text-sm"></i>
                 </a>
                 <a href="https://github.com/Emmy-Kingz" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-dark hover:bg-dark/10 transition-all">
                     <i class="fa-brands fa-github text-sm"></i>
                 </a>
-                <a href="https://instagram.com/emmy_kingz" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-accent/10 transition-all">
+                <a href="https://instagram.com/emmanuelamobi_" target="_blank" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-accent/10 transition-all">
                     <i class="fa-brands fa-instagram text-sm"></i>
                 </a>
             </div>
@@ -295,27 +308,29 @@
         </div>
     </footer>
 
-    <!-- Firebase SDK Setup -->
+    <!-- Firebase SDK Setup (Correct Config) -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
+        // Your correct Firebase config
         const firebaseConfig = {
-            apiKey: "AIzaSyD-YOUR_KEY_HERE-p7u5gS88", 
-            authDomain: "portfoio-ad5b1.firebaseapp.com",
-            projectId: "portfoio-ad5b1",
-            storageBucket: "portfoio-ad5b1.appspot.com",
-            messagingSenderId: "125633659223",
-            appId: "1:125633659223:web:9479b1202e72404e1ba1c3",
-            measurementId: "G-DFZ2ZZL6F3"
+            apiKey: "AIzaSyAl5cDLWFhyooWdsaEoEjhvuxiwpxnT9Wo",
+            authDomain: "emmy-kingz.firebaseapp.com",
+            databaseURL: "https://emmy-kingz-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "emmy-kingz",
+            storageBucket: "emmy-kingz.firebasestorage.app",
+            messagingSenderId: "915502186621",
+            appId: "1:915502186621:web:501cd6bae4974dd90f3114",
+            measurementId: "G-SLS8MFWCP6"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Elements
+        // DOM elements
         const loginContainer = document.getElementById('login-container');
         const dashboardContainer = document.getElementById('dashboard-container');
         const loginBtn = document.getElementById('login-btn');
@@ -328,16 +343,197 @@
         const inquiriesContent = document.getElementById('inquiries-content');
         const leadsContent = document.getElementById('leads-content');
 
-        // Helpers
-        const formatDate = (dateString) => {
-            if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+        // Helper: format date
+        const formatDate = (timestamp) => {
+            if (!timestamp) return 'N/A';
+            try {
+                const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+                return new Intl.DateTimeFormat('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).format(date);
+            } catch {
+                return 'Invalid Date';
+            }
         };
 
-        const getServiceBadge = (service) => {
-            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">${service || 'N/A'}</span>`;
+        // Helper: escape HTML
+        const escapeHtml = (str) => {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         };
+
+        // Service badge
+        const getServiceBadge = (service) => {
+            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">${escapeHtml(service || 'N/A')}</span>`;
+        };
+
+        // Data storage
+        let serviceData = [];
+        let leadsData = [];
+
+        // Fetch Service Inquiries
+        const fetchServiceInquiries = async () => {
+            const tableBody = document.getElementById('inquiries-table-body');
+            const totalEl = document.getElementById('total-inquiries');
+            const loader = document.getElementById('inquiries-loading');
+            
+            tableBody.innerHTML = '';
+            loader.classList.remove('hidden');
+            
+            try {
+                const q = query(collection(db, 'service_inquiries'), orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(q);
+                serviceData = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    serviceData.push({
+                        id: doc.id,
+                        name: data.name || '',
+                        email: data.email || '',
+                        service: data.service || '',
+                        hours: data.hours || '',
+                        total: data.estimatedTotal || '',
+                        message: data.message || '',
+                        timestamp: data.timestamp || null
+                    });
+                });
+                totalEl.textContent = serviceData.length;
+                renderServiceTable();
+            } catch (error) {
+                console.error(error);
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-red-500 py-8">Error loading data. Check console.</td></tr>';
+            } finally {
+                loader.classList.add('hidden');
+            }
+        };
+
+        const renderServiceTable = () => {
+            const tableBody = document.getElementById('inquiries-table-body');
+            if (serviceData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-gray-500 py-8">No service inquiries yet.</td></tr>';
+                return;
+            }
+            tableBody.innerHTML = serviceData.map(item => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 text-sm font-semibold text-gray-900 max-w-[150px] truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</td>
+                    <td class="px-6 py-4 text-xs text-gray-600 max-w-[200px] truncate" title="${escapeHtml(item.email)}">${escapeHtml(item.email)}</td>
+                    <td class="px-6 py-4">${getServiceBadge(item.service)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${escapeHtml(item.hours)}</td>
+                    <td class="px-6 py-4 text-sm font-medium text-emerald-600">${escapeHtml(item.total)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600 max-w-[250px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
+                    <td class="px-6 py-4 text-xs text-gray-400">${formatDate(item.timestamp)}</td>
+                </tr>
+            `).join('');
+        };
+
+        // Fetch Lead Messages
+        const fetchLeadMessages = async () => {
+            const tableBody = document.getElementById('leads-table-body');
+            const totalEl = document.getElementById('total-leads');
+            const loader = document.getElementById('leads-loading');
+            
+            tableBody.innerHTML = '';
+            loader.classList.remove('hidden');
+            
+            try {
+                const q = query(collection(db, 'lead_messages'), orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(q);
+                leadsData = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    leadsData.push({
+                        id: doc.id,
+                        name: data.name || '',
+                        email: data.email || '',
+                        subject: data.subject || '',
+                        message: data.message || '',
+                        timestamp: data.timestamp || null
+                    });
+                });
+                totalEl.textContent = leadsData.length;
+                renderLeadsTable();
+            } catch (error) {
+                console.error(error);
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-red-500 py-8">Error loading data. Check console.</td></tr>';
+            } finally {
+                loader.classList.add('hidden');
+            }
+        };
+
+        const renderLeadsTable = () => {
+            const tableBody = document.getElementById('leads-table-body');
+            if (leadsData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500 py-8">No lead messages yet.</td></tr>';
+                return;
+            }
+            tableBody.innerHTML = leadsData.map(item => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 text-sm font-semibold text-gray-900 max-w-[150px] truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</td>
+                    <td class="px-6 py-4 text-xs text-gray-600 max-w-[200px] truncate" title="${escapeHtml(item.email)}">${escapeHtml(item.email)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-700 max-w-[150px] truncate" title="${escapeHtml(item.subject)}">${escapeHtml(item.subject)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600 max-w-[300px] truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</td>
+                    <td class="px-6 py-4 text-xs text-gray-400">${formatDate(item.timestamp)}</td>
+                </tr>
+            `).join('');
+        };
+
+        // Export to CSV
+        const exportToCSV = (data, filename, columns) => {
+            const csvRows = [];
+            csvRows.push(columns.map(col => `"${col.label}"`).join(','));
+            for (const row of data) {
+                const values = columns.map(col => {
+                    let val = row[col.key] || '';
+                    if (col.key === 'timestamp') val = formatDate(val);
+                    val = String(val).replace(/"/g, '""');
+                    return `"${val}"`;
+                });
+                csvRows.push(values.join(','));
+            }
+            const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        // Export handlers
+        document.getElementById('export-service').addEventListener('click', () => {
+            const columns = [
+                { label: 'Name', key: 'name' },
+                { label: 'Email', key: 'email' },
+                { label: 'Service', key: 'service' },
+                { label: 'Hours', key: 'hours' },
+                { label: 'Total', key: 'total' },
+                { label: 'Message', key: 'message' },
+                { label: 'Date', key: 'timestamp' }
+            ];
+            exportToCSV(serviceData, 'service_inquiries.csv', columns);
+        });
+
+        document.getElementById('export-leads').addEventListener('click', () => {
+            const columns = [
+                { label: 'Name', key: 'name' },
+                { label: 'Email', key: 'email' },
+                { label: 'Subject', key: 'subject' },
+                { label: 'Message', key: 'message' },
+                { label: 'Date', key: 'timestamp' }
+            ];
+            exportToCSV(leadsData, 'lead_messages.csv', columns);
+        });
 
         // Tabs
         inquiriesTab.addEventListener('click', () => {
@@ -354,58 +550,14 @@
             inquiriesContent.classList.add('hidden');
         });
 
-        // Data Fetching
-        const fetchData = async (collectionName, tableBodyId, totalId, loaderId, type) => {
-            const tableBody = document.getElementById(tableBodyId);
-            const totalEl = document.getElementById(totalId);
-            const loader = document.getElementById(loaderId);
-            
-            tableBody.innerHTML = '';
-            loader.classList.remove('hidden');
-            
-            try {
-                const q = query(collection(db, collectionName), orderBy("timestamp", "desc"));
-                const querySnapshot = await getDocs(q);
-                totalEl.textContent = querySnapshot.size;
-                loader.classList.add('hidden');
-
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-gray-50 transition-colors';
-                    
-                    if (type === 'service') {
-                        tr.innerHTML = `
-                            <td class="px-6 py-4 text-sm font-semibold text-gray-900">${data.name || 'N/A'}</td>
-                            <td class="px-6 py-4 text-xs text-gray-600">${data.email || 'N/A'}</td>
-                            <td class="px-6 py-4">${getServiceBadge(data.service)}</td>
-                            <td class="px-6 py-4 text-sm font-medium text-emerald-600">${data.budget || 'N/A'}</td>
-                            <td class="px-6 py-4 text-xs text-gray-400">${formatDate(data.timestamp)}</td>
-                        `;
-                    } else {
-                        tr.innerHTML = `
-                            <td class="px-6 py-4 text-sm font-semibold text-gray-900">${data.name || 'N/A'}</td>
-                            <td class="px-6 py-4 text-xs text-gray-600">${data.email || 'N/A'}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 font-medium">${data.subject || 'N/A'}</td>
-                            <td class="px-6 py-4 text-xs text-gray-400">${formatDate(data.timestamp)}</td>
-                        `;
-                    }
-                    tableBody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error(error);
-                loader.classList.add('hidden');
-            }
-        };
-
-        // Auth
+        // Authentication
         loginBtn.addEventListener('click', async () => {
             loginStatus.textContent = '';
             loginBtn.disabled = true;
             try {
-                await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
+                await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);
             } catch (error) {
-                loginStatus.textContent = 'Invalid credentials.';
+                loginStatus.textContent = 'Invalid credentials. Please try again.';
                 loginBtn.disabled = false;
             }
         });
@@ -416,12 +568,19 @@
             if (user && user.email === 'emmanuel.amobi03@gmail.com') {
                 loginContainer.classList.add('hidden');
                 dashboardContainer.classList.remove('hidden');
-                fetchData('services', 'inquiries-table-body', 'total-inquiries', 'inquiries-loading', 'service');
-                fetchData('contacts', 'leads-table-body', 'total-leads', 'leads-loading', 'contact');
+                fetchServiceInquiries();
+                fetchLeadMessages();
             } else {
+                if (user && user.email !== 'emmanuel.amobi03@gmail.com') {
+                    alert('Unauthorized. This dashboard is for superadmin only.');
+                    signOut(auth);
+                }
                 loginContainer.classList.remove('hidden');
                 dashboardContainer.classList.add('hidden');
                 loginBtn.disabled = false;
+                loginStatus.textContent = '';
+                loginEmail.value = '';
+                loginPassword.value = '';
             }
         });
     </script>
