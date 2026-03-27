@@ -1,0 +1,35 @@
+{
+  "videos": [
+    {
+      "title": "Cinematic B-Roll (Landscape)",
+      "url": "https://www.youtube.com/embed/VIDEO_ID",
+      "aspect": "landscape"
+    },
+    {
+      "title": "Instagram Reel Compilation (Portrait)",
+      "url": "https://www.tiktok.com/embed/VIDEO_ID",
+      "aspect": "portrait"
+    },
+    {
+      "title": "Event Highlights (Landscape)",
+      "url": "https://www.youtube.com/embed/ANOTHER_ID",
+      "aspect": "landscape"
+    },
+    {
+      "title": "TikTok Trend Edit (Portrait)",
+      "url": "https://www.tiktok.com/embed/VIDEO_ID",
+      "aspect": "portrait"
+    },
+    {
+      "title": "Another Landscape (Set 2)",
+      "url": "https://www.youtube.com/embed/ID",
+      "aspect": "landscape"
+    },
+    {
+      "title": "Another Portrait (Set 2)",
+      "url": "https://www.tiktok.com/embed/ID",
+      "aspect": "portrait"
+    }
+    // ... up to 12 total
+  ]
+}

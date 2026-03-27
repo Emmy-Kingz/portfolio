@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Emmanuel Amobi | Videographer & Video Editor — Cinematic Storytelling, Post-Production, Motion Design</title>
+    <meta name="description" content="Emmanuel Amobi — Videographer and Video Editor specializing in cinematic storytelling, commercial video production, color grading, and motion graphics. View portfolio and showreel.">
+    <meta name="keywords" content="Emmanuel Amobi, videographer, video editor, cinematography, color grading, motion graphics, Lagos videographer, post-production">
+    <meta name="author" content="Emmanuel Amobi">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+
+    <!-- Tailwind CSS + Font Awesome + Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0056b3',
+                        'secondary': '#004494',
+                        'dark': '#0f172a',
+                        'neutral': '#64748b',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { scroll-behavior: smooth; }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 25px 35px -12px rgba(0,0,0,0.15); }
+        .gallery-img { transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+        .gallery-img:hover { transform: scale(1.03); filter: brightness(1.02); }
+        #lightbox { transition: opacity 0.25s ease; }
+        #lightbox.hidden { opacity: 0; pointer-events: none; }
+        #lightbox:not(.hidden) { opacity: 1; pointer-events: auto; }
+        .skill-badge {
+            background: linear-gradient(135deg, rgba(0,86,179,0.08) 0%, rgba(0,68,148,0.08) 100%);
+            border: 1px solid rgba(0,86,179,0.2);
+        }
+        .section-highlight {
+            background: radial-gradient(circle at 0% 20%, rgba(0,86,179,0.03) 0%, rgba(0,68,148,0.02) 100%);
+        }
+        .tool-card { transition: all 0.2s ease; }
+        .tool-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); border-color: rgba(0,86,179,0.5); }
+        
+        /* Video set grid (desktop) */
+        .video-set {
+            margin-bottom: 2rem;
+        }
+        .video-set-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .video-item {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+        }
+        .video-item iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .video-landscape {
+            aspect-ratio: 16 / 9;
+        }
+        .video-portrait {
+            aspect-ratio: 9 / 16;
+        }
+        /* Desktop: use grid template areas for alternating layouts */
+        @media (min-width: 768px) {
+            .video-set-grid.arrangement-default {
+                grid-template-areas:
+                    "portrait landscape"
+                    "portrait2 landscape2";
+            }
+            .video-set-grid.arrangement-swapped {
+                grid-template-areas:
+                    "landscape portrait"
+                    "landscape2 portrait2";
+            }
+            .video-item.portrait-1 { grid-area: portrait; }
+            .video-item.portrait-2 { grid-area: portrait2; }
+            .video-item.landscape-1 { grid-area: landscape; }
+            .video-item.landscape-2 { grid-area: landscape2; }
+        }
+        /* Mobile: stack */
+        @media (max-width: 767px) {
+            .video-set-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .video-item {
+                max-width: 100%;
+            }
+            .video-portrait {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+        }
+        img:not([src]), img[src=""] { opacity: 0; }
+    </style>
+</head>
+<body class="font-sans text-dark antialiased">
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-primary text-5xl p-3 z-[110]">&times;</button>
+        <img id="lightbox-img" src="" alt="Full view" class="max-h-[90vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/20">
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-primary/20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <img src="./img/logo.png" alt="EA Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="text-2xl font-serif font-bold text-dark hidden">EA<span class="text-primary">.</span></span>
+            </a>
+            <div class="hidden md:flex gap-8 items-center text-sm font-semibold">
+                <a href="#work" class="hover:text-primary transition">WORK</a>
+                <a href="#skills-tools" class="hover:text-primary transition">SKILLS & TOOLS</a>
+                <a href="#video-showcase" class="hover:text-primary transition">VIDEOS</a>
+                <a href="#gallery" class="hover:text-primary transition">GALLERY</a>
+                <a href="#contact" class="hover:text-primary transition">CONTACT</a>
+                <a href="https://emmy-kingz.github.io/portfolio/" target="_blank" class="ml-2 px-5 py-2 rounded-full bg-dark text-white text-sm hover:bg-primary transition shadow-md"><i class="fas fa-camera-movie mr-1"></i> Main Portfolio</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-lg border-t border-primary/20 pb-6">
+            <div class="flex flex-col space-y-4 px-6 pt-4 text-base font-medium">
+                <a href="#work" class="py-2 border-b border-gray-100">WORK</a>
+                <a href="#skills-tools" class="py-2 border-b border-gray-100">SKILLS & TOOLS</a>
+                <a href="#video-showcase" class="py-2 border-b border-gray-100">VIDEOS</a>
+                <a href="#gallery" class="py-2 border-b border-gray-100">GALLERY</a>
+                <a href="#contact" class="py-2">CONTACT</a>
+                <a href="https://emmy-kingz.github.io/portfolio/" target="_blank" class="mt-2 bg-dark text-white text-center py-2 rounded-full">Main Portfolio →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="pt-36 pb-20 md:pt-44 md:pb-28 relative overflow-hidden section-highlight">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="flex-1 text-center lg:text-left">
+                    <div class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide mb-6 border border-primary/20">
+                        <i class="fas fa-video mr-1"></i> VIDEOGRAPHER & EDITOR
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-[1.1] text-dark">
+                        Crafting cinematic <span class="text-primary">stories<br>frame by frame.</span>
+                    </h1>
+                    <p class="text-lg text-neutral mt-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        I'm Emmanuel Amobi — videographer and video editor dedicated to storytelling through visuals. From commercial shoots to post-production magic, I bring your vision to life.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8 justify-center lg:justify-start">
+                        <a href="#video-showcase" class="px-7 py-3.5 bg-primary text-white rounded-full font-bold shadow-lg hover:bg-secondary transition flex items-center gap-2"><i class="fas fa-play"></i> Watch my work</a>
+                        <a href="#contact" class="px-7 py-3.5 border-2 border-primary/70 text-dark rounded-full font-bold hover:bg-primary/10 transition">Let's collaborate</a>
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-primary/20 via-primary/10 to-secondary/10 p-2">
+                        <div class="w-full h-full rounded-full bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-xl border-2 border-white overflow-hidden">
+                            <img src="./img/myphoto.jpeg" alt="Emmanuel Amobi" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Emmanuel+Amobi'; this.onerror=null;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="work" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-primary/10 px-4 py-1 rounded-full inline-block">What I do</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold mt-4 text-dark">Video services & expertise</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mt-5 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100 p-6 text-center"><div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-video text-2xl text-primary"></i></div><h3 class="text-xl font-bold">Commercial Videography</h3><p class="text-neutral text-sm mt-2">Corporate videos, product commercials, and brand storytelling with cinematic flair.</p></div>
+                <div class="rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100 p-6 text-center"><div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-cut text-2xl text-primary"></i></div><h3 class="text-xl font-bold">Video Editing & Post</h3><p class="text-neutral text-sm mt-2">Professional editing, color grading, sound design, and motion graphics integration.</p></div>
+                <div class="rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100 p-6 text-center"><div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-palette text-2xl text-primary"></i></div><h3 class="text-xl font-bold">Color Grading</h3><p class="text-neutral text-sm mt-2">Advanced color correction and grading to set the perfect mood and visual tone.</p></div>
+                <div class="rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100 p-6 text-center"><div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-camera-retro text-2xl text-primary"></i></div><h3 class="text-xl font-bold">Event Coverage</h3><p class="text-neutral text-sm mt-2">Weddings, conferences, and live events captured with dynamic multi-camera setups.</p></div>
+                <div class="rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100 p-6 text-center"><div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-chalkboard-user text-2xl text-primary"></i></div><h3 class="text-xl font-bold">Motion Graphics</h3><p class="text-neutral text-sm mt-2">2D/3D animations, titles, and explainer videos to elevate your brand.</p></div>
+                <div class="rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100 p-6 text-center"><div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-file-video text-2xl text-primary"></i></div><h3 class="text-xl font-bold">Social Media Content</h3><p class="text-neutral text-sm mt-2">Short-form videos optimized for Instagram Reels, TikTok, YouTube Shorts.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS & TOOLS (expanded) -->
+    <section id="skills-tools" class="py-20 bg-dark text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-14">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-white/10 px-4 py-1 rounded-full">Creative arsenal</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold mt-3">Video editing toolset</h2>
+                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Industry-leading software & techniques</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Core skills -->
+                <div>
+                    <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-star text-primary"></i> Core Expertise</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-film text-primary text-xl w-8"></i><span>Cinematography</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-sliders-h text-primary text-xl w-8"></i><span>Color Grading</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-music text-primary text-xl w-8"></i><span>Sound Design</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-cubes text-primary text-xl w-8"></i><span>Motion Graphics</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-edit text-primary text-xl w-8"></i><span>Multi-cam Editing</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-chart-line text-primary text-xl w-8"></i><span>Storyboarding</span></div>
+                    </div>
+                </div>
+                <!-- Tools -->
+                <div>
+                    <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-tools text-primary"></i> Tools Mastery</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Premiere Pro</p><p class="text-[10px] text-gray-400">Editing & timeline</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">After Effects</p><p class="text-[10px] text-gray-400">Motion & VFX</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-adjust text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">DaVinci Resolve</p><p class="text-[10px] text-gray-400">Color grading</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-microphone-alt text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Audition</p><p class="text-[10px] text-gray-400">Audio cleanup</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-camera text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Final Cut Pro</p><p class="text-[10px] text-gray-400">Alternative NLE</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-cube text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Blender</p><p class="text-[10px] text-gray-400">3D & animation</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-cut text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">CapCut</p><p class="text-[10px] text-gray-400">Mobile/desktop editing</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-film text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">PowerDirector</p><p class="text-[10px] text-gray-400">Fast editing suite</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-tower-broadcast text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">OBS Studio</p><p class="text-[10px] text-gray-400">Streaming & recording</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-share-alt text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Restream.io</p><p class="text-[10px] text-gray-400">Multi-platform streaming</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-church text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">EasyWorship</p><p class="text-[10px] text-gray-400">Church presentation</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-tiktok text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">TikTok Studio</p><p class="text-[10px] text-gray-400">Short-form content</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-youtube text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">YouTube Studio</p><p class="text-[10px] text-gray-400">Channel & analytics</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO SHOWCASE (dynamic sets, up to 12 videos, alternating layout) -->
+    <section id="video-showcase" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-primary/10 px-4 py-1 rounded-full">Featured Work</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold mt-3 text-dark">Video Showcase</h2>
+                <p class="text-neutral mt-2 max-w-2xl mx-auto">Up to 12 videos organized in alternating portrait/landscape sets</p>
+            </div>
+            <div id="video-container" class="space-y-8">
+                <div class="text-center py-12 text-neutral">Loading videos...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY (10 stills) -->
+    <section id="gallery" class="py-24 bg-dark text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-white/10 px-4 py-1 rounded-full">Behind the scenes</span>
+                <h2 class="text-4xl font-display font-bold mt-3">Stills & Production Stills</h2>
+                <p class="text-gray-300 mt-2">Moments captured on set — click to expand</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="gallery-grid">
+                <!-- JS injects 10 images -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-dark text-white pt-20 pb-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+                <div>
+                    <h2 class="text-4xl font-display font-bold">Let's create something<br>cinematic together.</h2>
+                    <p class="text-slate-400 mt-5 text-lg max-w-md">Available for video projects, editing gigs, and creative collaborations.</p>
+                    <div class="mt-8 space-y-4">
+                        <a href="mailto:emmanuel.amobi03@gmail.com" class="flex items-center gap-4 group"><div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition"><i class="fas fa-envelope"></i></div><span class="text-lg group-hover:text-primary">emmanuel.amobi03@gmail.com</span></a>
+                        <a href="https://wa.me/2347084672771" target="_blank" class="flex items-center gap-4 group"><div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-green-600 transition"><i class="fab fa-whatsapp"></i></div><span class="text-lg group-hover:text-green-400">+234 708 467 2771</span></a>
+                    </div>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                    <h3 class="text-xl font-bold mb-2">Send a message</h3>
+                    <p class="text-slate-400 text-sm mb-5">I'll reply within 24h.</p>
+                    <form id="contactForm" class="space-y-4">
+                        <input type="text" id="contactName" placeholder="Your name *" required class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white focus:outline-none focus:border-primary">
+                        <input type="email" id="contactEmail" placeholder="Email address *" required class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white focus:outline-none focus:border-primary">
+                        <select id="contactService" class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white">
+                            <option value="Videography">Videography / Shoot</option>
+                            <option value="Editing">Video Editing</option>
+                            <option value="Color Grading">Color Grading</option>
+                            <option value="Motion Graphics">Motion Graphics</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <textarea id="contactMessage" rows="3" placeholder="Tell me about your project..." class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white"></textarea>
+                        <button type="submit" class="w-full bg-primary hover:bg-secondary transition font-bold py-3 rounded-lg text-white">Send inquiry</button>
+                        <p id="formStatus" class="text-xs text-center text-slate-400 mt-2"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="https://www.linkedin.com/in/emmanuel-amobi/" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="https://www.instagram.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="https://www.youtube.com/@emmanuelamobi" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-youtube text-xl"></i></a>
+                    <a href="https://twitter.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-twitter text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        window.openLightbox = (src) => { lightboxImg.src = src; lightbox.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+        window.closeLightbox = () => { lightbox.classList.add('hidden'); document.body.style.overflow = ''; setTimeout(() => lightboxImg.src = '', 200); };
+        if (lightbox) lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+
+        // Video logic: group into sets of 4 (2 landscape + 2 portrait), up to 3 sets (12 videos)
+        async function loadVideos() {
+            const container = document.getElementById('video-container');
+            if (!container) return;
+            try {
+                const response = await fetch('./videos.json');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                let videos = data.videos || [];
+
+                // Separate by aspect
+                const landscapes = videos.filter(v => v.aspect === 'landscape');
+                const portraits = videos.filter(v => v.aspect === 'portrait');
+
+                // Create sets: each set needs 2 landscape + 2 portrait
+                const maxSets = 3;
+                const sets = [];
+                for (let i = 0; i < maxSets; i++) {
+                    const startL = i * 2;
+                    const startP = i * 2;
+                    const setLandscapes = landscapes.slice(startL, startL + 2);
+                    const setPortraits = portraits.slice(startP, startP + 2);
+                    if (setLandscapes.length === 2 && setPortraits.length === 2) {
+                        sets.push({ landscapes: setLandscapes, portraits: setPortraits });
+                    } else {
+                        // Not enough of both types for another full set
+                        break;
+                    }
+                }
+
+                if (sets.length === 0) {
+                    container.innerHTML = '<div class="text-center py-12 text-neutral">Add at least 2 landscape and 2 portrait videos to videos.json to see the showcase.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+
+                sets.forEach((set, idx) => {
+                    const isEven = idx % 2 === 0; // even index: default arrangement (portraits left, landscapes right)
+                    const arrangementClass = isEven ? 'arrangement-default' : 'arrangement-swapped';
+                    const setDiv = document.createElement('div');
+                    setDiv.className = 'video-set';
+                    setDiv.innerHTML = `
+                        <div class="video-set-grid ${arrangementClass}">
+                            <div class="video-item portrait-1 video-portrait"></div>
+                            <div class="video-item portrait-2 video-portrait"></div>
+                            <div class="video-item landscape-1 video-landscape"></div>
+                            <div class="video-item landscape-2 video-landscape"></div>
+                        </div>
+                    `;
+                    // Fill the iframes
+                    const grid = setDiv.querySelector('.video-set-grid');
+                    const portrait1 = grid.querySelector('.portrait-1');
+                    const portrait2 = grid.querySelector('.portrait-2');
+                    const landscape1 = grid.querySelector('.landscape-1');
+                    const landscape2 = grid.querySelector('.landscape-2');
+
+                    // Assign in order based on arrangement
+                    if (isEven) {
+                        // portraits first, then landscapes
+                        portrait1.innerHTML = `<iframe src="${set.portraits[0].url}" title="${set.portraits[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        portrait2.innerHTML = `<iframe src="${set.portraits[1].url}" title="${set.portraits[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        landscape1.innerHTML = `<iframe src="${set.landscapes[0].url}" title="${set.landscapes[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        landscape2.innerHTML = `<iframe src="${set.landscapes[1].url}" title="${set.landscapes[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    } else {
+                        // swapped: landscapes first, then portraits
+                        landscape1.innerHTML = `<iframe src="${set.landscapes[0].url}" title="${set.landscapes[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        landscape2.innerHTML = `<iframe src="${set.landscapes[1].url}" title="${set.landscapes[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        portrait1.innerHTML = `<iframe src="${set.portraits[0].url}" title="${set.portraits[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        portrait2.innerHTML = `<iframe src="${set.portraits[1].url}" title="${set.portraits[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    }
+                    container.appendChild(setDiv);
+                });
+            } catch (err) {
+                console.error('Error loading videos.json:', err);
+                container.innerHTML = '<div class="text-center py-12 text-neutral">⚠️ Could not load videos. Make sure videos.json exists and is correctly formatted.</div>';
+            }
+        }
+
+        // Gallery (10 stills)
+        function loadGallery() {
+            const container = document.getElementById('gallery-grid');
+            if (!container) return;
+            for (let i = 1; i <= 10; i++) {
+                const filename = `gallery${i}.png`;
+                const div = document.createElement('div');
+                div.className = 'aspect-square rounded-xl overflow-hidden cursor-pointer group relative bg-white/5';
+                const img = document.createElement('img');
+                img.src = `./img/${filename}`;
+                img.alt = `Gallery ${i}`;
+                img.className = 'w-full h-full object-cover gallery-img';
+                img.loading = 'lazy';
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'w-full h-full flex items-center justify-center bg-slate-800 text-slate-400 text-sm';
+                    placeholder.innerHTML = `<i class="fas fa-image mr-1"></i> ${filename}`;
+                    this.parentNode.appendChild(placeholder);
+                };
+                img.addEventListener('click', () => openLightbox(img.src));
+                const overlay = document.createElement('div');
+                overlay.className = 'absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none';
+                overlay.innerHTML = '<i class="fas fa-expand text-white text-2xl"></i>';
+                div.appendChild(img);
+                div.appendChild(overlay);
+                container.appendChild(div);
+            }
+        }
+
+        // Contact form
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('contactName')?.value.trim();
+                const email = document.getElementById('contactEmail')?.value.trim();
+                if (!name || !email) {
+                    formStatus.textContent = 'Please fill name and email.';
+                    formStatus.classList.add('text-red-400');
+                    return;
+                }
+                formStatus.textContent = 'Sending...';
+                formStatus.classList.remove('text-red-400','text-green-400');
+                setTimeout(() => {
+                    console.log(`Video inquiry: ${name}, ${email}`);
+                    formStatus.innerHTML = '✓ Message sent! I’ll reply within 24h.';
+                    formStatus.classList.add('text-green-400');
+                    contactForm.reset();
+                    setTimeout(() => formStatus.innerHTML = '', 4000);
+                }, 800);
+            });
+        }
+
+        // Mobile menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuToggle && mobileMenu) menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === "#") return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        loadVideos();
+        loadGallery();
+    </script>
+</body>
+</html>
