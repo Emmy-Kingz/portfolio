@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Emmanuel Amobi | Graphic & Visual Designer — Brand Identity, Digital Art, Creative Direction</title>
+    <meta name="description" content="Emmanuel Amobi — Graphic & Visual Designer specializing in brand identity, social media visuals, UI/UX design, and creative direction. Explore the project gallery, tools, and design expertise.">
+    <meta name="keywords" content="Emmanuel Amobi, graphic designer, visual designer, brand identity, logo design, social media graphics, UI/UX, Figma, Adobe Creative Suite, Lagos designer">
+    <meta name="author" content="Emmanuel Amobi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon from img folder -->
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+
+    <!-- Tailwind CSS + Font Awesome + Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0056b3',    /* Professional Blue */
+                        'secondary': '#004494',
+                        'dark': '#0f172a',       /* Slate 900 */
+                        'neutral': '#64748b',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { scroll-behavior: smooth; }
+        .glass-card {
+            background: rgba(255, 255, 245, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 86, 179, 0.2);
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.15);
+        }
+        .gallery-img {
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .gallery-img:hover {
+            transform: scale(1.03);
+            filter: brightness(1.02);
+        }
+        /* Lightbox */
+        #lightbox {
+            transition: opacity 0.25s ease;
+        }
+        #lightbox.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #lightbox:not(.hidden) {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .skill-badge {
+            background: linear-gradient(135deg, rgba(0,86,179,0.08) 0%, rgba(0,68,148,0.08) 100%);
+            border: 1px solid rgba(0,86,179,0.2);
+        }
+        .section-highlight {
+            background: radial-gradient(circle at 0% 20%, rgba(0,86,179,0.03) 0%, rgba(0,68,148,0.02) 100%);
+        }
+        /* Image placeholder fallback */
+        img:not([src]), img[src=""] {
+            opacity: 0;
+        }
+        .img-placeholder {
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark antialiased">
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-primary text-5xl p-3 z-[110]">&times;</button>
+        <img id="lightbox-img" src="" alt="Full view" class="max-h-[90vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/20">
+    </div>
+
+    <!-- NAVIGATION (same style as original portfolio) -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-primary/20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <img src="./img/logo.png" alt="EA Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="text-2xl font-serif font-bold text-dark hidden">EA<span class="text-primary">.</span></span>
+            </a>
+            <div class="hidden md:flex gap-8 items-center text-sm font-semibold">
+                <a href="#work" class="hover:text-primary transition">PORTFOLIO</a>
+                <a href="#skills-tools" class="hover:text-primary transition">SKILLS & TOOLS</a>
+                <a href="#gallery" class="hover:text-primary transition">GALLERY</a>
+                <a href="#contact" class="hover:text-primary transition">CONTACT</a>
+                <a href="https://emmy-kingz.github.io/portfolio/" target="_blank" class="ml-2 px-5 py-2 rounded-full bg-dark text-white text-sm hover:bg-primary transition shadow-md"><i class="fas fa-bezier-curve mr-1"></i> Main Portfolio</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-lg border-t border-primary/20 pb-6">
+            <div class="flex flex-col space-y-4 px-6 pt-4 text-base font-medium">
+                <a href="#work" class="py-2 border-b border-gray-100">PORTFOLIO</a>
+                <a href="#skills-tools" class="py-2 border-b border-gray-100">SKILLS & TOOLS</a>
+                <a href="#gallery" class="py-2 border-b border-gray-100">GALLERY</a>
+                <a href="#contact" class="py-2">CONTACT</a>
+                <a href="https://emmy-kingz.github.io/portfolio/" target="_blank" class="mt-2 bg-dark text-white text-center py-2 rounded-full">Main Portfolio →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="pt-36 pb-20 md:pt-44 md:pb-28 relative overflow-hidden section-highlight">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="flex-1 text-center lg:text-left">
+                    <div class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide mb-6 border border-primary/20">
+                        <i class="fas fa-palette mr-1"></i> GRAPHIC & VISUAL DESIGNER
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-[1.1] text-dark">
+                        Visual stories that <span class="text-primary">connect,<br> inspire & convert.</span>
+                    </h1>
+                    <p class="text-lg text-neutral mt-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        I'm Emmanuel Amobi — blending bold aesthetics with strategic design. From brand identity to digital visuals, I craft experiences that resonate.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8 justify-center lg:justify-start">
+                        <a href="#work" class="px-7 py-3.5 bg-primary text-white rounded-full font-bold shadow-lg hover:bg-secondary transition flex items-center gap-2"><i class="fas fa-arrow-down"></i> View projects</a>
+                        <a href="#contact" class="px-7 py-3.5 border-2 border-primary/70 text-dark rounded-full font-bold hover:bg-primary/10 transition">Let's collaborate</a>
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-primary/20 via-primary/10 to-secondary/10 p-2">
+                        <div class="w-full h-full rounded-full bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-xl border-2 border-white overflow-hidden">
+                            <img src="./img/myphoto.jpeg" alt="Emmanuel Amobi" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Emmanuel+Amobi'; this.onerror=null;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+    </section>
+
+    <!-- FEATURED PROJECTS (6 items: featured1.png to featured6.png) -->
+    <section id="work" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-primary/10 px-4 py-1 rounded-full inline-block">Selected works</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold mt-4 text-dark">Design that makes an impact</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mt-5 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="featured-grid">
+                <!-- JavaScript will populate featured projects -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS & TOOLS SECTION (unchanged style, but with dark theme) -->
+    <section id="skills-tools" class="py-20 bg-dark text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-14">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-white/10 px-4 py-1 rounded-full">Creative arsenal</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold mt-3">Design skills & toolset</h2>
+                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Industry-standard expertise + experimental creativity</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-pen-fancy text-primary"></i> Core Design Expertise</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm bg-white/5 border border-white/10"><i class="fas fa-crown text-primary text-xl w-8"></i><span class="font-medium">Brand Identity</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-chart-line text-primary text-xl w-8"></i><span class="font-medium">Visual Strategy</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-mobile-alt text-primary text-xl w-8"></i><span class="font-medium">UI/UX Design</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-draw-polygon text-primary text-xl w-8"></i><span class="font-medium">Typography & Layout</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-film text-primary text-xl w-8"></i><span class="font-medium">Motion Graphics</span></div>
+                        <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-paint-brush text-primary text-xl w-8"></i><span class="font-medium">Illustration</span></div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-tools text-primary"></i> Tools Mastery</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">Photoshop</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">Illustrator</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">InDesign</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fab fa-figma text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">Figma</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fas fa-video text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">After Effects</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fas fa-palette text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">Procreate</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fab fa-canva text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">Canva Pro</p></div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center hover:bg-white/10 transition"><i class="fas fa-code text-3xl text-primary"></i><p class="text-xs mt-1 font-semibold">Webflow/HTML/CSS</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-16 border-t border-white/10 pt-10 text-center max-w-3xl mx-auto">
+                <i class="fas fa-quote-left text-3xl text-primary opacity-60"></i>
+                <p class="text-xl italic text-gray-200 mt-2">"Design is not just how it looks, but how it communicates. I merge empathy with aesthetics to build brands that people remember."</p>
+                <p class="text-primary mt-3 font-bold">— Emmanuel Amobi</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION (20 images: gallery1.png to gallery20.png) -->
+    <section id="gallery" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12 text-center">
+                <span class="text-primary font-bold tracking-wider text-sm uppercase bg-primary/10 px-4 py-1 rounded-full">Visual diary</span>
+                <h2 class="text-4xl font-display font-bold mt-3 text-dark">Design gallery & snapshots</h2>
+                <p class="text-neutral mt-2">Selected creative explorations — click to expand</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="gallery-grid">
+                <!-- JavaScript will populate 20 gallery items -->
+            </div>
+            <div class="text-center mt-12">
+                <p class="text-sm text-neutral italic">* All projects showcase real client & personal creative work. Full portfolio available upon request.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (matches original portfolio style) -->
+    <footer id="contact" class="bg-dark text-white pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+                <div>
+                    <h2 class="text-4xl font-display font-bold">Let's bring your<br>vision to life.</h2>
+                    <p class="text-slate-400 mt-5 text-lg max-w-md">Available for freelance design projects, brand collaborations, and creative direction.</p>
+                    <div class="mt-8 space-y-4">
+                        <a href="mailto:emmanuel.amobi03@gmail.com" class="flex items-center gap-4 group"><div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-primary transition"><i class="fas fa-envelope"></i></div><span class="text-lg group-hover:text-primary">emmanuel.amobi03@gmail.com</span></a>
+                        <a href="https://wa.me/2347084672771" target="_blank" class="flex items-center gap-4 group"><div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-green-600 transition"><i class="fab fa-whatsapp"></i></div><span class="text-lg group-hover:text-green-400">+234 708 467 2771</span></a>
+                    </div>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                    <h3 class="text-xl font-bold mb-2">Send design inquiry</h3>
+                    <p class="text-slate-400 text-sm mb-5">I'll reply within 24h with ideas & proposals.</p>
+                    <form id="designContactForm" class="space-y-4">
+                        <input type="text" id="designName" placeholder="Your name *" required class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white focus:outline-none focus:border-primary">
+                        <input type="email" id="designEmail" placeholder="Email address *" required class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white focus:outline-none focus:border-primary">
+                        <select id="designService" class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white">
+                            <option value="Brand Identity">Brand Identity / Logo</option>
+                            <option value="Social Media Graphics">Social Media Graphics</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Print/Editorial">Print / Editorial</option>
+                            <option value="Motion Graphics">Motion Graphics</option>
+                        </select>
+                        <textarea id="designMessage" rows="3" placeholder="Tell me about your project..." class="w-full px-4 py-3 rounded-lg bg-dark/50 border border-white/20 text-white"></textarea>
+                        <button type="submit" class="w-full bg-primary hover:bg-secondary transition font-bold py-3 rounded-lg text-white">Send message <i class="fas fa-arrow-right ml-1"></i></button>
+                        <p id="designFormStatus" class="text-xs text-center text-slate-400 mt-2"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="https://www.linkedin.com/in/emmanuel-amobi/" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="https://www.facebook.com/emmanuelamobii" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-facebook text-xl"></i></a>
+                    <a href="https://www.instagram.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="https://www.tiktok.com/@emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-tiktok text-xl"></i></a>
+                    <a href="https://twitter.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-twitter text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---------------------------
+        // Helper: create image element with fallback
+        function createImage(src, alt, className, onClick) {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = alt;
+            img.className = className;
+            img.loading = 'lazy';
+            img.onerror = function() {
+                this.style.display = 'none';
+                const parent = this.parentElement;
+                const placeholder = document.createElement('div');
+                placeholder.className = 'w-full h-full flex items-center justify-center bg-slate-100 text-slate-400 text-sm';
+                placeholder.innerHTML = `<i class="fas fa-image mr-1"></i> ${alt || 'image'}`;
+                parent.appendChild(placeholder);
+            };
+            if (onClick) img.addEventListener('click', onClick);
+            return img;
+        }
+
+        // Lightbox functions
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        window.openLightbox = (src) => {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+        window.closeLightbox = () => {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = '';
+            setTimeout(() => lightboxImg.src = '', 200);
+        };
+        if (lightbox) lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+
+        // Populate featured projects (6 items)
+        const featuredContainer = document.getElementById('featured-grid');
+        if (featuredContainer) {
+            const featuredNames = [
+                { file: 'featured1.png', title: 'Brand Identity System', cat: 'Branding', desc: 'Complete visual identity for a fintech startup, including logo design, brand guidelines, and marketing collateral.' },
+                { file: 'featured2.png', title: 'Social Media Campaign', cat: 'Digital Campaign', desc: 'High-impact social assets for AFRES Summit 2025 — designed keynote decks, animated teasers & event branding.' },
+                { file: 'featured3.png', title: 'UI/UX Dashboard', cat: 'UI/UX Design', desc: 'Modern, minimalist interface for investment platform with user-centric flows & micro-interactions.' },
+                { file: 'featured4.png', title: 'Editorial Layout', cat: 'Print / Editorial', desc: '48-page brand guidelines & layout design, typography system, and visual language for a tech startup.' },
+                { file: 'featured5.png', title: 'Luxury Packaging', cat: 'Packaging', desc: 'Sustainable packaging concepts, foil stamping & premium unboxing experience for skincare line.' },
+                { file: 'featured6.png', title: 'Motion Explainer', cat: 'Motion & Video', desc: '2D animated explainer video, 45-sec hype reel for SaaS platform, 130k+ organic views.' }
+            ];
+            featuredNames.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'group rounded-2xl overflow-hidden shadow-md hover-lift bg-white border border-gray-100';
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'h-64 overflow-hidden relative cursor-pointer';
+                const img = createImage(`./img/${item.file}`, item.title, 'w-full h-full object-cover gallery-img', () => openLightbox(`./img/${item.file}`));
+                imgDiv.appendChild(img);
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'p-6';
+                infoDiv.innerHTML = `
+                    <span class="text-xs font-bold uppercase tracking-wider text-primary">${item.cat}</span>
+                    <h3 class="text-xl font-bold mt-1">${item.title}</h3>
+                    <p class="text-gray-500 text-sm mt-2">${item.desc}</p>
+                `;
+                card.appendChild(imgDiv);
+                card.appendChild(infoDiv);
+                featuredContainer.appendChild(card);
+            });
+        }
+
+        // Populate gallery (20 images)
+        const galleryContainer = document.getElementById('gallery-grid');
+        if (galleryContainer) {
+            for (let i = 1; i <= 20; i++) {
+                const filename = `gallery${i}.png`;
+                const div = document.createElement('div');
+                div.className = 'aspect-square rounded-xl overflow-hidden shadow-md cursor-pointer group relative';
+                const img = createImage(`./img/${filename}`, `Gallery ${i}`, 'w-full h-full object-cover gallery-img', () => openLightbox(`./img/${filename}`));
+                // add zoom overlay on hover
+                const overlay = document.createElement('div');
+                overlay.className = 'absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center pointer-events-none';
+                overlay.innerHTML = '<i class="fas fa-expand text-white text-2xl"></i>';
+                div.appendChild(img);
+                div.appendChild(overlay);
+                galleryContainer.appendChild(div);
+            }
+        }
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(menuToggle && mobileMenu){
+            menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        }
+
+        // Contact form simulation (same as original portfolio's lead form)
+        const contactForm = document.getElementById('designContactForm');
+        const statusMsg = document.getElementById('designFormStatus');
+        if(contactForm){
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('designName')?.value.trim();
+                const email = document.getElementById('designEmail')?.value.trim();
+                const service = document.getElementById('designService')?.value;
+                const message = document.getElementById('designMessage')?.value.trim();
+                if(!name || !email){
+                    statusMsg.textContent = 'Please fill name and email.';
+                    statusMsg.classList.add('text-red-400');
+                    return;
+                }
+                statusMsg.textContent = 'Sending inquiry...';
+                statusMsg.classList.remove('text-red-400','text-green-400');
+                setTimeout(() => {
+                    console.log(`Design inquiry: ${name}, ${email}, ${service}, ${message}`);
+                    statusMsg.innerHTML = '✓ Message sent! I’ll reply within 24h.';
+                    statusMsg.classList.add('text-green-400');
+                    contactForm.reset();
+                    setTimeout(() => statusMsg.innerHTML = '', 4000);
+                }, 800);
+            });
+        }
+
+        // Smooth anchor scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e){
+                const targetId = this.getAttribute('href');
+                if(targetId === "#") return;
+                const target = document.querySelector(targetId);
+                if(target){
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if(mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
