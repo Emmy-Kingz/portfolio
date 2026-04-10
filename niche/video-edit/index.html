@@ -54,7 +54,7 @@
         .tool-card { transition: all 0.2s ease; }
         .tool-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); border-color: rgba(0,86,179,0.5); }
         
-        /* --- Video Set Grid Styling (Redesigned) --- */
+        /* --- Video Set Grid Styling (Fixed Aspect Ratio & Gaps) --- */
         .video-set {
             margin-bottom: 2rem;
         }
@@ -79,42 +79,36 @@
             border: 0;
         }
         
-        /* Aspect Ratios through padding-bottom trick */
-        .video-landscape {
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-        }
-        .video-portrait {
-            padding-bottom: 177.77%; /* 9:16 Aspect Ratio */
-            height: 0;
-        }
+        /* Modern Aspect Ratio properties cleanly calculate height natively */
+        .video-landscape { aspect-ratio: 16 / 9; }
+        .video-portrait { aspect-ratio: 9 / 16; }
 
         /* Desktop Layout: 1 Portrait, 2 Stacked Landscapes */
         @media (min-width: 768px) {
             .video-set-grid.arrangement-default {
-                grid-template-columns: 1fr 2.5fr; /* Portrait takes less width, landscapes take more */
+                grid-template-columns: 1fr 2.5fr; 
                 grid-template-areas:
                     "portrait landscape1"
                     "portrait landscape2";
             }
             .video-set-grid.arrangement-swapped {
-                grid-template-columns: 2.5fr 1fr; /* Swapped arrangement */
+                grid-template-columns: 2.5fr 1fr; 
                 grid-template-areas:
                     "landscape1 portrait"
                     "landscape2 portrait";
             }
             
-            /* Make portrait fill the entire height of the two stacked landscapes */
+            /* Allow portrait to fill the total height of the 2 stacked landscapes */
             .video-item.portrait-1 { 
                 grid-area: portrait; 
-                padding-bottom: 0; 
+                aspect-ratio: auto; /* Releases aspect-ratio lock so grid defines height */
                 height: 100%; 
             }
             .video-item.landscape-1 { grid-area: landscape1; }
             .video-item.landscape-2 { grid-area: landscape2; }
         }
 
-        /* Mobile Layout: 1 Portrait, followed by 2 Landscapes */
+        /* Mobile Layout: Stacked -> 1 Portrait, followed by 2 Landscapes */
         @media (max-width: 767px) {
             .video-set-grid {
                 display: flex;
@@ -124,8 +118,7 @@
             .video-portrait {
                 max-width: 320px;
                 margin: 0 auto;
-                /* Keeps aspect ratio active on mobile */
-                padding-bottom: 177.77%; 
+                /* Aspect-ratio (9/16) scales perfectly here without injecting empty padding */
             }
         }
         img:not([src]), img[src=""] { opacity: 0; }
@@ -239,22 +232,58 @@
                         <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-chart-line text-primary text-xl w-8"></i><span>Storyboarding</span></div>
                     </div>
                 </div>
-                <!-- Tools Mastery -->
+                <!-- Tools Mastery (Colorized Icons) -->
                 <div>
                     <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-tools text-primary"></i> Tools Mastery</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Premiere Pro</p><p class="text-[10px] text-gray-400">Editing & timeline</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-adobe text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">After Effects</p><p class="text-[10px] text-gray-400">Motion & VFX</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-adjust text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">DaVinci Resolve</p><p class="text-[10px] text-gray-400">Color grading</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-microphone-alt text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Audition</p><p class="text-[10px] text-gray-400">Audio cleanup</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-camera text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Final Cut Pro</p><p class="text-[10px] text-gray-400">Alternative NLE</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-cut text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">CapCut</p><p class="text-[10px] text-gray-400">Mobile/desktop editing</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-film text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">PowerDirector</p><p class="text-[10px] text-gray-400">Fast editing suite</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-tower-broadcast text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">OBS Studio</p><p class="text-[10px] text-gray-400">Streaming & recording</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-share-alt text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">Restream.io</p><p class="text-[10px] text-gray-400">Multi-platform streaming</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fas fa-church text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">EasyWorship</p><p class="text-[10px] text-gray-400">Church presentation</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-tiktok text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">TikTok Studio</p><p class="text-[10px] text-gray-400">Short-form content</p></div>
-                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center"><i class="fab fa-youtube text-3xl text-primary"></i><p class="text-xs font-semibold mt-1">YouTube Studio</p><p class="text-[10px] text-gray-400">Channel & analytics</p></div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-film text-3xl text-[#9999FF] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">Premiere Pro</p><p class="text-[10px] text-gray-400">Editing & timeline</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-video text-3xl text-[#9999FF] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">After Effects</p><p class="text-[10px] text-gray-400">Motion & VFX</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-adjust text-3xl text-[#31A8FF] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">DaVinci Resolve</p><p class="text-[10px] text-gray-400">Color grading</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-microphone-alt text-3xl text-[#00E4B5] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">Audition</p><p class="text-[10px] text-gray-400">Audio cleanup</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-camera text-3xl text-[#FF2D55] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">Final Cut Pro</p><p class="text-[10px] text-gray-400">Alternative NLE</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-cut text-3xl text-gray-200 group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">CapCut</p><p class="text-[10px] text-gray-400">Mobile/desktop editing</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-compact-disc text-3xl text-[#00BFFF] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">PowerDirector</p><p class="text-[10px] text-gray-400">Fast editing suite</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-tower-broadcast text-3xl text-gray-300 group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">OBS Studio</p><p class="text-[10px] text-gray-400">Streaming & recording</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-share-alt text-3xl text-[#F96232] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">Restream.io</p><p class="text-[10px] text-gray-400">Multi-platform streaming</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fas fa-church text-3xl text-[#0056b3] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">EasyWorship</p><p class="text-[10px] text-gray-400">Church presentation</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fab fa-tiktok text-3xl text-white group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">TikTok Studio</p><p class="text-[10px] text-gray-400">Short-form content</p>
+                        </div>
+                        <div class="tool-card bg-white/5 border border-white/10 rounded-xl p-3 text-center group">
+                            <i class="fab fa-youtube text-3xl text-[#FF0000] group-hover:scale-110 transition-transform"></i>
+                            <p class="text-xs font-semibold mt-2">YouTube Studio</p><p class="text-[10px] text-gray-400">Channel & analytics</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -328,16 +357,33 @@
             <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-slate-500 text-sm">&copy; 2026 Emmanuel Amobi. All rights reserved.</p>
                 <div class="flex gap-6">
-                    <a href="https://www.linkedin.com/in/emmanuel-amobi/" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-linkedin text-xl"></i></a>
-                    <a href="https://www.instagram.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-instagram text-xl"></i></a>
-                    <a href="https://www.youtube.com/@emmanuelamobi" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-youtube text-xl"></i></a>
-                    <a href="https://twitter.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="https://www.linkedin.com/in/emmanuel-amobi/" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="https://github.com/Emmy-Kingz/" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-github text-xl"></i></a>
+                    <a href="https://www.instagram.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="https://www.youtube.com/@emmanuelamobi" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-youtube text-xl"></i></a>
+                    <a href="https://twitter.com/emmanuelamobi_" target="_blank" class="text-slate-400 hover:text-primary transition"><i class="fab fa-twitter text-xl"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script>
+    <!-- Firebase + Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyAl5cDLWFhyooWdsaEoEjhvuxiwpxnT9Wo",
+            authDomain: "emmy-kingz.firebaseapp.com",
+            projectId: "emmy-kingz",
+            storageBucket: "emmy-kingz.firebasestorage.app",
+            messagingSenderId: "915502186621",
+            appId: "1:915502186621:web:501cd6bae4974dd90f3114"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         // Lightbox
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -449,28 +495,51 @@
             }
         }
 
-        // Contact form
+        // Real Firebase Contact Form Integration
         const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('formStatus');
+        const statusMsg = document.getElementById('formStatus');
         if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
+            contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const name = document.getElementById('contactName')?.value.trim();
                 const email = document.getElementById('contactEmail')?.value.trim();
+                const service = document.getElementById('contactService')?.value;
+                const message = document.getElementById('contactMessage')?.value.trim();
+                
                 if (!name || !email) {
-                    formStatus.textContent = 'Please fill name and email.';
-                    formStatus.classList.add('text-red-400');
+                    statusMsg.textContent = 'Please fill name and email.';
+                    statusMsg.classList.add('text-red-400');
                     return;
                 }
-                formStatus.textContent = 'Sending...';
-                formStatus.classList.remove('text-red-400','text-green-400');
-                setTimeout(() => {
-                    console.log(`Video inquiry: ${name}, ${email}`);
-                    formStatus.innerHTML = '✓ Message sent! I’ll reply within 24h.';
-                    formStatus.classList.add('text-green-400');
+                
+                const btn = contactForm.querySelector('button[type="submit"]');
+                btn.disabled = true;
+                btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin ml-1"></i>';
+                statusMsg.textContent = '';
+                statusMsg.classList.remove('text-red-400','text-green-400');
+                
+                try {
+                    await addDoc(collection(db, 'lead_messages'), {
+                        name, 
+                        email, 
+                        subject: `Video Inquiry: ${service}`,
+                        message,
+                        timestamp: serverTimestamp(),
+                        type: 'video_contact'
+                    });
+                    
+                    statusMsg.innerHTML = '✓ Message sent! I’ll reply within 24h.';
+                    statusMsg.classList.add('text-green-400');
                     contactForm.reset();
-                    setTimeout(() => formStatus.innerHTML = '', 4000);
-                }, 800);
+                } catch(error) {
+                    console.error('Firestore Error:', error);
+                    statusMsg.textContent = 'Error sending message. Please try again.';
+                    statusMsg.classList.add('text-red-400');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Send inquiry';
+                    setTimeout(() => { if(statusMsg.classList.contains('text-green-400')) statusMsg.innerHTML = ''; }, 5000);
+                }
             });
         }
 
