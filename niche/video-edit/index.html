@@ -54,13 +54,12 @@
         .tool-card { transition: all 0.2s ease; }
         .tool-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); border-color: rgba(0,86,179,0.5); }
         
-        /* Video set grid (desktop) */
+        /* --- Video Set Grid Styling (Redesigned) --- */
         .video-set {
             margin-bottom: 2rem;
         }
         .video-set-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
         }
         .video-item {
@@ -72,46 +71,61 @@
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
         }
         .video-item iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 0;
         }
+        
+        /* Aspect Ratios through padding-bottom trick */
         .video-landscape {
-            aspect-ratio: 16 / 9;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
         }
         .video-portrait {
-            aspect-ratio: 9 / 16;
+            padding-bottom: 177.77%; /* 9:16 Aspect Ratio */
+            height: 0;
         }
-        /* Desktop: use grid template areas for alternating layouts */
+
+        /* Desktop Layout: 1 Portrait, 2 Stacked Landscapes */
         @media (min-width: 768px) {
             .video-set-grid.arrangement-default {
+                grid-template-columns: 1fr 2.5fr; /* Portrait takes less width, landscapes take more */
                 grid-template-areas:
-                    "portrait landscape"
-                    "portrait2 landscape2";
+                    "portrait landscape1"
+                    "portrait landscape2";
             }
             .video-set-grid.arrangement-swapped {
+                grid-template-columns: 2.5fr 1fr; /* Swapped arrangement */
                 grid-template-areas:
-                    "landscape portrait"
-                    "landscape2 portrait2";
+                    "landscape1 portrait"
+                    "landscape2 portrait";
             }
-            .video-item.portrait-1 { grid-area: portrait; }
-            .video-item.portrait-2 { grid-area: portrait2; }
-            .video-item.landscape-1 { grid-area: landscape; }
+            
+            /* Make portrait fill the entire height of the two stacked landscapes */
+            .video-item.portrait-1 { 
+                grid-area: portrait; 
+                padding-bottom: 0; 
+                height: 100%; 
+            }
+            .video-item.landscape-1 { grid-area: landscape1; }
             .video-item.landscape-2 { grid-area: landscape2; }
         }
-        /* Mobile: stack */
+
+        /* Mobile Layout: 1 Portrait, followed by 2 Landscapes */
         @media (max-width: 767px) {
             .video-set-grid {
                 display: flex;
                 flex-direction: column;
                 gap: 1.5rem;
             }
-            .video-item {
-                max-width: 100%;
-            }
             .video-portrait {
-                max-width: 280px;
+                max-width: 320px;
                 margin: 0 auto;
+                /* Keeps aspect ratio active on mobile */
+                padding-bottom: 177.77%; 
             }
         }
         img:not([src]), img[src=""] { opacity: 0; }
@@ -204,7 +218,7 @@
         </div>
     </section>
 
-    <!-- SKILLS & TOOLS (expanded, 12 tools) -->
+    <!-- SKILLS & TOOLS -->
     <section id="skills-tools" class="py-20 bg-dark text-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-14">
@@ -213,7 +227,7 @@
                 <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Industry-leading software & techniques</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Core skills (unchanged) -->
+                <!-- Core skills -->
                 <div>
                     <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-star text-primary"></i> Core Expertise</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -225,7 +239,7 @@
                         <div class="skill-badge rounded-xl p-4 flex items-center gap-3 bg-white/5 border border-white/10"><i class="fas fa-chart-line text-primary text-xl w-8"></i><span>Storyboarding</span></div>
                     </div>
                 </div>
-                <!-- Tools Mastery (12 tools, Blender removed) -->
+                <!-- Tools Mastery -->
                 <div>
                     <h3 class="text-2xl font-bold flex items-center gap-2 mb-6"><i class="fas fa-tools text-primary"></i> Tools Mastery</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -252,15 +266,15 @@
         </div>
     </section>
 
-    <!-- VIDEO SHOWCASE (dynamic sets, up to 12 videos, alternating layout) -->
+    <!-- VIDEO SHOWCASE (1 portrait, 2 landscape per set) -->
     <section id="video-showcase" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="text-primary font-bold tracking-wider text-sm uppercase bg-primary/10 px-4 py-1 rounded-full">Featured Work</span>
                 <h2 class="text-4xl md:text-5xl font-display font-bold mt-3 text-dark">Video Showcase</h2>
-                <p class="text-neutral mt-2 max-w-2xl mx-auto">Up to 12 videos organized in alternating portrait/landscape sets</p>
+                <p class="text-neutral mt-2 max-w-2xl mx-auto">Organized in dynamic sets of 3 (1 Portrait + 2 Landscapes)</p>
             </div>
-            <div id="video-container" class="space-y-8">
+            <div id="video-container" class="space-y-12">
                 <div class="text-center py-12 text-neutral">Loading videos...</div>
             </div>
         </div>
@@ -275,7 +289,7 @@
                 <p class="text-gray-300 mt-2">Moments captured on set — click to expand</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="gallery-grid">
-                <!-- JS injects 10 images -->
+                <!-- JS injects images -->
             </div>
         </div>
     </section>
@@ -331,7 +345,7 @@
         window.closeLightbox = () => { lightbox.classList.add('hidden'); document.body.style.overflow = ''; setTimeout(() => lightboxImg.src = '', 200); };
         if (lightbox) lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
 
-        // Video logic: group into sets of 4 (2 landscape + 2 portrait), up to 3 sets (12 videos)
+        // Video logic: group into sets of 3 (2 landscape + 1 portrait)
         async function loadVideos() {
             const container = document.getElementById('video-container');
             if (!container) return;
@@ -345,63 +359,58 @@
                 const landscapes = videos.filter(v => v.aspect === 'landscape');
                 const portraits = videos.filter(v => v.aspect === 'portrait');
 
-                // Create sets: each set needs 2 landscape + 2 portrait
-                const maxSets = 3;
+                // Create sets: each set needs 2 landscape + 1 portrait
+                const maxSets = 4; // Render up to 4 sets (12 videos max)
                 const sets = [];
                 for (let i = 0; i < maxSets; i++) {
                     const startL = i * 2;
-                    const startP = i * 2;
+                    const startP = i * 1;
                     const setLandscapes = landscapes.slice(startL, startL + 2);
-                    const setPortraits = portraits.slice(startP, startP + 2);
-                    if (setLandscapes.length === 2 && setPortraits.length === 2) {
+                    const setPortraits = portraits.slice(startP, startP + 1);
+                    
+                    // We only build a full set if we have exactly 2 landscapes and 1 portrait remaining
+                    if (setLandscapes.length === 2 && setPortraits.length === 1) {
                         sets.push({ landscapes: setLandscapes, portraits: setPortraits });
                     } else {
-                        // Not enough of both types for another full set
                         break;
                     }
                 }
 
                 if (sets.length === 0) {
-                    container.innerHTML = '<div class="text-center py-12 text-neutral">Add at least 2 landscape and 2 portrait videos to videos.json to see the showcase.</div>';
+                    container.innerHTML = '<div class="text-center py-12 text-neutral">Add at least 2 landscape and 1 portrait video to videos.json to see the showcase.</div>';
                     return;
                 }
 
                 container.innerHTML = '';
 
                 sets.forEach((set, idx) => {
-                    const isEven = idx % 2 === 0; // even index: default arrangement (portraits left, landscapes right)
+                    const isEven = idx % 2 === 0; 
                     const arrangementClass = isEven ? 'arrangement-default' : 'arrangement-swapped';
                     const setDiv = document.createElement('div');
                     setDiv.className = 'video-set';
+                    
+                    // Note: DOM order is Portrait -> Landscape 1 -> Landscape 2.
+                    // This perfectly ensures that flex-col on mobile stacks the Portrait at the top!
+                    // On desktop, our CSS grid-template-areas handles re-ordering visual placement.
                     setDiv.innerHTML = `
                         <div class="video-set-grid ${arrangementClass}">
                             <div class="video-item portrait-1 video-portrait"></div>
-                            <div class="video-item portrait-2 video-portrait"></div>
                             <div class="video-item landscape-1 video-landscape"></div>
                             <div class="video-item landscape-2 video-landscape"></div>
                         </div>
                     `;
+                    
                     // Fill the iframes
                     const grid = setDiv.querySelector('.video-set-grid');
                     const portrait1 = grid.querySelector('.portrait-1');
-                    const portrait2 = grid.querySelector('.portrait-2');
                     const landscape1 = grid.querySelector('.landscape-1');
                     const landscape2 = grid.querySelector('.landscape-2');
 
-                    // Assign in order based on arrangement
-                    if (isEven) {
-                        // portraits first, then landscapes
-                        portrait1.innerHTML = `<iframe src="${set.portraits[0].url}" title="${set.portraits[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        portrait2.innerHTML = `<iframe src="${set.portraits[1].url}" title="${set.portraits[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        landscape1.innerHTML = `<iframe src="${set.landscapes[0].url}" title="${set.landscapes[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        landscape2.innerHTML = `<iframe src="${set.landscapes[1].url}" title="${set.landscapes[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                    } else {
-                        // swapped: landscapes first, then portraits
-                        landscape1.innerHTML = `<iframe src="${set.landscapes[0].url}" title="${set.landscapes[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        landscape2.innerHTML = `<iframe src="${set.landscapes[1].url}" title="${set.landscapes[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        portrait1.innerHTML = `<iframe src="${set.portraits[0].url}" title="${set.portraits[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        portrait2.innerHTML = `<iframe src="${set.portraits[1].url}" title="${set.portraits[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                    }
+                    // Set URL attributes
+                    portrait1.innerHTML = `<iframe src="${set.portraits[0].url}" title="${set.portraits[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    landscape1.innerHTML = `<iframe src="${set.landscapes[0].url}" title="${set.landscapes[0].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    landscape2.innerHTML = `<iframe src="${set.landscapes[1].url}" title="${set.landscapes[1].title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    
                     container.appendChild(setDiv);
                 });
             } catch (err) {
